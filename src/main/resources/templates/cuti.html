@@ -11,44 +11,63 @@
 <div class="main">
     <div class="container">
         <h1>Pengajuan Cuti</h1><br>
-        <h2>Semua Pengajuan Cuti</h2>
-        <table class="btatable">
-            <thead>
-            <tr>
-                <th>No.</th>
-                <th>Tanggal Pengajuan</th>
-                <th>Tanggal Mulai</th>
-                <th>Tanggal Selesai</th>
-                <th>Status Persetujuan</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cuti, iterStat : ${listCuti}">
-                <td>
-                    <p th:text="${iterStat.count}"></p>
-                </td>
-                <td>
-                    <p th:text="${cuti.tanggal_diajukan}"></p>
-                </td>
-                <td>
-                    <p th:text="${cuti.tanggal_mulai}"></p>
-                </td>
-                <td>
-                    <p th:text="${cuti.tanggal_selesai}"></p>
-                </td>
-                <td>
-                    <p th:if="${cuti.status} == 0" class="badge-menunggu">Menunggu Persetujuan</p>
-                    <p th:if="${cuti.status} == 1" class="badge-disetujui">Disetujui</p>
-                    <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
-                </td>
-                <td>
-                    <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class = "btn btn-primary">Lihat</a>
-                    <a th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Hapus</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h2>Semua Pengajuan Cuti</h2><br>
+        <div class="cuti-alert" align="center">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Pengajuan cuti berhasil dibuat!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Pengajuan cuti berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat pengajuan!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus pengajuan!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Pengajuan cuti tidak ditemukan!
+            </div>
+        </div>
+        <div align="center">
+            <table class="btatable" style="width: 90%">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Tanggal Pengajuan</th>
+                    <th>Tanggal Mulai</th>
+                    <th>Tanggal Selesai</th>
+                    <th>Status Persetujuan</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cuti, iterStat : ${listCuti}">
+                    <td>
+                        <p th:text="${iterStat.count}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:if="${cuti.status} == 0" class="badge-menunggu">Menunggu Persetujuan</p>
+                        <p th:if="${cuti.status} == 1" class="badge-disetujui">Disetujui</p>
+                        <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
+                    </td>
+                    <td>
+                        <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class = "btn btn-primary">Lihat</a>
+                        <a th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Hapus</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>

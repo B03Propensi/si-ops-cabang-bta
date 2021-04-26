@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,6 @@ public class CutiController {
 
         model.addAttribute("listCuti", listCuti);
 //        model.addAttribute("isAbleToAddCuti", role == 3 || role == 4 || role ==5);
-        model.addAttribute("alert", null);
 
         return "cuti";
     }
@@ -56,47 +56,46 @@ public class CutiController {
     }
 
     @PostMapping("/cuti/add")
-    public String addCutiSubmit(@ModelAttribute CutiModel cuti, Model model){
+    public String addCutiSubmit(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs){
         try {
             cuti.setPengaju(userService.findByUsername("vina"));
             cutiService.addCuti(cuti);
-            model.addAttribute("alert", "addSuccess");
-            return "cuti";
+//            model.addAttribute("alert", "addSuccess");
+            redirectAttrs.addFlashAttribute("alert", "addSuccess");
+            return "redirect:/cuti";
         } catch (Exception e) {
-            model.addAttribute("alert", "addFail");
-            return "cuti";
+//            model.addAttribute("alert", "addFail");
+            redirectAttrs.addFlashAttribute("alert", "addFail");
+            return "redirect:/cuti";
         }
 
     }
 
     @GetMapping("/cuti/view/{id}")
-    public String detailCuti(@PathVariable Long id, Model model) {
+    public String detailCuti(@PathVariable Long id, Model model, RedirectAttributes redirectAttrs) {
         try {
             CutiModel cuti = cutiService.getCutiByIdCuti(id);
             model.addAttribute("cuti", cuti);
 
             return "view-cuti";
         } catch (EmptyResultDataAccessException e) {
-            model.addAttribute("alert", "notFound");
-            return "cuti";
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/cuti";
         }
     }
 
-    @GetMapping("gaji/delete/{id}")
-    private String deleteCuti(
-            @PathVariable Long id,
-            Model model
-    ) {
+    @GetMapping("cuti/delete/{id}")
+    private String deleteCuti(@PathVariable Long id, RedirectAttributes redirectAttrs) {
         try {
             cutiService.deleteCuti(id);
-            model.addAttribute("alert", "delSuccess");
-            return "cuti";
+            redirectAttrs.addFlashAttribute("alert", "delSuccess");
+            return "redirect:/cuti";
         } catch (EmptyResultDataAccessException e) {
-            model.addAttribute("alert", "notFound");
-            return "cuti";
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/cuti";
         } catch (Exception e) {
-            model.addAttribute("alert", "delFail");
-            return "cuti";
+            redirectAttrs.addFlashAttribute("alert", "delFail");
+            return "redirect:/cuti";
         }
 
     }
