@@ -24,4 +24,9 @@ public class PageController {
     public String daftarPresensi(){
         return "daftar-presensi";
     }
+
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
 }
