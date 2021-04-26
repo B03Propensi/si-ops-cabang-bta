@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface UserDb extends JpaRepository<UserModel, Long> {
     List<UserModel> findAllByRole_IdRole(Long idRole);
+    UserModel findByUsername(String username);
 }

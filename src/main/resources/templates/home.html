@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+    <div class="main">
+        <!--Isi di sini-->
+        <h1 style="color: #FF4C4C; text-align: center; margin-top: 50px; font-weight: bold">
+            Selamat Datang di <br> SIOC!
+        </h1>
+    </div>
+</body>
+</html>

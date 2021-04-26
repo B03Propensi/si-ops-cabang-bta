@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <h1>Pengajuan Cuti</h1><br>
+        <h2>Semua Pengajuan Cuti</h2>
+        <table class="btatable">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Tanggal Pengajuan</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
+                <th>Status Persetujuan</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cuti, iterStat : ${listCuti}">
+                <td>
+                    <p th:text="${iterStat.count}"></p>
+                </td>
+                <td>
+                    <p th:text="${cuti.tanggal_diajukan}"></p>
+                </td>
+                <td>
+                    <p th:text="${cuti.tanggal_mulai}"></p>
+                </td>
+                <td>
+                    <p th:text="${cuti.tanggal_selesai}"></p>
+                </td>
+                <td>
+                    <p th:if="${cuti.status} == 0" class="badge-menunggu">Menunggu Persetujuan</p>
+                    <p th:if="${cuti.status} == 1" class="badge-disetujui">Disetujui</p>
+                    <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
+                </td>
+                <td>
+                    <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class = "btn btn-primary">Lihat</a>
+                    <a th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Hapus</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

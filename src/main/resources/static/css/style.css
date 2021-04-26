@@ -1,0 +1,120 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.sidenav {
+    height: 100%;
+    width: 210px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #FF4C4C;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #FFFFFF;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav a:active {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 210px;
+    margin-top: 80px;
+    padding: 0px 10px;
+}
+
+.main h1 {
+    font-size: 28px;
+}
+
+.main h2 {
+    font-size: 22px;
+}
+
+.btacard {
+    background-color: #fff;
+    border: 1px solid #ff4c4c;
+    border-bottom: 10px solid #ff4c4c;
+    border-radius: 4px;
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 16px 50px;
+}
+
+.btacard h1 {
+    font-size: 22px;
+}
+
+.btacard .btn {
+    width: 80px;
+    margin: 5px;
+}
+
+.btatable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.btatable td {
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: center;
+}
+
+.btatable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.btatable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.badge-menunggu {
+    width: auto;
+    border-radius: 20px;
+    padding: 8px;
+    color: white;
+    background-color: #ffc107;
+}
+
+.badge-disetujui {
+    width: auto;
+    border-radius: 20px;
+    padding: 8px;
+    color: white;
+    background-color: #28a745;
+}
+
+.badge-ditolak {
+    width: auto;
+    border-radius: 20px;
+    padding: 8px;
+    color: white;
+    background-color: #ed1d24;
+}
+
+.btatable p {
+    margin: 10px 5px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}

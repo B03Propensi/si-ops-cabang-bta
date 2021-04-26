@@ -8,10 +8,10 @@
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar(page='404 Not Found')"></nav>
+    <div th:replace="fragments/fragment :: navbar('404')"></div>
     <div class="container-fluid">
         <h2>Halaman tidak ditemukan</h2>
-        <a th:href="@{/}">Kembali ke home</a>
+        <a th:href="@{/}">Kembali ke Beranda</a>
     </div>
 </body>
 </html>

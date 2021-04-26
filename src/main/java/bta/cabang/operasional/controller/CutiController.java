@@ -1,60 +1,103 @@
 package bta.cabang.operasional.controller;
 
 import bta.cabang.operasional.model.CutiModel;
+import bta.cabang.operasional.model.UserModel;
+import bta.cabang.operasional.security.AuthService;
 import bta.cabang.operasional.service.CutiService;
+import bta.cabang.operasional.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-@RestController
-@RequestMapping("/api")
+
+@Controller
 public class CutiController {
     @Autowired
     private CutiService cutiService;
 
-    @PostMapping(value = "/cuti")
-    private ResponseEntity<String> addCuti(@Valid @RequestBody CutiModel cuti, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Cuti gagal diajukan!"
-            );
-        } else {
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AuthService authService;
+
+    @GetMapping("/cuti")
+    public String viewAllCuti(Model model) {
+//        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
+//        Long role = currentUser.getRole().getIdRole();
+//        Long id = currentUser.getIdUser();
+//
+//        List<CutiModel> listCuti = new ArrayList<>();
+//        if (role == 1 || role == 2) {
+//            listCuti = cutiService.getAllCuti();
+//        } else {
+//            listCuti = cutiService.getAllCutiByUser(id);
+//        }
+
+        List<CutiModel> listCuti = cutiService.getAllCuti();
+
+        model.addAttribute("listCuti", listCuti);
+//        model.addAttribute("isAbleToAddCuti", role == 3 || role == 4 || role ==5);
+        model.addAttribute("alert", null);
+
+        return "cuti";
+    }
+
+    @GetMapping("/cuti/add")
+    public String addCutiForm(Model model) {
+        model.addAttribute("cuti", new CutiModel());
+
+        return "form-addCuti";
+    }
+
+    @PostMapping("/cuti/add")
+    public String addCutiSubmit(@ModelAttribute CutiModel cuti, Model model){
+        try {
+            cuti.setPengaju(userService.findByUsername("vina"));
             cutiService.addCuti(cuti);
-            return ResponseEntity.ok("Cuti berhasil diajukan!");
+            model.addAttribute("alert", "addSuccess");
+            return "cuti";
+        } catch (Exception e) {
+            model.addAttribute("alert", "addFail");
+            return "cuti";
         }
+
     }
 
-    @GetMapping(value = "/cuti/all")
-    private List<CutiModel> getAllCuti() { return cutiService.getAllCuti(); }
-
-    @GetMapping(value = "/cuti/{idCuti}")
-    private CutiModel viewCuti(@PathVariable("idCuti") Long idCuti) {
+    @GetMapping("/cuti/view/{id}")
+    public String detailCuti(@PathVariable Long id, Model model) {
         try {
-            return cutiService.getCutiByIdCuti(idCuti);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Cuti tidak ditemukan!"
-            );
-        }
-    }
+            CutiModel cuti = cutiService.getCutiByIdCuti(id);
+            model.addAttribute("cuti", cuti);
 
-    @DeleteMapping(value = "/cuti/delete/{idCuti}")
-    private ResponseEntity<String> deleteCuti(@PathVariable("idCuti") Long idCuti) {
-        try {
-            cutiService.deleteCuti(idCuti);
-            return ResponseEntity.ok("Cuti berhasil dihapus!");
+            return "view-cuti";
         } catch (EmptyResultDataAccessException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "ID Cuti tidak ditemukan!"
-            );
+            model.addAttribute("alert", "notFound");
+            return "cuti";
         }
+    }
+
+    @GetMapping("gaji/delete/{id}")
+    private String deleteCuti(
+            @PathVariable Long id,
+            Model model
+    ) {
+        try {
+            cutiService.deleteCuti(id);
+            model.addAttribute("alert", "delSuccess");
+            return "cuti";
+        } catch (EmptyResultDataAccessException e) {
+            model.addAttribute("alert", "notFound");
+            return "cuti";
+        } catch (Exception e) {
+            model.addAttribute("alert", "delFail");
+            return "cuti";
+        }
+
     }
 }
