@@ -5,50 +5,7 @@
     <title>Home</title>
     <head th:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-        <style>
-            body {
-                font-family: "Lato", sans-serif;
-            }
-
-            .sidenav {
-                height: 100%;
-                width: 210px;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                background-color: #FF4C4C;
-                overflow-x: hidden;
-                padding-top: 20px;
-            }
-
-            .sidenav a {
-                padding: 6px 8px 6px 16px;
-                text-decoration: none;
-                font-size: 25px;
-                color: #FFFFFF;
-                display: block;
-            }
-
-            .sidenav a:hover {
-                color: #f1f1f1;
-            }
-
-            .sidenav a:active {
-                color: #f1f1f1;
-            }
-
-            .main {
-                margin-left: 210px;
-                font-size: 28px;
-                padding: 0px 10px;
-            }
-
-            @media screen and (max-height: 450px) {
-                .sidenav {padding-top: 15px;}
-                .sidenav a {font-size: 18px;}
-            }
-        </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
     </head>
 
     <head th:fragment="js">
@@ -63,7 +20,7 @@
 </head>
 
 <body>
-    <div class="sidenav" th:fragment="sidenav">
+    <div class="sidenav" th:fragment="sidenav(nama)">
         <a href="/">Beranda</a>
         <a href="/jadwal">Jadwal Kelas</a>
         <a href="/registrasi-kelas">Registrasi Kelas</a>
