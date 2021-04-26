@@ -32,7 +32,30 @@ body {
 
 .main {
     margin-left: 210px;
+    margin-top: 80px;
     padding: 0px 10px;
+}
+
+.main h1 {
+    font-size: 28px;
+}
+
+.btacard {
+    background-color: #fff;
+    border: 1px solid #ff4c4c;
+    border-bottom: 10px solid #ff4c4c;
+    border-radius: 4px;
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 16px 50px;
+}
+
+.btacard h1 {
+    font-size: 22px;
+}
+
+.btacard .btn {
+    width: 80px;
+    margin: 5px;
 }
 
 @media screen and (max-height: 450px) {
