@@ -48,6 +48,18 @@ body p {
     font-size: 22px;
 }
 
+.btabutton {
+    border: 1px solid #ff4c4c;
+    color: #ff4c4c;
+    background-color: white;
+    font-weight: normal;
+}
+
+.btabutton:hover {
+    background-color: #ff4c4c;
+    color: white;
+}
+
 .btacard {
     background-color: #fff;
     border: 1px solid #ff4c4c;
@@ -74,6 +86,8 @@ body p {
 
 .btatable td {
     border: 1px solid #ddd;
+    border-left: 0;
+    border-right: 0;
     padding: 2px;
     text-align: center;
 }

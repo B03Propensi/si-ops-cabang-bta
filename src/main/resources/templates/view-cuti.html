@@ -11,27 +11,27 @@
 <div class="main">
     <div class="container">
         <h1>Detail Pengajuan Cuti</h1><br>
-        <div class="btacard" style="width: 50%">
+        <div class="btacard" style="width: 60%">
             <h1>Pengajuan Cuti</h1><br>
             <div class="detail-cuti">
                 <div class="row">
-                    <div class="col-5" style="margin-left: 0px"><p>Tanggal Diajukan</p></div>
+                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Diajukan</p></div>
                     <div class="col"><p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p></div>
                 </div>
                 <div class="row">
-                    <div class="col-5" style="margin-left: 0px"><p>Tanggal Mulai</p></div>
+                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Mulai</p></div>
                     <div class="col"><p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')}"></p></div>
                 </div>
                 <div class="row">
-                    <div class="col-5" style="margin-left: 0px"><p>Tanggal Selesai</p></div>
+                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Selesai</p></div>
                     <div class="col"><p th:text="${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p></div>
                 </div>
                 <div class="row">
-                    <div class="col-5" style="margin-left: 0px"><p>Alasan</p></div>
+                    <div class="col-4" style="margin-left: 0px"><p>Alasan</p></div>
                     <div class="col"><p th:text="${cuti.alasan}"></p></div>
                 </div>
                 <div class="row">
-                    <div class="col-5" style="margin-left: 0px"><p>Status Persetujuan</p></div>
+                    <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan</p></div>
                     <div class="col">
                         <p th:if="${cuti.status} == 0" class="menunggu">Menunggu Persetujuan</p>
                     </div>
