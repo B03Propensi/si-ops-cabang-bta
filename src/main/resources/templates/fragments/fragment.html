@@ -5,6 +5,50 @@
     <title>Home</title>
     <head th:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+        <style>
+            body {
+                font-family: "Lato", sans-serif;
+            }
+
+            .sidenav {
+                height: 100%;
+                width: 210px;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: #FF4C4C;
+                overflow-x: hidden;
+                padding-top: 20px;
+            }
+
+            .sidenav a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #FFFFFF;
+                display: block;
+            }
+
+            .sidenav a:hover {
+                color: #f1f1f1;
+            }
+
+            .sidenav a:active {
+                color: #f1f1f1;
+            }
+
+            .main {
+                margin-left: 210px;
+                font-size: 28px;
+                padding: 0px 10px;
+            }
+
+            @media screen and (max-height: 450px) {
+                .sidenav {padding-top: 15px;}
+                .sidenav a {font-size: 18px;}
+            }
+        </style>
     </head>
 
     <head th:fragment="js">
@@ -19,42 +63,51 @@
 </head>
 
 <body>
-    <nav
-        th:fragment="navbar(page)"
-        class="navbar navbar-expand-lg navbar-light bg-light"
-    >
-        <a class="navbar-brand font-weight-bold text-success" href="#">HaiDokter!</a>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <a class="nav-item nav-link activate text-secondary" th:href="@{/}">
-                    Home<span class="sr-only">(current)</span>
-                </a>
-            </ul>
-            <ul class="navbar-nav navbar-right">
-                <p class="nav-item nav-link activate text-secondary"
-                   style="margin-bottom: 0;"
-                   th:text="${page}"
-                >
-                    <span class="sr-only">(current)</span>
-                </p>
-            </ul>
-            <ul class="navbar-nav pull-right">
-                <a class="nav-item nav-link activate text-secondary" th:href="@{/logout}">
-                    Logout<span class="sr-only">(current)</span>
-                </a>
-            </ul>
-        </div>
-    </nav>
+    <div class="sidenav" th:fragment="sidenav">
+        <a href="/">Beranda</a>
+        <a href="/jadwal">Jadwal Kelas</a>
+        <a href="/registrasi-kelas">Registrasi Kelas</a>
+        <a href="/cabang">Cabang</a>
+        <a href="/siswa">Siswa</a>
+        <a href="/presensi">Presensi</a>
+        <a href="/cuti">Cuti</a>
+    </div>
+<!--    <nav-->
+<!--        th:fragment="navbar(page)"-->
+<!--        class="navbar navbar-expand-lg navbar-light bg-light"-->
+<!--    >-->
+<!--        <a class="navbar-brand font-weight-bold text-success" href="#">HaiDokter!</a>-->
+<!--        <button-->
+<!--            class="navbar-toggler"-->
+<!--            type="button"-->
+<!--            data-toggle="collapse"-->
+<!--            data-target="#navbarNavAltMarkup"-->
+<!--            aria-controls="navbarNavAltMarkup"-->
+<!--            aria-expanded="false"-->
+<!--            aria-label="Toggle navigation"-->
+<!--        >-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse">-->
+<!--            <ul class="navbar-nav mr-auto">-->
+<!--                <a class="nav-item nav-link activate text-secondary" th:href="@{/}">-->
+<!--                    Home<span class="sr-only">(current)</span>-->
+<!--                </a>-->
+<!--            </ul>-->
+<!--            <ul class="navbar-nav navbar-right">-->
+<!--                <p class="nav-item nav-link activate text-secondary"-->
+<!--                   style="margin-bottom: 0;"-->
+<!--                   th:text="${page}"-->
+<!--                >-->
+<!--                    <span class="sr-only">(current)</span>-->
+<!--                </p>-->
+<!--            </ul>-->
+<!--            <ul class="navbar-nav pull-right">-->
+<!--                <a class="nav-item nav-link activate text-secondary" th:href="@{/logout}">-->
+<!--                    Logout<span class="sr-only">(current)</span>-->
+<!--                </a>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </nav>-->
 </body>
 </html>
