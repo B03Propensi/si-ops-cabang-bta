@@ -1,4 +1,7 @@
 package bta.cabang.operasional.service;
 
-public class UserService {
+import bta.cabang.operasional.model.UserModel;
+
+public interface UserService {
+    UserModel findByUsername(String username);
 }

@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-//@Service
-//@Transactional
-//public class AuthServiceImpl implements AuthService {
-//    @Autowired
-//    private UserService userService;
-//
-//    @Override
-//    public UserModel getCurrentLoggedInUserByUsername() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        String currentUsername = auth.getName();
-//        return userService.findByUsername(currentUsername);
-//    }
-//}
+@Service
+@Transactional
+public class AuthServiceImpl implements AuthService {
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public UserModel getCurrentLoggedInUserByUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = auth.getName();
+        return userService.findByUsername(currentUsername);
+    }
+}
