@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Pengajuan Cuti</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <h1>Tambah Pengajuan Cuti</h1><br>
+        <div class="btacard" style="width: 50%">
+            <h1 align="center">Form Pengajuan Cuti</h1><br>
+            <form th:action="@{/cuti/add}" th:object = "${cuti}" method = "POST">
+                <div class="row">
+                    <div class="col">
+                        <p>Tanggal Mulai:</p>
+                        <input required type="date" class="form-control"  name="tanggal_mulai" />
+                    </div>
+
+                    <div class="col">
+                        <p>Tanggal Selesai:</p>
+                        <input required type="date" class="form-control"  name="tanggal_selesai" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Alasan:</p>
+                        <textarea required type="text" class="form-control" name="alasan"
+                                  rows="3" placeholder="Alasan cuti..."></textarea>
+                    </div>
+                </div>
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                    <a href="/cuti" class="btn btn-outline-danger">Batal</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
