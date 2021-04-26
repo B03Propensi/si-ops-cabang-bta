@@ -39,11 +39,11 @@ public class CutiController {
 //        } else {
 //            listCuti = cutiService.getAllCutiByUser(id);
 //        }
-
         List<CutiModel> listCuti = cutiService.getAllCuti();
 
         model.addAttribute("listCuti", listCuti);
-//        model.addAttribute("isAbleToAddCuti", role == 3 || role == 4 || role ==5);
+//        model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
+//        model.addAttribute("isAbleToUpdateCuti", role == 2 || role == 1);
 
         return "cuti";
     }
@@ -58,13 +58,13 @@ public class CutiController {
     @PostMapping("/cuti/add")
     public String addCutiSubmit(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs){
         try {
+//            cuti.setPengaju(authService.getCurrentLoggedInUserByUsername());
             cuti.setPengaju(userService.findByUsername("vina"));
             cutiService.addCuti(cuti);
-//            model.addAttribute("alert", "addSuccess");
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/cuti";
+
         } catch (Exception e) {
-//            model.addAttribute("alert", "addFail");
             redirectAttrs.addFlashAttribute("alert", "addFail");
             return "redirect:/cuti";
         }
@@ -76,8 +76,8 @@ public class CutiController {
         try {
             CutiModel cuti = cutiService.getCutiByIdCuti(id);
             model.addAttribute("cuti", cuti);
-
             return "view-cuti";
+
         } catch (EmptyResultDataAccessException e) {
             redirectAttrs.addFlashAttribute("alert", "notFound");
             return "redirect:/cuti";
@@ -90,13 +90,14 @@ public class CutiController {
             cutiService.deleteCuti(id);
             redirectAttrs.addFlashAttribute("alert", "delSuccess");
             return "redirect:/cuti";
+
         } catch (EmptyResultDataAccessException e) {
             redirectAttrs.addFlashAttribute("alert", "notFound");
             return "redirect:/cuti";
+
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("alert", "delFail");
             return "redirect:/cuti";
         }
-
     }
 }
