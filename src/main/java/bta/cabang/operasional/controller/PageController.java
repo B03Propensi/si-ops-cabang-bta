@@ -14,4 +14,14 @@ public class PageController {
     public String jadwal() {
         return "jadwal";
     }
+
+    @RequestMapping("/presensi")
+    public String presensi() {
+        return "presensi";
+    }
+
+    @RequestMapping("/daftar-presensi")
+    public String daftarPresensi(){
+        return "daftar-presensi";
+    }
 }
