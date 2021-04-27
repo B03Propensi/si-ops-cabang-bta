@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cabang</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div>
+            <h4 style="font-family: Roboto;color: black;font-style: normal;font-size: 36px; font-weight: 900;line-height: 42px"> Cabang </h4>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row justify-content-between">
+            <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"> Daftar Cabang</h2>
+            <a th:href = "@{/}" class = "btn btn-outline-danger " > + Buat Cabang Baru</a>
+        </div>
+        <br>
+        <table class="btatable">
+            <thead>
+            <tr>
+                <th>Nomor</th>
+                <th>Kode Cabang</th>
+                <th>Nama Cabang</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cabang, iterStat : ${cabangList}">
+                <td>
+                    <p th:text="${iterStat.count}"></p>
+                </td>
+                <td>
+                    <p th:text="${cabang.kode_cabang}"></p>
+                </td>
+                <td>
+                    <p th:text="${cabang.nama_cabang}"></p>
+                </td>
+                <td class="btn-toolbar" style="justify-content: center">
+                    <a th:href = "@{/}" class = "btn btn-success mr-2 mb-2">Detail</a>
+                    <a th:href = "@{/}" class = "btn btn-primary mr-2 mb-2">Ubah</a>
+                    <a th:href = "@{/}" class="btn btn-danger mr-2 mb-2">Hapus</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

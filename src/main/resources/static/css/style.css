@@ -2,6 +2,10 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
+body p {
+    font-weight: 10;
+}
+
 .sidenav {
     height: 100%;
     width: 10%;
@@ -32,7 +36,76 @@ body {
 
 .main {
     margin-left: 210px;
+    margin-top: 80px;
     padding: 0px 10px;
+}
+
+.main h1 {
+    font-size: 28px;
+}
+
+.main h2 {
+    font-size: 22px;
+}
+
+.btabutton {
+    border: 1px solid #ff4c4c;
+    color: #ff4c4c;
+    background-color: white;
+    font-weight: normal;
+}
+
+.btabutton:hover {
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.btacard {
+    background-color: #fff;
+    border: 1px solid #ff4c4c;
+    border-bottom: 10px solid #ff4c4c;
+    border-radius: 4px;
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 20px 50px;
+}
+
+.btacard h1 {
+    font-size: 22px;
+}
+
+.btacard .btn {
+    width: 80px;
+    margin: 5px;
+}
+
+.btatable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.btatable td {
+    border: 1px solid #ddd;
+    border-left: 0;
+    border-right: 0;
+    padding: 2px;
+    text-align: center;
+}
+
+.btatable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.btatable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.btatable p {
+    margin: 6px 2px;
 }
 
 @media screen and (max-height: 450px) {
