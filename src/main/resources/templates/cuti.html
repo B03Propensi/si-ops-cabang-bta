@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Beranda</title>
+    <title>Pengajuan Cuti</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -30,13 +30,14 @@
         </div>
         <div align="center">
             <div style="width: 95%">
-                <a href="/cuti/add" class="btn btn-sm btabutton" style="float: left; margin-bottom: 5px">
+                <a th:if="${isAbleToAddDeleteCuti}" href="/cuti/add" class="btn btn-sm btabutton" style="float: left; margin-bottom: 5px">
                     <span><strong>+</strong></span> Buat Pengajuan Cuti
                 </a>
                 <table class="btatable">
                     <thead>
                     <tr>
                         <th>No.</th>
+                        <th th:if="${isAbleToUpdateCuti}">Nama Pegawai</th>
                         <th>Tanggal Pengajuan</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
@@ -48,6 +49,9 @@
                     <tr th:each="cuti, iterStat : ${listCuti}">
                         <td>
                             <p th:text="${iterStat.count}"></p>
+                        </td>
+                        <td th:if="${isAbleToUpdateCuti}">
+                            <p th:text="${cuti.pengaju.namaUser}"></p>
                         </td>
                         <td>
                             <p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p>
@@ -65,7 +69,7 @@
                         </td>
                         <td>
                             <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class="btn btn-primary">Lihat</a>
-                            <a th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Hapus</a>
+                            <a th:if="${isAbleToAddDeleteCuti}" th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Hapus</a>
                         </td>
                     </tr>
                     </tbody>
