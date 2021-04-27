@@ -10,8 +10,8 @@ public class PageController {
         return "home";
     }
 
-    @RequestMapping("/jadwal")
-    public String jadwal() {
-        return "jadwal";
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
     }
 }

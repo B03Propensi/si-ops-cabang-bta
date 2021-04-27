@@ -29,21 +29,20 @@ public class CutiController {
 
     @GetMapping("/cuti")
     public String viewAllCuti(Model model) {
-//        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
-//        Long role = currentUser.getRole().getIdRole();
-//        Long id = currentUser.getIdUser();
-//
-//        List<CutiModel> listCuti = new ArrayList<>();
-//        if (role == 1 || role == 2) {
-//            listCuti = cutiService.getAllCuti();
-//        } else {
-//            listCuti = cutiService.getAllCutiByUser(id);
-//        }
-        List<CutiModel> listCuti = cutiService.getAllCuti();
+        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
+        Long role = currentUser.getRole().getIdRole();
+        Long id = currentUser.getIdUser();
+
+        List<CutiModel> listCuti = new ArrayList<>();
+        if (role == 1 || role == 2) {
+            listCuti = cutiService.getAllCuti();
+        } else {
+            listCuti = cutiService.getAllCutiByUser(id);
+        }
 
         model.addAttribute("listCuti", listCuti);
-//        model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
-//        model.addAttribute("isAbleToUpdateCuti", role == 2 || role == 1);
+        model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
+        model.addAttribute("isAbleToUpdateCuti", role == 1 || role == 2);
 
         return "cuti";
     }
@@ -58,8 +57,7 @@ public class CutiController {
     @PostMapping("/cuti/add")
     public String addCutiSubmit(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs){
         try {
-//            cuti.setPengaju(authService.getCurrentLoggedInUserByUsername());
-            cuti.setPengaju(userService.findByUsername("vina"));
+            cuti.setPengaju(authService.getCurrentLoggedInUserByUsername());
             cutiService.addCuti(cuti);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/cuti";
@@ -75,7 +73,12 @@ public class CutiController {
     public String detailCuti(@PathVariable Long id, Model model, RedirectAttributes redirectAttrs) {
         try {
             CutiModel cuti = cutiService.getCutiByIdCuti(id);
+            UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
+            Long role = currentUser.getRole().getIdRole();
+
             model.addAttribute("cuti", cuti);
+            model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
+            model.addAttribute("isAbleToUpdateCuti", role == 1 || role == 2);
             return "view-cuti";
 
         } catch (EmptyResultDataAccessException e) {

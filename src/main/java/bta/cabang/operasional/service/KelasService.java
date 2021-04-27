@@ -13,4 +13,6 @@ public interface KelasService {
     void deleteKelas(Long idKelas);
     List<UserModel> getAllPengajar(Long idRolePengajar);
     KelasModel editPengajar(Long idKelas, KelasModel kelasUpdate);
+    List<List<String>> getRowKelas(List<List<String>> allKelas, String waktu);
+    List<List<String>> getAllCells();
 }

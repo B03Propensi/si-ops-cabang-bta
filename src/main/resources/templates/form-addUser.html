@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah User</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Tambah User Baru</div>
+                    <div class="card-body">
+                        <form th:action="@{/user/add}" method="POST">
+                            <label>User Name</label>
+                            <input type="text" name="username" class="form-control">
+
+                            <label>Password</label>
+                            <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" class="form-control" title="Must contain at least one number and one lowercase letter, and at least 8 or more characters">
+
+                            <label>Nama</label>
+                            <input type="text" name="namaUser" class="form-control">
+
+                            <label>NIP</label>
+                            <input type="text" name="nip" class="form-control" maxlength="18">
+
+                            <label>Tanggal Lahir</label>
+                            <input type="date" name="tanggalLahir" class="form-control">
+
+                            <label>Alamat</label>
+                            <input type="text" name="alamat" class="form-control">
+
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control">
+
+                            <label>Role</label>
+                            <select name="role" class="form-control">
+                                <option selected value="">--- Pilih Role ---</option>
+                                <option th:each="role : ${listRole}" th:value="${role.idRole}" th:text="${role.namaRole}"></option>
+                            </select>
+                            <br>
+
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
