@@ -1,8 +1,10 @@
 package bta.cabang.operasional.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,6 +43,8 @@ public class UserModel implements Serializable {
 
     @NotNull
     @Column(name = "tanggal_lahir", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Jakarta")
     private Date tanggalLahir;
 
     @NotNull

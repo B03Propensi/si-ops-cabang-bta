@@ -29,10 +29,10 @@ public class CutiController {
 
     @GetMapping("/cuti")
     public String viewAllCuti(Model model) {
-//        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
-//        Long role = currentUser.getRole().getIdRole();
-//        Long id = currentUser.getIdUser();
-//
+        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
+        Long role = currentUser.getRole().getIdRole();
+        Long id = currentUser.getIdUser();
+
 //        List<CutiModel> listCuti = new ArrayList<>();
 //        if (role == 1 || role == 2) {
 //            listCuti = cutiService.getAllCuti();
@@ -42,8 +42,8 @@ public class CutiController {
         List<CutiModel> listCuti = cutiService.getAllCuti();
 
         model.addAttribute("listCuti", listCuti);
-//        model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
-//        model.addAttribute("isAbleToUpdateCuti", role == 2 || role == 1);
+        model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
+        model.addAttribute("isAbleToUpdateCuti", role == 1 || role == 2);
 
         return "cuti";
     }
