@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -32,6 +34,16 @@ public class CabangController {
         return "view-all-cabang";
     }
 
+    @GetMapping("/add")
+    private String addCabangForm(Model model){
+        model.addAttribute("cabang", new CabangModel());
+        return "add-cabang-form";
+    }
+    @PostMapping("/add")
+    private String addCabangSubmit(@ModelAttribute CabangModel cabang, Model model){
+        cabangService.addCabang(cabang);
+        return null;
+    }
 
 
 
