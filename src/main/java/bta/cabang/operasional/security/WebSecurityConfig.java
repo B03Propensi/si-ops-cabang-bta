@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,12 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     authorizeRequests()
                     .antMatchers("/css/**").permitAll()
                     .antMatchers("/js/**").permitAll()
+                    .antMatchers("/static/**").permitAll()
                     .antMatchers("/cuti/add").hasAnyAuthority("Koordinator Bidang Studi", "Staf Cabang", "Pengajar")
                     .antMatchers("/cuti/delete").hasAnyAuthority("Koordinator Bidang Studi", "Staf Cabang", "Pengajar")
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
-                    .loginPage("/login").permitAll()
+                    .loginPage("/login").defaultSuccessUrl("/", true).permitAll()
                     .and()
                     .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll()
                     .and()

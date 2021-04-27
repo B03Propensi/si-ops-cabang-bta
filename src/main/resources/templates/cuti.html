@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Beranda</title>
+    <title>Pengajuan Cuti</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -37,6 +37,7 @@
                     <thead>
                     <tr>
                         <th>No.</th>
+                        <th th:if="${isAbleToUpdateCuti}">Nama Pegawai</th>
                         <th>Tanggal Pengajuan</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
@@ -48,6 +49,9 @@
                     <tr th:each="cuti, iterStat : ${listCuti}">
                         <td>
                             <p th:text="${iterStat.count}"></p>
+                        </td>
+                        <td th:if="${isAbleToUpdateCuti}">
+                            <p th:text="${cuti.pengaju.namaUser}"></p>
                         </td>
                         <td>
                             <p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p>
