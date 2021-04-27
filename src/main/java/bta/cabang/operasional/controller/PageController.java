@@ -14,9 +14,3 @@ public class PageController {
     public String login() {
         return "login";
     }
-
-    @RequestMapping("/jadwal")
-    public String jadwal() {
-        return "jadwal";
-    }
-}

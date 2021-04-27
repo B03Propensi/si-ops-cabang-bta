@@ -35,90 +35,345 @@
                 <div>17:00 - 18:00</div>
             </div>
             <div class="content">
-                <div>
-                    <div class="accent-orange-gradient">
-                        <p>Biologi 1</p>
+                <div th:each="cell : ${cells}">
+                    <div th:each="class : ${cell}">
+                        <button th:if="${class.contains('Fisika') || class.contains('Ekonomi')}" class="accent-pink-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+                        <button th:if="${class.contains('Biologi') || class.contains('Sosiologi')}" class="accent-orange-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+                        <button th:if="${class.contains('Kimia') || class.contains('Geografi')}" class="accent-cyan-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+                        <button th:if="${class.contains('Indonesia')}" class="accent-blue-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+                        <button th:if="${class.contains('Inggris')}" class="accent-green-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+                        <button th:if="${class.contains('Matematika')}" class="accent-purple-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+                        <button th:if="${class.contains('Sejarah')}" class="accent-red-gradient"
+                                data-toggle="modal" data-target="#exampleModal" style="border: 0;">
+                            <p th:text="${class}"></p>
+                        </button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>
-                    <div class="accent-green-gradient">
-                        <p>Fisika 2</p>
-                    </div>
-                </div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>
-                    <div class="accent-cyan-gradient">
-                        <p>Fisika 1</p>
-                    </div>
-                </div>
-                <div></div>
-                <div class="weekend"></div>
-                <div>
-                    <div class="accent-pink-gradient"></div>
-                </div>
-                <div></div>
-                <div>
-                    <div class="accent-purple-gradient"></div>
-                </div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div>
-                    <div class="accent-purple-gradient"></div>
-                </div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="weekend"></div>
+
+<!--                <div class="senin8">-->
+<!--                    <div>-->
+<!--                        <div class="accent-pink-gradient">-->
+<!--                            <p>Biologi 1</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-orange-gradient">-->
+<!--                            <p>Fisika 1</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-green-gradient">-->
+<!--                            <p>Fisika 2</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="selasa8">-->
+<!--                    <div>-->
+<!--                        <div class="accent-cyan-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-blue-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-purple-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="rabu8">-->
+<!--                    <div>-->
+<!--                        <div class="accent-pink-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-green-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-blue-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="kamis8">-->
+<!--                    <div>-->
+<!--                        <div class="accent-orange-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-cyan-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-purple-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="jumat8">-->
+<!--                    <div>-->
+<!--                        <div class="accent-pink-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-orange-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-green-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="sabtu8">-->
+<!--                    <div>-->
+<!--                        <div class="accent-cyan-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-blue-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-purple-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="senin9">-->
+<!--                    <div>-->
+<!--                        <div class="accent-pink-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-green-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-blue-gradient">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="selasa9">-->
+<!--                </div>-->
+
+<!--                <div class="rabu9">-->
+<!--                </div>-->
+
+<!--                <div class="kamis9">-->
+<!--                </div>-->
+
+<!--                <div class="jumat9">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu9">-->
+<!--                </div>-->
+
+<!--                <div class="senin10">-->
+<!--                </div>-->
+
+<!--                <div class="selasa10">-->
+<!--                </div>-->
+
+<!--                <div class="rabu10">-->
+<!--                </div>-->
+
+<!--                <div class="kamis10">-->
+<!--                </div>-->
+
+<!--                <div class="jumat10">-->
+<!--                    <div>-->
+<!--                        <div class="accent-purple-gradient">-->
+<!--                            <p>Biologi 2</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="sabtu10">-->
+<!--                </div>-->
+
+<!--                <div class="senin11">-->
+<!--                </div>-->
+
+<!--                <div class="selasa11">-->
+<!--                </div>-->
+
+<!--                <div class="rabu11">-->
+<!--                </div>-->
+
+<!--                <div class="kamis11">-->
+<!--                </div>-->
+
+<!--                <div class="jumat11">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu11">-->
+<!--                </div>-->
+
+<!--                <div class="senin12">-->
+<!--                </div>-->
+
+<!--                <div class="selasa12">-->
+<!--                </div>-->
+
+<!--                <div class="rabu12">-->
+<!--                </div>-->
+
+<!--                <div class="kamis12">-->
+<!--                </div>-->
+
+<!--                <div class="jumat12">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu12">-->
+<!--                </div>-->
+
+<!--                <div class="senin13">-->
+<!--                </div>-->
+
+<!--                <div class="selasa13">-->
+<!--                </div>-->
+
+<!--                <div class="rabu13">-->
+<!--                    <div>-->
+<!--                        <div class="accent-pink-gradient">-->
+<!--                            <p>Kimia 1</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <div class="accent-purple-gradient">-->
+<!--                            <p>Fisika 3</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="kamis13">-->
+<!--                </div>-->
+
+<!--                <div class="jumat13">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu13">-->
+<!--                </div>-->
+
+<!--                <div class="senin14">-->
+<!--                </div>-->
+
+<!--                <div class="selasa14">-->
+<!--                </div>-->
+
+<!--                <div class="rabu14">-->
+<!--                </div>-->
+
+<!--                <div class="kamis14">-->
+<!--                </div>-->
+
+<!--                <div class="jumat14">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu14">-->
+<!--                </div>-->
+
+<!--                <div class="senin15">-->
+<!--                </div>-->
+
+<!--                <div class="selasa15">-->
+<!--                </div>-->
+
+<!--                <div class="rabu15">-->
+<!--                </div>-->
+
+<!--                <div class="kamis15">-->
+<!--                </div>-->
+
+<!--                <div class="jumat15">-->
+<!--                    <div>-->
+<!--                        <div class="accent-cyan-gradient">-->
+<!--                            <p>Fisika 3</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="sabtu15">-->
+<!--                </div>-->
+
+<!--                <div class="senin16">-->
+<!--                </div>-->
+
+<!--                <div class="selasa16">-->
+<!--                </div>-->
+
+<!--                <div class="rabu16">-->
+<!--                </div>-->
+
+<!--                <div class="kamis16">-->
+<!--                </div>-->
+
+<!--                <div class="jumat16">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu16">-->
+<!--                </div>-->
+
+<!--                <div class="senin17">-->
+<!--                </div>-->
+
+<!--                <div class="selasa17">-->
+<!--                </div>-->
+
+<!--                <div class="rabu17">-->
+<!--                </div>-->
+
+<!--                <div class="kamis17">-->
+<!--                </div>-->
+
+<!--                <div class="jumat17">-->
+<!--                </div>-->
+
+<!--                <div class="sabtu17">-->
+<!--                </div>-->
             </div>
         </div>
 </body>
