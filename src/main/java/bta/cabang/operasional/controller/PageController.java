@@ -9,9 +9,4 @@ public class PageController {
     public String home() {
         return "home";
     }
-
-    @RequestMapping("/jadwal")
-    public String jadwal() {
-        return "jadwal";
-    }
 }
