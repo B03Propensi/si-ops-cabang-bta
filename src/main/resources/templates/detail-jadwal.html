@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Detail Kelas')"></div>
+<div class="main">
+    <div class="container">
+        <p th:text="${kelas.idKelas}"></p>
+        <p th:text="${kelas.namaKelas}"></p>
+    </div>
+</div>
+</body>
+</html>

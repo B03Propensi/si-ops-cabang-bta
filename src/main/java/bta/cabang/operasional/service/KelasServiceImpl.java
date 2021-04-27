@@ -23,8 +23,13 @@ public class KelasServiceImpl implements KelasService {
     UserDb userDb;
 
     @Override
-    public KelasModel getKelas(Long id) {
-        return kelasDb.findByIdKelas(id).get();
+    public KelasModel getKelas(Long idKelas) {
+        return kelasDb.findByIdKelas(idKelas).get();
+    }
+
+    @Override
+    public KelasModel getKelasByNamaKelas(String namaKelas) {
+        return kelasDb.findByNamaKelas(namaKelas).get();
     }
 
     @Override
@@ -66,28 +71,28 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public List<List<String>> getRowKelas(List<List<String>> allKelas, String waktu) {
-        List<String> kelasSenin = new ArrayList<>();
-        List<String> kelasSelasa = new ArrayList<>();
-        List<String> kelasRabu = new ArrayList<>();
-        List<String> kelasKamis = new ArrayList<>();
-        List<String> kelasJumat = new ArrayList<>();
-        List<String> kelasSabtu = new ArrayList<>();
+    public List<List<KelasModel>> getRowKelas(List<List<KelasModel>> allKelas, String waktu) {
+        List<KelasModel> kelasSenin = new ArrayList<>();
+        List<KelasModel> kelasSelasa = new ArrayList<>();
+        List<KelasModel> kelasRabu = new ArrayList<>();
+        List<KelasModel> kelasKamis = new ArrayList<>();
+        List<KelasModel> kelasJumat = new ArrayList<>();
+        List<KelasModel> kelasSabtu = new ArrayList<>();
 
         List<KelasModel> kelasPerJam = kelasDb.findAllByWaktu(java.sql.Time.valueOf(waktu));
         for (KelasModel kelas : kelasPerJam) {
             if (kelas.getHari().equals("Senin")) {
-                kelasSenin.add(kelas.getNamaKelas());
+                kelasSenin.add(kelas);
             } else if (kelas.getHari().equals("Selasa")) {
-                kelasSelasa.add(kelas.getNamaKelas());
+                kelasSelasa.add(kelas);
             } else if (kelas.getHari().equals("Rabu")) {
-                kelasRabu.add(kelas.getNamaKelas());
+                kelasRabu.add(kelas);
             } else if (kelas.getHari().equals("Kamis")) {
-                kelasKamis.add(kelas.getNamaKelas());
+                kelasKamis.add(kelas);
             } else if (kelas.getHari().equals("Jumat")) {
-                kelasJumat.add(kelas.getNamaKelas());
+                kelasJumat.add(kelas);
             } else if (kelas.getHari().equals("Sabtu")) {
-                kelasSabtu.add(kelas.getNamaKelas());
+                kelasSabtu.add(kelas);
             }
         }
 
@@ -102,8 +107,8 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public List<List<String>> getAllCells() {
-        List<List<String>> allKelas = new ArrayList<>();
+    public List<List<KelasModel>> getAllCells() {
+        List<List<KelasModel>> allKelas = new ArrayList<>();
 
         allKelas = getRowKelas(allKelas, "08:00:00");
         allKelas = getRowKelas(allKelas, "09:00:00");
