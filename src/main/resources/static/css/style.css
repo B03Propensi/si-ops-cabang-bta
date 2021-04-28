@@ -8,7 +8,7 @@ body p {
 
 .sidenav {
     height: 100%;
-    width: 10%;
+    width: 15%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -19,19 +19,15 @@ body p {
 }
 
 .sidenav a {
-    padding: 6px 8px 6px 16px;
+    padding: 6px 16px;
     text-decoration: none;
     font-size: 20px;
     color: #FFFFFF;
     display: block;
 }
 
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav a:active {
-    color: #f1f1f1;
+.sidenav .active, a:hover {
+    background-color: #FF9494;
 }
 
 .main {
@@ -46,6 +42,12 @@ body p {
 
 .main h2 {
     font-size: 22px;
+}
+
+.navbar {
+    background-color: white;
+    border-bottom: 1px solid #dddddd;
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .btabutton {
@@ -106,6 +108,11 @@ body p {
 
 .btatable p {
     margin: 6px 2px;
+}
+
+.card-header {
+    background-color: #FF4C4C;
+    color: white;
 }
 
 @media screen and (max-height: 450px) {
