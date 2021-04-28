@@ -20,7 +20,7 @@ public class KelasModel implements Serializable {
 
     @NotNull
     @Size(max = 50)
-    @Column(name = "nama_kelas", nullable = false)
+    @Column(name = "nama_kelas", nullable = false, unique = true)
     private String namaKelas;
 
     @NotNull
