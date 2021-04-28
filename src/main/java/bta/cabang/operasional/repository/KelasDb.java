@@ -13,4 +13,5 @@ public interface KelasDb extends JpaRepository<KelasModel, Long> {
     Optional<KelasModel> findByIdKelas(Long id);
     Optional<KelasModel> findByNamaKelas(String namaKelas);
     List<KelasModel> findAllByWaktu(Time waktu);
+    void deleteByIdKelas(Long idKelas);
 }

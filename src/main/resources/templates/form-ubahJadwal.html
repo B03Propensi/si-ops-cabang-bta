@@ -12,7 +12,7 @@
     <div class="container">
         <!--Isi di sini-->
         <div class="btacard">
-            <form th:action="@{/jadwal/ubah/}" th:object="${kelas}" method="POST">
+            <form th:action="@{/jadwal/ubah/} + ${kelas.idKelas}" th:object="${kelas}" method="POST">
                 <h6>Nama Kelas</h6>
                 <input th:value="*{namaKelas}" name="namaKelas" type="text" class="form-control">
                 <h6 style="margin-top: 10px;">Bidang</h6>
