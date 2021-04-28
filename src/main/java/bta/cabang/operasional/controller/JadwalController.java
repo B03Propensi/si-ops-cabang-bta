@@ -1,10 +1,13 @@
 package bta.cabang.operasional.controller;
 
 import bta.cabang.operasional.model.CabangModel;
+import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.KelasModel;
+import bta.cabang.operasional.model.UserModel;
 import bta.cabang.operasional.service.CabangService;
 import bta.cabang.operasional.service.KelasService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -35,31 +38,35 @@ public class JadwalController {
     @GetMapping("/jadwal/{idKelas}")
     public String viewJadwal(
             @PathVariable Long idKelas,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttrs
     ) {
-        KelasModel kelas = kelasService.getKelas(idKelas);
-        model.addAttribute("kelas", kelas);
+        try {
+            KelasModel kelas = kelasService.getKelas(idKelas);
+            model.addAttribute("kelas", kelas);
+            return "detail-jadwal";
 
-        return "detail-jadwal";
+        } catch (EmptyResultDataAccessException e) {
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/jadwal";
+        }
     }
 
-//    @GetMapping("/jadwal/{idKelas}")
-//    public RedirectView viewJadwal(
-//            @PathVariable Long idKelas,
-//            RedirectAttributes attributes
-//    ) {
-//        KelasModel kelas = kelasService.getKelas(idKelas);
-//        attributes.addFlashAttribute("kelas", kelas);
-//        String link = "redirect:/jadwal/" + idKelas;
-//        return new RedirectView(link);
-//    }
-
     @PostMapping("/jadwal/tambah")
-    public String addJadwal(@ModelAttribute KelasModel kelasBaru, Model model) {
-        System.out.println(kelasBaru);
-        kelasService.addKelas(kelasBaru);
+    public String tambahJadwal(
+            @ModelAttribute KelasModel kelasBaru,
+            Model model,
+            RedirectAttributes redirectAttrs
+    ) {
+        try {
+            kelasService.addKelas(kelasBaru);
+            redirectAttrs.addFlashAttribute("alert", "addSuccess");
+            return "redirect:/jadwal";
 
-        return "redirect:/jadwal";
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "addFail");
+            return "redirect:/jadwal";
+        }
     }
 
     @GetMapping("/jadwal/tambah")
@@ -92,13 +99,40 @@ public class JadwalController {
         return "form-ubahJadwal";
     }
 
-    @PostMapping("/jadwal/ubah/")
+    @PostMapping("/jadwal/ubah/{idKelas}")
     public String ubahJadwal(
+            @PathVariable Long idKelas,
             @ModelAttribute KelasModel kelas,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttrs
     ) {
-        kelasService.editKelas(kelas);
-
-       return "redirect:/jadwal/" + kelas.getIdKelas();
+        try {
+            kelasService.editKelas(idKelas, kelas);
+            return "redirect:/jadwal/" + kelas.getIdKelas();
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "editFail");
+            return "redirect:/jadwal";
+        }
     }
+
+    @GetMapping("/jadwal/hapus/{idKelas}")
+    public String deleteJadwal(
+            @PathVariable Long idKelas,
+            RedirectAttributes redirectAttrs
+    ) {
+        try {
+            kelasService.deleteKelas(idKelas);
+            redirectAttrs.addFlashAttribute("alert", "delSuccess");
+            return "redirect:/jadwal";
+
+        } catch (EmptyResultDataAccessException e) {
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/jadwal";
+
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "delFail");
+            return "redirect:/jadwal";
+        }
+    }
+
 }

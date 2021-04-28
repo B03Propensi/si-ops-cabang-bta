@@ -44,8 +44,8 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public KelasModel editKelas(KelasModel kelasUpdate) {
-        KelasModel kelas = getKelas(kelasUpdate.getIdKelas());
+    public KelasModel editKelas(Long idKelas, KelasModel kelasUpdate) {
+        KelasModel kelas = getKelas(idKelas);
         kelas.setNamaKelas(kelasUpdate.getNamaKelas());
         kelas.setBidang(kelasUpdate.getBidang());
         kelas.setCabang(kelasUpdate.getCabang());
@@ -55,8 +55,8 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public void deleteKelas(Long id) {
-        kelasDb.deleteById(id);
+    public void deleteKelas(Long idKelas) {
+        kelasDb.deleteByIdKelas(idKelas);
     }
 
     @Override

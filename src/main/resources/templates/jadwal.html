@@ -13,6 +13,26 @@
         <div>
             <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Jadwal Kelas</h1>
         </div>
+        <div class="cuti-alert">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Jadwal Kelas berhasil dibuat!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Jadwal Kelas berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat Jadwal Kelas!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus Jadwal Kelas!
+            </div>
+            <div th:if="${alert} == 'editFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat mengubah Jadwal Kelas!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Jadwal Kelas tidak ditemukan!
+            </div>
+        </div>
         <a th:href="@{/jadwal/tambah/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Jadwal</a>
         <div class="timetable">
             <div class="week-names">
