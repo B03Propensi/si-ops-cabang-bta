@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div>
+            <h4 style="font-family: Roboto;color: black;font-style: normal;font-size: 36px; font-weight: 900;line-height: 42px"> Ubah Cabang  </h4>
+        </div>
+        <br>
+        <br>
+        <div class="btacard">
+            <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"> Formulir Ubah Cabang</h2>
+            <form th:action="@{/cabang/update(${cabang.id_cabang})}" th:object = "${cabang}" method = "POST">
+                <input type="hidden" th:field="*{id_cabang}"/>
+                <div class="row">
+                    <div class="col">
+                        <p> Nama Cabang </p>
+                        <input  type="text"  th:field="*{nama_cabang}" class="form-control"  name="nama_cabang" placeholder="Nama Cabang" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Kode Cabang </p>
+                        <input  type="text" th:field="*{kode_cabang}" class="form-control"  name="kode_cabang" placeholder="kode_cabang"/>
+                    </div>
+                 </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Alamat</p>
+                        <textarea required type="text" th:field="*{alamat}" class="form-control" name="alamat"
+                                  rows="3" placeholder="Alamat Cabang" minlength="20"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-sm btn-primary">Kirim</button>
+                    <a href="/cabang" class="btn btn-sm btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+        <br>
+
+    </div>
+</div>
+</body>
+</html>

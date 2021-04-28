@@ -19,7 +19,7 @@
         <br>
         <div class="row justify-content-between">
             <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"> Daftar Cabang</h2>
-            <a th:href = "@{/}" class = "btn btn-outline-danger " > + Buat Cabang Baru</a>
+            <a th:href = "@{/cabang/add}" class = "btn btn-outline-danger " > + Buat Cabang Baru</a>
         </div>
         <br>
         <table class="btatable">
@@ -46,8 +46,8 @@
                 </td>
                 <td class="btn-toolbar" style="justify-content: center">
                     <a th:href = "@{/}" class = "btn btn-success mr-2 mb-2">Detail</a>
-                    <a th:href = "@{/}" class = "btn btn-primary mr-2 mb-2">Ubah</a>
-                    <a th:href = "@{/}" class="btn btn-danger mr-2 mb-2">Hapus</a>
+                    <a th:href = "@{/cabang/update/} + ${cabang.id_cabang}" class = "btn btn-primary mr-2 mb-2">Ubah</a>
+                    <a th:href = "@{/cabang/delete/} + ${cabang.id_cabang}" class="btn btn-danger mr-2 mb-2">Hapus</a>
                 </td>
             </tr>
             </tbody>
