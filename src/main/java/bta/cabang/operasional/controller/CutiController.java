@@ -56,16 +56,16 @@ public class CutiController {
 
     @PostMapping("/cuti/add")
     public String addCutiSubmit(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs){
-        try {
+//        try {
             cuti.setPengaju(authService.getCurrentLoggedInUserByUsername());
             cutiService.addCuti(cuti);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/cuti";
 
-        } catch (Exception e) {
-            redirectAttrs.addFlashAttribute("alert", "addFail");
-            return "redirect:/cuti";
-        }
+//        } catch (Exception e) {
+//            redirectAttrs.addFlashAttribute("alert", "addFail");
+//            return "redirect:/cuti";
+//        }
 
     }
 
