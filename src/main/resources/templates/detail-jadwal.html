@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Kelas</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Detail Kelas')"></div>
+<div class="main">
+    <div class="container">
+        <div class="detailcard">
+            <h2 style="font-weight: bold;" th:text="${kelas.namaKelas}"></h2>
+            <div style="text-align: right;">
+                <a type="button" class="btn btn-primary" th:href="@{/jadwal/ubah/} + ${kelas.idKelas}">
+                    <span>Ubah</span>
+                </a>
+                <button type="button" class="btn btn-danger" style="margin-left: 20px;">
+                    <span>Hapus</span>
+                </button>
+            </div>
+            <table class="table" style="width: 60%;">
+                <tbody>
+                    <tr>
+                        <th scope="row">Nama Kelas</th>
+                        <td th:text="${kelas.namaKelas}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Bidang</th>
+                        <td th:text="${kelas.bidang}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cabang</th>
+                        <td th:text="${kelas.cabang.nama_cabang}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Hari</th>
+                        <td th:text="${kelas.hari}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Waktu</th>
+                        <td th:text="${kelas.waktu}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
