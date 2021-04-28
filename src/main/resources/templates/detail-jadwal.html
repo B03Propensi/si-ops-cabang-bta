@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Kelas</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Detail Kelas')"></div>
+<div class="main">
+    <div class="container">
+        <div class="detailcard">
+            <h2 style="font-weight: bold;" th:text="${kelas.namaKelas}"></h2>
+            <div style="text-align: right;">
+                <a type="button" class="btn btn-primary" th:href="@{/jadwal/ubah/} + ${kelas.idKelas}">
+                    <span>Ubah</span>
+                </a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusJadwalModal" style="margin-left: 20px;">
+                    <span>Hapus</span>
+                </button>
+            </div>
+            <table class="table" style="width: 60%;">
+                <tbody>
+                    <tr>
+                        <th scope="row">Nama Kelas</th>
+                        <td th:text="${kelas.namaKelas}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Bidang</th>
+                        <td th:text="${kelas.bidang}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cabang</th>
+                        <td th:text="${kelas.cabang.nama_cabang}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Hari</th>
+                        <td th:text="${kelas.hari}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Waktu</th>
+                        <td th:text="${kelas.waktu}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal fade" id="hapusJadwalModal" tabindex="-1" role="dialog" aria-labelledby="hapusJadwalModalLabel" aria-hidden="true">-->
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hapusJadwalModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 style="font-weight: bold; text-align: center;" th:text="'Apakah Anda yakin ingin menghapus kelas ' + ${kelas.namaKelas} + '?'"></h2>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/jadwal/hapus/} + ${kelas.idKelas}" class="btn btn-outline-secondary">
+                                <span>Hapus</span>
+                            </a>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">
+                                <span>Batal</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
