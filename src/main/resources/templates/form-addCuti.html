@@ -7,7 +7,7 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
 <div class="main">
     <div class="container">
         <h1>Buat Pengajuan Cuti</h1><br>
@@ -30,7 +30,7 @@
                     <div class="col">
                         <p>Alasan:</p>
                         <textarea required type="text" class="form-control" name="alasan"
-                                  rows="3" placeholder="Alasan cuti..." minlength="50"></textarea>
+                                  rows="3" placeholder="Alasan cuti..." minlength="25" maxlength="255"></textarea>
                     </div>
                 </div>
                 <br>
