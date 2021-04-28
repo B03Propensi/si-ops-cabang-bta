@@ -45,7 +45,7 @@
                     <p th:text="${cabang.nama_cabang}"></p>
                 </td>
                 <td class="btn-toolbar" style="justify-content: center">
-                    <a th:href = "@{/}" class = "btn btn-success mr-2 mb-2">Detail</a>
+                    <a th:href = "@{/cabang/view/} + ${cabang.id_cabang}" class = "btn btn-success mr-2 mb-2">Detail</a>
                     <a th:href = "@{/cabang/update/} + ${cabang.id_cabang}" class = "btn btn-primary mr-2 mb-2">Ubah</a>
                     <a th:href = "@{/cabang/delete/} + ${cabang.id_cabang}" class="btn btn-danger mr-2 mb-2">Hapus</a>
                 </td>

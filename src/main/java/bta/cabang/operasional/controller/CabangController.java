@@ -86,6 +86,16 @@ public class CabangController {
         }
 
     }
-
+    @GetMapping("/view/{id_cabang}")
+    private String detailCabang(@PathVariable Long id_cabang, Model model, RedirectAttributes redirectAttrs){
+        try {
+            CabangModel cabangModel = cabangService.getCabangbyId(id_cabang);
+            model.addAttribute("cabang",cabangModel);
+            return "view-cabang";
+        }catch (EmptyResultDataAccessException e) {
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/cabang";
+        }
+    }
 
 }
