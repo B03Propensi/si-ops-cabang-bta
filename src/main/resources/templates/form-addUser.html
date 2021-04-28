@@ -43,8 +43,10 @@
                                 <option th:each="role : ${listRole}" th:value="${role.idRole}" th:text="${role.namaRole}"></option>
                             </select>
                             <br>
-
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <div align="center">
+                                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                <a href="/" class="btn btn-sm btn-outline-danger">Batal</a>
+                            </div>
                         </form>
                     </div>
                 </div>

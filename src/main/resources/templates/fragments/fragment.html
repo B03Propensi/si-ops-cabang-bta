@@ -22,51 +22,57 @@
 </head>
 
 <body>
-    <div class="sidenav" th:fragment="sidenav(nama)">
-        <a href="/">Beranda</a>
-        <a href="/jadwal">Jadwal Kelas</a>
-        <a href="/registrasi-kelas">Registrasi Kelas</a>
-        <a href="/cabang">Cabang</a>
-        <a href="/siswa">Siswa</a>
-        <a href="/presensi">Presensi</a>
-        <a href="/cuti">Cuti</a>
+    <div class="sidenav" th:fragment="sidenav(page)">
+        <div style="padding: 25px">
+            <img src="/img/logo bta.png" alt="" style="max-width: 100%">
+        </div>
+        <br>
+<!--        BERANDA-->
+        <a th:class="${page} == 'Beranda'? 'active' : ''" href="/">Beranda</a>
+<!--        CABANG-->
+        <a th:class="${page} == 'Cabang'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1"
+           href="/cabang">Cabang</a>
+<!--        SISWA-->
+        <a th:class="${page} == 'Siswa'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1"
+           href="/siswa">Siswa</a>
+<!--        REGIS KELAS-->
+        <a th:class="${page} == 'Registrasi Kelas'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1"
+           href="/registrasi-kelas">Registrasi Kelas</a>
+<!--        JADWAL KELAS-->
+        <a th:class="${page} == 'Jadwal Kelas'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1
+                  OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 3
+                  OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 4
+                  OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 5"
+           href="/jadwal">Jadwal Kelas</a>
+<!--        PRESENSI-->
+        <a th:class="${page} == 'Presensi'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 2
+                  OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 4
+                  OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 5"
+           href="/presensi">Presensi</a>
+<!--        CUTI-->
+        <a th:class="${page} == 'Cuti'? 'active' : ''"
+           href="/cuti">Cuti</a>
+
+        <br><br>
+        <a href="/logout">Log Out</a>
     </div>
-<!--    <nav-->
-<!--        th:fragment="navbar(page)"-->
-<!--        class="navbar navbar-expand-lg navbar-light bg-light"-->
-<!--    >-->
-<!--        <a class="navbar-brand font-weight-bold text-success" href="#">HaiDokter!</a>-->
-<!--        <button-->
-<!--            class="navbar-toggler"-->
-<!--            type="button"-->
-<!--            data-toggle="collapse"-->
-<!--            data-target="#navbarNavAltMarkup"-->
-<!--            aria-controls="navbarNavAltMarkup"-->
-<!--            aria-expanded="false"-->
-<!--            aria-label="Toggle navigation"-->
-<!--        >-->
-<!--            <span class="navbar-toggler-icon"></span>-->
-<!--        </button>-->
-<!--        <div class="collapse navbar-collapse">-->
-<!--            <ul class="navbar-nav mr-auto">-->
-<!--                <a class="nav-item nav-link activate text-secondary" th:href="@{/}">-->
-<!--                    Home<span class="sr-only">(current)</span>-->
-<!--                </a>-->
-<!--            </ul>-->
-<!--            <ul class="navbar-nav navbar-right">-->
-<!--                <p class="nav-item nav-link activate text-secondary"-->
-<!--                   style="margin-bottom: 0;"-->
-<!--                   th:text="${page}"-->
-<!--                >-->
-<!--                    <span class="sr-only">(current)</span>-->
-<!--                </p>-->
-<!--            </ul>-->
-<!--            <ul class="navbar-nav pull-right">-->
+    <nav
+        th:fragment="navbar"
+        class="navbar navbar-expand-lg"
+    >
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <p th:text="${@authServiceImpl.getCurrentLoggedInUserByUsername().getNamaUser()}"></p>
 <!--                <a class="nav-item nav-link activate text-secondary" th:href="@{/logout}">-->
 <!--                    Logout<span class="sr-only">(current)</span>-->
 <!--                </a>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </nav>-->
+            </ul>
+        </div>
+    </nav>
 </body>
 </html>
