@@ -44,8 +44,8 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public KelasModel editKelas(Long idKelas, KelasModel kelasUpdate) {
-        KelasModel kelas = getKelas(idKelas);
+    public KelasModel editKelas(KelasModel kelasUpdate) {
+        KelasModel kelas = getKelas(kelasUpdate.getIdKelas());
         kelas.setNamaKelas(kelasUpdate.getNamaKelas());
         kelas.setBidang(kelasUpdate.getBidang());
         kelas.setCabang(kelasUpdate.getCabang());

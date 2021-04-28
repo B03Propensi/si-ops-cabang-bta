@@ -67,9 +67,38 @@ public class JadwalController {
         KelasModel kelasBaru = new KelasModel();
         List<Time> listWaktu = kelasService.getListWaktu();
         List<CabangModel> listCabang = cabangService.getCabangList();
+
         model.addAttribute("kelasBaru", kelasBaru);
         model.addAttribute("listWaktu", listWaktu);
         model.addAttribute("listCabang", listCabang);
         return "form-tambahJadwal";
+    }
+
+    @GetMapping("/jadwal/ubah/{idKelas}")
+    public String ubahJadwalForm(
+            @PathVariable Long idKelas,
+            Model model
+    ) {
+        KelasModel kelas = kelasService.getKelas(idKelas);
+        System.out.println(idKelas);
+        System.out.println(kelas.getNamaKelas());
+        List<Time> listWaktu = kelasService.getListWaktu();
+        List<CabangModel> listCabang = cabangService.getCabangList();
+
+        model.addAttribute("kelas", kelas);
+        model.addAttribute("listWaktu", listWaktu);
+        model.addAttribute("listCabang", listCabang);
+
+        return "form-ubahJadwal";
+    }
+
+    @PostMapping("/jadwal/ubah/")
+    public String ubahJadwal(
+            @ModelAttribute KelasModel kelas,
+            Model model
+    ) {
+        kelasService.editKelas(kelas);
+
+       return "redirect:/jadwal/" + kelas.getIdKelas();
     }
 }
