@@ -9,6 +9,19 @@ p {
   margin: 10px;
 }
 
+h6 {
+  font-weight: bold;
+}
+
+.detailcard {
+  background-color: #fff;
+  border: 1px solid #ff4c4c;
+  border-left: 10px solid #ff4c4c;
+  border-radius: 4px;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  padding: 20px 50px;
+}
+
 .modal-footer {
   border-bottom: 10px solid #ff4c4c;
   border-radius: 4px;

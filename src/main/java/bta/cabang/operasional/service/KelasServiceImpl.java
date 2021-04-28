@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,5 +123,23 @@ public class KelasServiceImpl implements KelasService {
         allKelas = getRowKelas(allKelas, "17:00:00");
 
         return allKelas;
+    }
+
+    @Override
+    public List<Time> getListWaktu() {
+        List<Time> listWaktu = new ArrayList<>();
+
+        listWaktu.add(java.sql.Time.valueOf("08:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("09:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("10:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("11:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("12:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("13:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("14:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("15:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("16:00:00"));
+        listWaktu.add(java.sql.Time.valueOf("17:00:00"));
+
+        return listWaktu;
     }
 }
