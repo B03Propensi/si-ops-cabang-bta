@@ -17,6 +17,26 @@
         <br>
         <br>
         <br>
+        <div class="cabang-alert">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Cabang baru berhasil dibuat
+            </div>
+            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+                Cabang berhasil diubah!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Cabang berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat cabang!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus cabang!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Cabang tidak ditemukan!
+            </div>
+        </div>
         <div class="row justify-content-between">
             <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"> Daftar Cabang</h2>
             <a th:href = "@{/cabang/add}" class = "btn btn-outline-danger " > + Buat Cabang Baru</a>
