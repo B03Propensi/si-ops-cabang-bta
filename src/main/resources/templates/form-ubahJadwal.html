@@ -8,6 +8,7 @@
 </head>
 <body>
 <div th:replace="fragments/fragment :: sidenav('Ubah Jadwal')"></div>
+<div th:replace="fragments/fragment :: navbar('Tambah Jadwal')"></div>
 <div class="main">
     <div class="container">
         <!--Isi di sini-->
@@ -29,11 +30,13 @@
                     <option value="Bahasa Inggris">Bahasa Inggris</option>
                     <option value="Matematika">Matematika</option>
                 </select>
+                <p th:text="*{bidang}"></p>
                 <h6 style="margin-top: 10px;">Cabang</h6>
                 <select th:value="*{cabang}" name="cabang" class="form-control" aria-label="Default select example">
                     <option value="" disabled selected>Pilih Cabang...</option>
                     <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
                 </select>
+                <p th:text="*{cabang.nama_cabang}"></p>
                 <h6 style="margin-top: 10px;">Hari</h6>
                 <select th:value="*{hari}" name="hari" class="form-control" aria-label="Default select example">
                     <option value="" disabled selected>Pilih Hari...</option>
@@ -44,11 +47,13 @@
                     <option value="Jumat">Jumat</option>
                     <option value="Sabtu">Sabtu</option>
                 </select>
+                <p th:text="*{hari}"></p>
                 <h6 style="margin-top: 10px;">Waktu</h6>
                 <select th:value="*{waktu}" name="waktu" class="form-control" aria-label="Default select example">
                     <option value="" disabled selected>Pilih Waktu...</option>
                     <option th:each="waktu : ${listWaktu}" th:value="${waktu}" th:text="${waktu}"></option>
                 </select>
+                <p th:text="*{waktu}"></p>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a th:href="@{/jadwal/} + ${kelas.idKelas}" type="button" class="btn btn-outline-danger">Batal</a>
