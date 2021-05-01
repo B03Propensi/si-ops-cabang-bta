@@ -5,6 +5,7 @@
     <title>Buat Pengajuan Cuti</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
@@ -18,12 +19,12 @@
                 <div class="row">
                     <div class="col">
                         <p>Tanggal Mulai:</p>
-                        <input required type="date" class="form-control"  name="tanggal_mulai" />
+                        <input required id="fDate" type="date" class="form-control"  name="tanggal_mulai" onchange="myFunction()"/>
                     </div>
 
                     <div class="col">
                         <p>Tanggal Selesai:</p>
-                        <input required type="date" class="form-control"  name="tanggal_selesai" />
+                        <input required id="tDate" type="date" class="form-control"  name="tanggal_selesai"/>
                     </div>
                 </div>
                 <br>
@@ -43,5 +44,31 @@
         </div>
     </div>
 </div>
+
+<script>
+    var today = new Date();
+    var dd = today.getDate() + 1;
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("fDate").setAttribute("min", today);
+    document.getElementById("tDate").setAttribute("min", today);
+
+    function myFunction() {
+        var minToDate = document.getElementById("fDate").value;
+        if (Date.parse(document.getElementById("tDate").value) < Date.parse(minToDate))
+            document.getElementById("tDate").value = minToDate;
+        document.getElementById("tDate").setAttribute("min", minToDate);
+    }
+</script>
 </body>
 </html>
