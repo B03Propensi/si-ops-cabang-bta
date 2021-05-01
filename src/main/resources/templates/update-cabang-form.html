@@ -7,7 +7,8 @@
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div th:replace="fragments/fragment :: sidenav('Ubah Cabang')"></div>
+<div th:replace="fragments/fragment :: navbar('Ubah Cabang')"></div>
 <div class="main">
     <div class="container">
         <!--Isi di sini-->
@@ -43,7 +44,7 @@
                 </div>
                 <br>
                 <div align="center">
-                    <button type="submit" class="btn btn-sm btn-primary">Kirim</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                     <a href="/cabang" class="btn btn-sm btn-outline-danger">Batal</a>
                 </div>
             </form>

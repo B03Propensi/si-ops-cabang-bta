@@ -18,23 +18,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity security) throws Exception {
         security.
-                    authorizeRequests()
-                    .antMatchers("/css/**").permitAll()
-                    .antMatchers("/js/**").permitAll()
-                    .antMatchers("/static/**").permitAll()
-                    .antMatchers("/cuti/add").hasAnyAuthority("Koordinator Bidang Studi", "Staf Cabang", "Pengajar")
-                    .antMatchers("/cuti/delete").hasAnyAuthority("Koordinator Bidang Studi", "Staf Cabang", "Pengajar")
-                    .anyRequest().authenticated()
-                    .and()
-                    .formLogin()
-                    .loginPage("/login").defaultSuccessUrl("/", true).permitAll()
-                    .and()
-                    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll()
-                    .and()
-                    .cors()
-                    .and()
-                    .csrf()
-                    .disable();
+                authorizeRequests()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/cuti/add").hasAnyAuthority("Koordinator Bidang Studi", "Staf Cabang", "Pengajar")
+                .antMatchers("/cuti/delete").hasAnyAuthority("Koordinator Bidang Studi", "Staf Cabang", "Pengajar")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").defaultSuccessUrl("/", true).permitAll()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll()
+                .and()
+                .cors()
+                .and()
+                .csrf()
+                .disable();
     }
 
     @Bean
