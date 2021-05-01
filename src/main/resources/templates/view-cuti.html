@@ -27,12 +27,9 @@
                     <div class="col"><p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p></div>
                 </div>
                 <div class="row">
-                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Mulai</p></div>
-                    <div class="col"><p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')}"></p></div>
-                </div>
-                <div class="row">
-                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Selesai</p></div>
-                    <div class="col"><p th:text="${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p></div>
+                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Cuti</p></div>
+                    <div class="col"><p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')} + ' - ' +
+                                                 ${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p></div>
                 </div>
                 <div class="row">
                     <div class="col-4" style="margin-left: 0px"><p>Alasan</p></div>

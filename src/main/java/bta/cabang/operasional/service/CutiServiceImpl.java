@@ -25,6 +25,9 @@ public class CutiServiceImpl implements CutiService{
     public List<CutiModel> getAllCutiByUser(Long idUser) { return cutiDb.findAllByPengaju_IdUser(idUser); }
 
     @Override
+    public List<CutiModel> getAllCutiByStatus(Integer status) { return cutiDb.findAllByStatus(status); }
+
+    @Override
     public void addCuti(CutiModel cuti){ cutiDb.save(cuti); }
 
     @Override

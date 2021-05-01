@@ -10,4 +10,5 @@ public interface CutiService {
     CutiModel getCutiByIdCuti(Long id);
     List<CutiModel> getAllCuti();
     List<CutiModel> getAllCutiByUser(Long idUser);
+    List<CutiModel> getAllCutiByStatus(Integer status);
 }
