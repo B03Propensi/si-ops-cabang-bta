@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface CutiService {
     void addCuti(CutiModel cuti);
+    void updateCuti(CutiModel cuti);
     void deleteCuti(Long id);
     CutiModel getCutiByIdCuti(Long id);
     List<CutiModel> getAllCuti();

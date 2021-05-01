@@ -31,5 +31,8 @@ public class CutiServiceImpl implements CutiService{
     public void addCuti(CutiModel cuti){ cutiDb.save(cuti); }
 
     @Override
+    public void updateCuti(CutiModel cuti){ cutiDb.save(cuti); }
+
+    @Override
     public void deleteCuti(Long id) {  cutiDb.deleteById(id); }
 }

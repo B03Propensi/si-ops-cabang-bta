@@ -19,6 +19,9 @@
             <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
                 Pengajuan cuti berhasil dibatalkan!
             </div>
+            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+                Status pengajuan cuti berhasil diubah!
+            </div>
             <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
                 Terjadi kesalahan saat membuat pengajuan!
             </div>
@@ -75,9 +78,9 @@
                         <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
                     </td>
                     <td>
-                        <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class="btn btn-primary">Lihat</a>
+                        <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class="btn btn-sm btn-primary">Lihat</a>
                         <a th:if="${isAbleToAddDeleteCuti} AND ${cuti.status} == 0"
-                           th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Batalkan</a>
+                           th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-sm btn-danger">Batalkan</a>
                     </td>
                 </tr>
                 </tbody>

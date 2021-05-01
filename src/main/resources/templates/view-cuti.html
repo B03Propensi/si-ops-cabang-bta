@@ -37,24 +37,56 @@
                     <div class="col"><p th:text="${cuti.alasan}"></p></div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan</p></div>
-                    <div class="col">
-                        <p th:if="${cuti.status} == 0" class="menunggu">Menunggu Persetujuan</p>
-                        <p th:if="${cuti.status} == 1" class="disetujui">Disetujui</p>
-                        <p th:if="${cuti.status} == 2" class="ditolak">Ditolak</p>
+                <div th:if="${isPegawai} OR ${cuti.status} != 0">
+                    <div class="row">
+                        <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan</p></div>
+                        <div class="col">
+                            <p th:if="${cuti.status} == 0" class="menunggu">Menunggu Persetujuan</p>
+                            <p th:if="${cuti.status} == 1" class="disetujui">Disetujui</p>
+                            <p th:if="${cuti.status} == 2" class="ditolak">Ditolak</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4" style="margin-left: 0px"><p>Feedback</p></div>
+                        <div class="col">
+                            <p th:if="${cuti.feedback} == null">Belum ada feedback.</p>
+                            <p th:unless="${cuti.feedback} == null" th:text="${cuti.feedback}"></p>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-4" style="margin-left: 0px"><p>Feedback</p></div>
-                    <div class="col">
-                        <p th:if="${cuti.feedback} == null">Belum ada feedback.</p>
-                        <p th:unless="${cuti.feedback} == null" th:text="${cuti.feedback}"></p>
-                    </div>
+                <div th:if="${isAbleToUpdateCuti} AND ${cuti.status} == 0">
+                    <form id="updateForm" th:action="@{/cuti/update}" th:object="${cuti}" method="POST">
+                        <input type="hidden" th:field="*{idCuti}"/>
+                        <input type="hidden" th:field="*{tanggal_diajukan}"/>
+                        <input type="hidden" th:field="*{tanggal_mulai}"/>
+                        <input type="hidden" th:field="*{tanggal_selesai}"/>
+                        <input type="hidden" th:field="*{alasan}"/>
+                        <input type="hidden" th:field="*{pengaju.idUser}"/>
+
+                        <div class="row" style="margin-bottom: 15px">
+                            <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan</p></div>
+                            <div class="col-3" style="padding-left: 0">
+                                <select required class="form-control" name="status">
+                                    <option value="" disabled selected hidden>Pilih status</option>
+                                    <option value="1">Disetujui</option>
+                                    <option value="2">Ditolak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" style="margin-left: 0px"><p>Feedback</p></div>
+                            <div class="col">
+                                <textarea required type="text" class="form-control" name="feedback"
+                                          rows="3" placeholder="Feedback..." minlength="25" maxlength="255"></textarea>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <br>
             <div align="right">
+                <button th:if="${isAbleToUpdateCuti} AND ${cuti.status} == 0"
+                        type="submit" form="updateForm" class="btn btn-sm btn-primary">Simpan</button>
                 <a href="/cuti" class="btn btn-sm btn-outline-danger">Kembali</a>
             </div>
         </div>

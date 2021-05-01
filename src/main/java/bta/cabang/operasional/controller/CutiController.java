@@ -50,13 +50,7 @@ public class CutiController {
 
     @GetMapping("/cuti/add")
     public String addCutiForm(Model model) {
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        Date minDate = new Date(new Date().getTime() + 86400000);
-//        String strMinDate = df.format(minDate);
-
         model.addAttribute("cuti", new CutiModel());
-//        model.addAttribute("minDate", strMinDate);
-
         return "form-addCuti";
     }
 
@@ -83,7 +77,7 @@ public class CutiController {
             Long role = currentUser.getRole().getIdRole();
 
             model.addAttribute("cuti", cuti);
-            model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
+            model.addAttribute("isPegawai", role == 3 || role == 4 || role ==5);
             model.addAttribute("isAbleToUpdateCuti", role == 1 || role == 2);
             return "view-cuti";
 
@@ -94,6 +88,11 @@ public class CutiController {
     }
 
     @PostMapping("/cuti/update")
+    public String updateStatusCuti(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs) {
+        cutiService.updateCuti(cuti);
+        redirectAttrs.addFlashAttribute("alert", "updateSuccess");
+        return "redirect:/cuti";
+    }
 
     @GetMapping("cuti/delete/{id}")
     private String deleteCuti(@PathVariable Long id, RedirectAttributes redirectAttrs) {
