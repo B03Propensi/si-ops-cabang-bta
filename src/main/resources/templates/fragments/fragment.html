@@ -30,6 +30,10 @@
         <br>
 <!--        BERANDA-->
         <a th:class="${page} == 'Beranda'? 'active' : ''" href="/">Beranda</a>
+<!--        TAMBAH USER-->
+        <a th:class="${page} == 'Tambah User'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1"
+           href="/user/add">Tambah User</a>
 <!--        CABANG-->
         <a th:class="${page} == 'Cabang'? 'active' : ''"
            th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1"

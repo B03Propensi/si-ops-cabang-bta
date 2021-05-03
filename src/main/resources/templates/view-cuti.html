@@ -64,7 +64,7 @@
                         <input type="hidden" th:field="*{pengaju.idUser}"/>
 
                         <div class="row" style="margin-bottom: 15px">
-                            <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan</p></div>
+                            <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan <span style="color: red">*</span></p></div>
                             <div class="col-3" style="padding-left: 0">
                                 <select required class="form-control" name="status">
                                     <option value="" disabled selected hidden>Pilih status</option>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4" style="margin-left: 0px"><p>Feedback</p></div>
+                            <div class="col-4" style="margin-left: 0px"><p>Feedback <span style="color: red">*</span></p></div>
                             <div class="col">
                                 <textarea required type="text" class="form-control" name="feedback"
                                           rows="3" placeholder="Feedback..." minlength="25" maxlength="255"></textarea>
