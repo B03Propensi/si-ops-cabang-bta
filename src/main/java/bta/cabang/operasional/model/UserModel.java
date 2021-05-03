@@ -23,7 +23,7 @@ public class UserModel implements Serializable {
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @NotNull
@@ -38,7 +38,7 @@ public class UserModel implements Serializable {
 
     @NotNull
     @Size(max = 18)
-    @Column(name = "nip", nullable = false)
+    @Column(name = "nip", nullable = false, unique = true)
     private String nip;
 
     @NotNull
