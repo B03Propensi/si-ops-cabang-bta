@@ -18,19 +18,19 @@
             <form th:action="@{/cuti/add}" th:object = "${cuti}" method = "POST">
                 <div class="row">
                     <div class="col">
-                        <p>Tanggal Mulai:</p>
+                        <p>Tanggal Mulai: <span style="color: red">*</span></p>
                         <input required id="fDate" type="date" class="form-control"  name="tanggal_mulai" onchange="myFunction()"/>
                     </div>
 
                     <div class="col">
-                        <p>Tanggal Selesai:</p>
+                        <p>Tanggal Selesai: <span style="color: red">*</span></p>
                         <input required id="tDate" type="date" class="form-control"  name="tanggal_selesai"/>
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col">
-                        <p>Alasan:</p>
+                        <p>Alasan: <span style="color: red">*</span></p>
                         <textarea required type="text" class="form-control" name="alasan"
                                   rows="3" placeholder="Alasan cuti..." minlength="25" maxlength="255"></textarea>
                     </div>
