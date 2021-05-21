@@ -42,6 +42,10 @@ public class CutiModel implements Serializable {
     @Column(name = "alasan", nullable = false)
     private String alasan;
 
+    @Lob
+    @Column(name = "lampiran", length = 10485760)
+    private byte[] lampiran;
+
     @NotNull
     @Column(name = "status", nullable = false)
     private Integer status = 0;
@@ -94,6 +98,14 @@ public class CutiModel implements Serializable {
         this.alasan = alasan;
     }
 
+    public byte[] getLampiran() {
+        return lampiran;
+    }
+
+    public void setLampiran(byte[] lampiran) {
+        this.lampiran = lampiran;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -117,4 +129,12 @@ public class CutiModel implements Serializable {
     public void setPengaju(UserModel pengaju) {
         this.pengaju = pengaju;
     }
+//
+//    public LampiranModel getLampiran() {
+//        return lampiran;
+//    }
+//
+//    public void setLampiran(LampiranModel lampiran) {
+//        this.lampiran = lampiran;
+//    }
 }
