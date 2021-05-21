@@ -5,7 +5,6 @@
     <title>Buat Pengajuan Cuti</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
@@ -32,7 +31,7 @@
                     <div class="col">
                         <p>Alasan: <span style="color: red">*</span></p>
                         <textarea required type="text" class="form-control" name="alasan"
-                                  rows="3" placeholder="Alasan cuti..." minlength="25" maxlength="255"></textarea>
+                                  rows="3" placeholder="Alasan cuti..." maxlength="255"></textarea>
                     </div>
                 </div>
                 <br>
