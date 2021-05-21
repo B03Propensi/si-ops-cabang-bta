@@ -46,11 +46,10 @@
                             <p th:if="${cuti.status} == 2" class="ditolak">Ditolak</p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div th:if="${cuti.feedback} != null AND ${cuti.feedback} != ''" class="row">
                         <div class="col-4" style="margin-left: 0px"><p>Feedback</p></div>
                         <div class="col">
-                            <p th:if="${cuti.feedback} == null">Belum ada feedback.</p>
-                            <p th:unless="${cuti.feedback} == null" th:text="${cuti.feedback}"></p>
+                            <p th:text="${cuti.feedback}"></p>
                         </div>
                     </div>
                 </div>
@@ -66,7 +65,7 @@
                         <div class="row" style="margin-bottom: 15px">
                             <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan <span style="color: red">*</span></p></div>
                             <div class="col-3" style="padding-left: 0">
-                                <select required class="form-control" name="status">
+                                <select required id="status" class="form-control" name="status">
                                     <option value="" disabled selected hidden>Pilih status</option>
                                     <option value="1">Disetujui</option>
                                     <option value="2">Ditolak</option>
@@ -74,10 +73,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4" style="margin-left: 0px"><p>Feedback <span style="color: red">*</span></p></div>
+                            <div class="col-4" style="margin-left: 0px"><p>Feedback <span id="star" style="color: red">*</span></p></div>
                             <div class="col">
-                                <textarea required type="text" class="form-control" name="feedback"
-                                          rows="3" placeholder="Feedback..." minlength="25" maxlength="255"></textarea>
+                                <textarea id="feedback" type="text" class="form-control" name="feedback"
+                                          rows="3" placeholder="Feedback..." maxlength="255"></textarea>
                             </div>
                         </div>
                     </form>
@@ -92,5 +91,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function(){
+        $('#star').hide()
+        $('#status').change(function() {
+            if (this.value == "2") {
+                $('#feedback').prop("required", true)
+                $('#star').show()
+            } else {
+                $('#feedback').prop("required", false)
+                $('#star').hide()
+            }
+        })
+    });
+</script>
 </body>
 </html>
