@@ -36,6 +36,12 @@
                     <div class="col-4" style="margin-left: 0px"><p>Alasan</p></div>
                     <div class="col"><p th:text="${cuti.alasan}"></p></div>
                 </div>
+                <div th:if="${cuti.lampiran} != null" class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Lampiran</p></div>
+                    <div class="col">
+                        <a><img th:src="*{'data:image/*;base64,'+ image}" style="width: 50%" data-toggle="modal" data-target="#modal"/></a>
+                    </div>
+                </div>
                 <br>
                 <div th:if="${isPegawai} OR ${cuti.status} != 0">
                     <div class="row">
@@ -60,6 +66,7 @@
                         <input type="hidden" th:field="*{tanggal_mulai}"/>
                         <input type="hidden" th:field="*{tanggal_selesai}"/>
                         <input type="hidden" th:field="*{alasan}"/>
+                        <input type="hidden" th:field="*{lampiran}"/>
                         <input type="hidden" th:field="*{pengaju.idUser}"/>
 
                         <div class="row" style="margin-bottom: 15px">
@@ -89,6 +96,19 @@
                 <a href="/cuti" class="btn btn-sm btn-outline-danger">Kembali</a>
             </div>
         </div>
+
+        <!--Modal-->
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body mb-0 p-0">
+                        <img th:src="*{'data:image/*;base64,'+ image}" style="width: 100%"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal-->
+
     </div>
 </div>
 
