@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StatusPembayaranDb extends JpaRepository<StatusPembayaranModel, Long> {
     StatusPembayaranModel findByNamaStatus(String namaStatus);
-    StatusPembayaranModel findByIdStatusPembayaran(Integer idPembayaran);
+    StatusPembayaranModel findPembayaranByIdPembayaran(Long idPembayaran);
 }

@@ -9,9 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface SiswaDb extends JpaRepository<SiswaModel, Long> {
-    Optional<SiswaModel> findByIdSiswa(Long idSiswa);
+    Optional<SiswaModel> getSiswaById(Long idSiswa);
+    Optional<SiswaModel> getSiswaByNamaSiswa(String namaSiswa);
     List<InvoiceModel> findAllByInvoiceSiswa(Long idInvoice);
-    List<KuitansiModel> findAllByKuitansi(Long idStatus);
+    List<KuitansiModel> findAllByKuitansi(Long idKuitansi);
     List<ProgramKelasModel> findAllByProgram(Long idProgram);
     List<StatusPembayaranModel> findAllByPembayaran(Long idPembayaran);
+
 }

@@ -2,10 +2,9 @@ package bta.cabang.operasional.service;
 
 import bta.cabang.operasional.model.*;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface ProgramKelasService {
-    ProgramKelasModel findProgramByIdProgram (Long idProgram);
+    Optional<ProgramKelasModel> findProgramByProgramId(Long idProgram);
     ProgramKelasModel findProgramByNamaProgram(String namaProgram);
-    List<ProgramKelasModel> getAllProgram();
 }

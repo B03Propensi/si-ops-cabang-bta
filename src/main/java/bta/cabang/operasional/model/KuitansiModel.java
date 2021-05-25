@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "kuitansi")
-public class KuitansiModel {
+public class KuitansiModel implements Serializable {
 
     @Id
     @Column(name = "id_kuitansi")
