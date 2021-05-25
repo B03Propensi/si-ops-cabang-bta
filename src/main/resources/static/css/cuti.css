@@ -60,3 +60,10 @@ form p {
     margin-left: 0;
     margin-right: 0;
 }
+
+.empty-cuti {
+    padding: 30px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    width: 40%;
+}

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
-<div th:replace="fragments/fragment :: navbar"></div>
+<div th:replace="fragments/fragment :: navbar('Cuti')"></div>
 <div class="main">
     <div class="container">
         <h1>Daftar Pengajuan Cuti</h1><br>
@@ -17,65 +17,74 @@
                 Pengajuan cuti berhasil dibuat!
             </div>
             <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
-                Pengajuan cuti berhasil dihapus!
+                Pengajuan cuti berhasil dibatalkan!
+            </div>
+            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+                Status pengajuan cuti berhasil diubah!
             </div>
             <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
-                Terjadi error saat membuat pengajuan!
+                Terjadi kesalahan saat membuat pengajuan!
             </div>
             <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
-                Terjadi error saat menghapus pengajuan!
+                Terjadi kesalahan saat membatalkan pengajuan!
+            </div>
+            <div th:if="${alert} == 'delNotAllowed'" class="alert alert-danger" role="alert">
+                Pengajuan cuti tidak dapat dibatalkan!
             </div>
             <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
                 Pengajuan cuti tidak ditemukan!
             </div>
         </div>
-        <div align="center">
-            <div style="width: 95%">
-                <a th:if="${isAbleToAddDeleteCuti}" href="/cuti/add" class="btn btn-sm btabutton" style="float: left; margin-bottom: 5px">
-                    <span><strong>+</strong></span> Buat Pengajuan Cuti
-                </a>
-                <table class="btatable">
-                    <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th th:if="${isAbleToUpdateCuti}">Nama Pegawai</th>
-                        <th>Tanggal Pengajuan</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Selesai</th>
-                        <th>Status Persetujuan</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="cuti, iterStat : ${listCuti}">
-                        <td>
-                            <p th:text="${iterStat.count}"></p>
-                        </td>
-                        <td th:if="${isAbleToUpdateCuti}">
-                            <p th:text="${cuti.pengaju.namaUser}"></p>
-                        </td>
-                        <td>
-                            <p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p>
-                        </td>
-                        <td>
-                            <p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')}"></p>
-                        </td>
-                        <td>
-                            <p th:text="${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p>
-                        </td>
-                        <td>
-                            <p th:if="${cuti.status} == 0" class="badge-menunggu">Menunggu Persetujuan</p>
-                            <p th:if="${cuti.status} == 1" class="badge-disetujui">Disetujui</p>
-                            <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
-                        </td>
-                        <td>
-                            <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class="btn btn-primary">Lihat</a>
-                            <a th:if="${isAbleToAddDeleteCuti}" th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-danger">Hapus</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+
+
+        <div>
+            <a th:if="${isAbleToAddDeleteCuti}" href="/cuti/add" class="btn btn-sm btabutton" style="margin-bottom: 5px">
+                <span><strong>+</strong></span> Buat Pengajuan Cuti
+            </a>
+
+            <div th:if="${listCuti.size()} == 0" align="center">
+                <p class="empty-cuti">Belum ada pengajuan cuti</p>
             </div>
+
+            <table th:unless="${listCuti.size()} == 0" class="btatable">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th th:if="${isAbleToUpdateCuti}">Nama Pegawai</th>
+                    <th>Tanggal Diajukan</th>
+                    <th>Tanggal Cuti</th>
+                    <th>Status Persetujuan</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cuti, iterStat : ${listCuti}">
+                    <td>
+                        <p th:text="${iterStat.count}"></p>
+                    </td>
+                    <td th:if="${isAbleToUpdateCuti}">
+                        <p th:text="${cuti.pengaju.namaUser}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')} + ' - ' +
+                                    ${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:if="${cuti.status} == 0" class="badge-menunggu">Menunggu Persetujuan</p>
+                        <p th:if="${cuti.status} == 1" class="badge-disetujui">Disetujui</p>
+                        <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
+                    </td>
+                    <td>
+                        <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class="btn btn-sm btn-primary">Lihat</a>
+                        <a th:if="${isAbleToAddDeleteCuti} AND ${cuti.status} == 0"
+                           th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-sm btn-danger">Batalkan</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

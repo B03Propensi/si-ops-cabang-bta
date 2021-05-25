@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface CutiDb extends JpaRepository<CutiModel, Long> {
     Optional<CutiModel> findByIdCuti(Long id);
     List<CutiModel> findAllByPengaju_IdUser(Long idUser);
+    List<CutiModel> findAllByStatus(Integer status);
 
 }

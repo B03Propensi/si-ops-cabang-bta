@@ -4,25 +4,25 @@ import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.UserModel;
 import bta.cabang.operasional.security.AuthService;
 import bta.cabang.operasional.service.CutiService;
-import bta.cabang.operasional.service.UserService;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Controller
 public class CutiController {
     @Autowired
     private CutiService cutiService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private AuthService authService;
@@ -35,7 +35,7 @@ public class CutiController {
 
         List<CutiModel> listCuti = new ArrayList<>();
         if (role == 1 || role == 2) {
-            listCuti = cutiService.getAllCuti();
+            listCuti = cutiService.getAllCutiByStatus(0);
         } else {
             listCuti = cutiService.getAllCutiByUser(id);
         }
@@ -50,22 +50,30 @@ public class CutiController {
     @GetMapping("/cuti/add")
     public String addCutiForm(Model model) {
         model.addAttribute("cuti", new CutiModel());
-
         return "form-addCuti";
     }
 
     @PostMapping("/cuti/add")
-    public String addCutiSubmit(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs){
-//        try {
+    public String addCutiSubmit(@ModelAttribute CutiModel cuti, @RequestParam(value = "attachment") MultipartFile file, RedirectAttributes redirectAttrs){
+        try {
+            if (file.isEmpty()) {
+                cuti.setLampiran(null);
+            } else {
+                byte[] lampiran = file.getBytes();
+                cuti.setLampiran(lampiran);
+            }
             cuti.setPengaju(authService.getCurrentLoggedInUserByUsername());
             cutiService.addCuti(cuti);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/cuti";
 
-//        } catch (Exception e) {
-//            redirectAttrs.addFlashAttribute("alert", "addFail");
-//            return "redirect:/cuti";
-//        }
+        } catch (FileSizeLimitExceededException e) {
+            redirectAttrs.addFlashAttribute("alert", "sizeLimit");
+            return "redirect:/cuti";
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "addFail");
+            return "redirect:/cuti";
+        }
 
     }
 
@@ -75,24 +83,38 @@ public class CutiController {
             CutiModel cuti = cutiService.getCutiByIdCuti(id);
             UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
             Long role = currentUser.getRole().getIdRole();
+            String base64EncodedImage = Base64.encodeBase64String(cuti.getLampiran());
 
             model.addAttribute("cuti", cuti);
-            model.addAttribute("isAbleToAddDeleteCuti", role == 3 || role == 4 || role ==5);
+            model.addAttribute("image", base64EncodedImage);
+            model.addAttribute("isPegawai", role == 3 || role == 4 || role ==5);
             model.addAttribute("isAbleToUpdateCuti", role == 1 || role == 2);
             return "view-cuti";
 
-        } catch (EmptyResultDataAccessException e) {
+        } catch (NoSuchElementException e) {
             redirectAttrs.addFlashAttribute("alert", "notFound");
             return "redirect:/cuti";
         }
     }
 
+    @PostMapping("/cuti/update")
+    public String updateStatusCuti(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs) {
+        cutiService.updateCuti(cuti);
+        redirectAttrs.addFlashAttribute("alert", "updateSuccess");
+        return "redirect:/cuti";
+    }
+
     @GetMapping("cuti/delete/{id}")
     private String deleteCuti(@PathVariable Long id, RedirectAttributes redirectAttrs) {
         try {
-            cutiService.deleteCuti(id);
-            redirectAttrs.addFlashAttribute("alert", "delSuccess");
-            return "redirect:/cuti";
+            if (cutiService.getCutiByIdCuti(id).getStatus() == 0) {
+                cutiService.deleteCuti(id);
+                redirectAttrs.addFlashAttribute("alert", "delSuccess");
+                return "redirect:/cuti";
+            } else {
+                redirectAttrs.addFlashAttribute("alert", "delNotAllowed");
+                return "redirect:/cuti";
+            }
 
         } catch (EmptyResultDataAccessException e) {
             redirectAttrs.addFlashAttribute("alert", "notFound");

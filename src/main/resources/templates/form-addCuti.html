@@ -8,29 +8,37 @@
 </head>
 <body>
 <div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
+<div th:replace="fragments/fragment :: navbar('Cuti')"></div>
 <div class="main">
     <div class="container">
         <h1>Buat Pengajuan Cuti</h1><br>
         <div class="btacard" style="width: 50%">
             <h1 align="center">Form Pengajuan Cuti</h1><br>
-            <form th:action="@{/cuti/add}" th:object = "${cuti}" method = "POST">
+            <form th:action="@{/cuti/add}" th:object = "${cuti}" method = "POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
-                        <p>Tanggal Mulai:</p>
-                        <input required type="date" class="form-control"  name="tanggal_mulai" />
+                        <p>Tanggal Mulai: <span style="color: red">*</span></p>
+                        <input required id="fDate" type="date" class="form-control"  name="tanggal_mulai" onchange="myFunction()"/>
                     </div>
 
                     <div class="col">
-                        <p>Tanggal Selesai:</p>
-                        <input required type="date" class="form-control"  name="tanggal_selesai" />
+                        <p>Tanggal Selesai: <span style="color: red">*</span></p>
+                        <input required id="tDate" type="date" class="form-control"  name="tanggal_selesai"/>
                     </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col">
-                        <p>Alasan:</p>
+                        <p>Alasan: <span style="color: red">*</span></p>
                         <textarea required type="text" class="form-control" name="alasan"
-                                  rows="3" placeholder="Alasan cuti..." minlength="25" maxlength="255"></textarea>
+                                  rows="3" placeholder="Alasan cuti..." maxlength="255"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Lampiran (max 10mb):</p>
+                        <input type="file" id="attachment" name="attachment" accept="image/*">
                     </div>
                 </div>
                 <br>
@@ -42,5 +50,40 @@
         </div>
     </div>
 </div>
+
+<script>
+    var today = new Date();
+    var dd = today.getDate() + 1;
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("fDate").setAttribute("min", today);
+    document.getElementById("tDate").setAttribute("min", today);
+
+    function myFunction() {
+        var minToDate = document.getElementById("fDate").value;
+        if (Date.parse(document.getElementById("tDate").value) < Date.parse(minToDate))
+            document.getElementById("tDate").value = minToDate;
+        document.getElementById("tDate").setAttribute("min", minToDate);
+    }
+
+    var uploadField = document.getElementById("attachment");
+
+    uploadField.onchange = function() {
+        if(this.files[0].size > 10485760){
+            alert("Ukuran file terlalu besar!");
+            this.value = "";
+        };
+    };
+</script>
 </body>
 </html>
