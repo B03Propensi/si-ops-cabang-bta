@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "\"pengguna\"")
+@Table(name = "\"User\"")
 public class UserModel implements Serializable {
     @Id
     @Column(name = "id_user")
