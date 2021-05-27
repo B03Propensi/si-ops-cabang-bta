@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrasi Kelas</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Registrasi Kelas')"></div>
+<div th:replace="fragments/fragment :: navbar('Registrasi Kelas')"></div>
+<div class="main">
+    <div class="container">
+        <div>
+            <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Registrasi Kelas</h1>
+        </div>
+        <div>
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Kelas baru berhasil dibuat
+            </div>
+            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+                Kelas berhasil diubah!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Kelas berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat kelas!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus kelas!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Kelas tidak ditemukan!
+            </div>
+        </div>
+        <a th:href="@{/kelas/tambah/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah kelas</a>
+        <table class="btatable">
+            <thead>
+            <tr>
+                <th>Nomor</th>
+                <th>Nama Kelas</th>
+                <th>Bidang</th>
+                <th>Cabang</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="kelas, iterStat : ${listKelas}">
+                <td>
+                    <p th:text="${iterStat.count}"></p>
+                </td>
+                <td>
+                    <p th:text="${kelas.namaKelas}"></p>
+                </td>
+                <td>
+                    <p th:text="${kelas.bidang}"></p>
+                </td>
+                <td>
+                    <p th:text="${kelas.cabang.nama_cabang}"></p>
+                </td>
+                <td class="btn-toolbar" style="justify-content: center">
+                    <a th:href = "@{/kelas/ubah/} + ${kelas.idKelas}" class = "btn btn-outline-primary mr-2 mb-2">Ubah</a>
+                    <a th:href = "@{/kelas/hapus/} + ${kelas.idKelas}" class="btn btn-danger mr-2 mb-2">Hapus</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
