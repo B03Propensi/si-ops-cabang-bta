@@ -1,21 +1,21 @@
 package bta.cabang.operasional.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "siswa")
-public class SiswaModel implements Serializable{
+public class SiswaModel implements Serializable {
 
     @Id
     @Column(name = "id_siswa")
@@ -29,8 +29,8 @@ public class SiswaModel implements Serializable{
     private Date tanggalDaftar = new Date();
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "nama_siswa", nullable = false)
+    @Size(max=255)
+    @Column(name="nama_siswa", nullable = false)
     private String namaSiswa;
 
     @NotNull
@@ -40,55 +40,59 @@ public class SiswaModel implements Serializable{
     private Date tanggalLahir;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "asal_sekolah", nullable = false)
+    @Size(max=255)
+    @Column(name="asal_sekolah", nullable = false)
     private String asalSekolah;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "email_siswa", nullable = false)
+    @Size(max=255)
+    @Column(name="email_siswa", nullable = false)
     private String emailSiswa;
 
     @NotNull
-    @Column(name = "handphone_siswa", nullable = false)
-    private Long handphoneSiswa;
+    @Size(max=255)
+    @Column(name="hp_siswa", nullable = false)
+    private String hpSiswa;
 
     @NotNull
-    @Column(name = "alamat_siswa", nullable = false)
+    @Size(max=255)
+    @Column(name="alamat_siswa", nullable = false)
     private String alamatSiswa;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "nama_ortu", nullable = false)
+    @Size(max=255)
+    @Column(name="nama_ortu", nullable = false)
     private String namaOrtu;
 
     @NotNull
-    @Column(name = "handphone_ortu", nullable = false)
-    private Long handphoneOrtu;
+    @Size(max=255)
+    @Column(name="hp_ortu", nullable = false)
+    private String hpOrtu;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pembuat_siswa", referencedColumnName = "id_user", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private UserModel pembuatSiswa;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "program", referencedColumnName = "id_program", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private ProgramModel program;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_invoice", referencedColumnName = "id_invoice", nullable = false)
+    @JoinColumn(name = "invoice", referencedColumnName = "id_invoice", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private InvoiceModel invoice;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_kuitansi", referencedColumnName = "id_kuitansi", nullable = false)
+    @JoinColumn(name = "kuitansi", referencedColumnName = "id_kuitansi", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private KuitansiModel kuitansi;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_program", referencedColumnName = "id_program", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private ProgramKelasModel program;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_status", referencedColumnName = "id_status", nullable = false)
+    @JoinColumn(name = "pembayaran", referencedColumnName = "id_pembayaran", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private StatusPembayaranModel statusPembayaran;
+    private PembayaranModel pembayaran;
 
     public Long getIdSiswa() {
         return idSiswa;
@@ -138,12 +142,12 @@ public class SiswaModel implements Serializable{
         this.emailSiswa = emailSiswa;
     }
 
-    public Long getHandphoneSiswa() {
-        return handphoneSiswa;
+    public String getHpSiswa() {
+        return hpSiswa;
     }
 
-    public void setHandphoneSiswa(Long handphoneSiswa) {
-        this.handphoneSiswa = handphoneSiswa;
+    public void setHpSiswa(String hpSiswa) {
+        this.hpSiswa = hpSiswa;
     }
 
     public String getAlamatSiswa() {
@@ -162,12 +166,28 @@ public class SiswaModel implements Serializable{
         this.namaOrtu = namaOrtu;
     }
 
-    public Long getHandphoneOrtu() {
-        return handphoneOrtu;
+    public String getHpOrtu() {
+        return hpOrtu;
     }
 
-    public void setHandphoneOrtu(Long handphoneOrtu) {
-        this.handphoneOrtu = handphoneOrtu;
+    public void setHpOrtu(String hpOrtu) {
+        this.hpOrtu = hpOrtu;
+    }
+
+    public UserModel getPembuatSiswa() {
+        return pembuatSiswa;
+    }
+
+    public void setPembuatSiswa(UserModel pembuatSiswa) {
+        this.pembuatSiswa = pembuatSiswa;
+    }
+
+    public ProgramModel getProgram() {
+        return program;
+    }
+
+    public void setProgram(ProgramModel program) {
+        this.program = program;
     }
 
     public InvoiceModel getInvoice() {
@@ -182,23 +202,15 @@ public class SiswaModel implements Serializable{
         return kuitansi;
     }
 
-    public ProgramKelasModel getProgram() {
-        return program;
-    }
-
-    public void setProgram(ProgramKelasModel program) {
-        this.program = program;
-    }
-
-    public StatusPembayaranModel getStatusPembayaran() {
-        return statusPembayaran;
-    }
-
-    public void setStatusPembayaran(StatusPembayaranModel statusPembayaran) {
-        this.statusPembayaran = statusPembayaran;
-    }
-
     public void setKuitansi(KuitansiModel kuitansi) {
         this.kuitansi = kuitansi;
+    }
+
+    public PembayaranModel getPembayaran() {
+        return pembayaran;
+    }
+
+    public void setPembayaran(PembayaranModel pembayaran) {
+        this.pembayaran = pembayaran;
     }
 }

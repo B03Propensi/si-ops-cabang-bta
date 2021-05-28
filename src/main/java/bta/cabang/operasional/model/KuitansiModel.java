@@ -1,15 +1,15 @@
 package bta.cabang.operasional.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +23,14 @@ public class KuitansiModel implements Serializable {
     private Long idKuitansi;
 
     @NotNull
-    @Column(name = "nominal_kuitansi", nullable = false)
-    private Integer nominalKuitansi;
+    @Size(max=255)
+    @Column(name="bank_tujuan", nullable = false)
+    private String bankTujuan;
+
+    @NotNull
+    @Size(max=255)
+    @Column(name="nominal_kuitansi", nullable = false)
+    private String nominalKuitansi;
 
     @NotNull
     @Column(name = "tanggal_kuitansi", nullable = false)
@@ -32,51 +38,17 @@ public class KuitansiModel implements Serializable {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Jakarta")
     private Date tanggalKuitansi = new Date();
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "bank_tujuan", nullable = false)
-    private String bankTujuan;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_siswa", referencedColumnName = "id_siswa", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private SiswaModel siswaKui;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_invoice", referencedColumnName = "id_invoice", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private InvoiceModel invoiceKui;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
+    @JoinColumn(name = "pembuat_kuitansi", referencedColumnName = "id_user", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private UserModel pembuatKui;
+    private UserModel pembuatKuitansi;
 
     public Long getIdKuitansi() {
         return idKuitansi;
     }
 
-    public Integer getNominalKuitansi() {
-        return nominalKuitansi;
-    }
-
-    public void setNominalKuitansi(Integer nominalKuitansi) {
-        this.nominalKuitansi = nominalKuitansi;
-    }
-
     public void setIdKuitansi(Long idKuitansi) {
         this.idKuitansi = idKuitansi;
-    }
-
-    public Date getTanggalKuitansi() {
-        return tanggalKuitansi;
-    }
-
-    public void setTanggalKuitansi(Date tanggalKuitansi) {
-        this.tanggalKuitansi = tanggalKuitansi;
     }
 
     public String getBankTujuan() {
@@ -87,27 +59,27 @@ public class KuitansiModel implements Serializable {
         this.bankTujuan = bankTujuan;
     }
 
-    public SiswaModel getSiswaKui() {
-        return siswaKui;
+    public String getNominalKuitansi() {
+        return nominalKuitansi;
     }
 
-    public void setSiswaKui(SiswaModel siswaKui) {
-        this.siswaKui = siswaKui;
+    public void setNominalKuitansi(String nominalKuitansi) {
+        this.nominalKuitansi = nominalKuitansi;
     }
 
-    public InvoiceModel getInvoiceKui() {
-        return invoiceKui;
+    public Date getTanggalKuitansi() {
+        return tanggalKuitansi;
     }
 
-    public void setInvoiceKui(InvoiceModel invoiceKui) {
-        this.invoiceKui = invoiceKui;
+    public void setTanggalKuitansi(Date tanggalKuitansi) {
+        this.tanggalKuitansi = tanggalKuitansi;
     }
 
-    public UserModel getPembuatKui() {
-        return pembuatKui;
+    public UserModel getPembuatKuitansi() {
+        return pembuatKuitansi;
     }
 
-    public void setPembuatKui(UserModel pembuatKui) {
-        this.pembuatKui = pembuatKui;
+    public void setPembuatKuitansi(UserModel pembuatKuitansi) {
+        this.pembuatKuitansi = pembuatKuitansi;
     }
 }

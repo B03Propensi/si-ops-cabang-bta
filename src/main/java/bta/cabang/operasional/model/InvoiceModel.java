@@ -1,21 +1,22 @@
 package bta.cabang.operasional.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
 @Table(name = "invoice")
-public class InvoiceModel implements Serializable{
+public class InvoiceModel implements Serializable {
 
     @Id
     @Column(name = "id_invoice")
@@ -23,69 +24,32 @@ public class InvoiceModel implements Serializable{
     private Long idInvoice;
 
     @NotNull
-    @Column(name = "nominal_invoice", nullable = false)
-    private Integer nominalInvoice;
-
-    @NotNull
     @Column(name = "tanggal_invoice", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Jakarta")
     private Date tanggalInvoice = new Date();
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_siswa", referencedColumnName = "id_siswa", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pembuat_invoice", referencedColumnName = "id_user", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private SiswaModel siswaInv;
+    private UserModel pembuatInvoice;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_kuitansi", referencedColumnName = "id_kuitansi", nullable = false)
+    @JoinColumn(name = "siswa_invoice", referencedColumnName = "id_siswa", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private KuitansiModel kuitansiInv;
+    private SiswaModel siswaInvoice;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
+    @JoinColumn(name = "program_invoice", referencedColumnName = "id_program", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private UserModel pembuatInv;
+    private ProgramModel programInvoice;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_program", referencedColumnName = "id_program", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private ProgramKelasModel programInv;
-
-    public ProgramKelasModel getProgramInv() {
-        return programInv;
+    public Long getIdInvoice() {
+        return idInvoice;
     }
 
-    public void setProgramInv(ProgramKelasModel programInv) {
-        this.programInv = programInv;
-    }
-
-    public UserModel getPembuatInv() {
-        return pembuatInv;
-    }
-
-    public void setPembuatInv(UserModel pembuatInv) {
-        this.pembuatInv = pembuatInv;
-    }
-
-    public KuitansiModel getKuitansiInv() {
-        return kuitansiInv;
-    }
-
-    public void setKuitansiInv(KuitansiModel kuitansiInv) {
-        this.kuitansiInv = kuitansiInv;
-    }
-
-    public SiswaModel getSiswaInv() {
-        return siswaInv;
-    }
-
-    public void setSiswaInv(SiswaModel siswaInv) {
-        this.siswaInv = siswaInv;
+    public void setIdInvoice(Long idInvoice) {
+        this.idInvoice = idInvoice;
     }
 
     public Date getTanggalInvoice() {
@@ -96,19 +60,27 @@ public class InvoiceModel implements Serializable{
         this.tanggalInvoice = tanggalInvoice;
     }
 
-    public Integer getNominalInvoice() {
-        return nominalInvoice;
+    public UserModel getPembuatInvoice() {
+        return pembuatInvoice;
     }
 
-    public void setNominalInvoice(Integer nominalInvoice) {
-        this.nominalInvoice = nominalInvoice;
+    public void setPembuatInvoice(UserModel pembuatInvoice) {
+        this.pembuatInvoice = pembuatInvoice;
     }
 
-    public Long getIdInvoice() {
-        return idInvoice;
+    public SiswaModel getSiswaInvoice() {
+        return siswaInvoice;
     }
 
-    public void setIdInvoice(Long idInvoice) {
-        this.idInvoice = idInvoice;
+    public void setSiswaInvoice(SiswaModel siswaInvoice) {
+        this.siswaInvoice = siswaInvoice;
+    }
+
+    public ProgramModel getProgramInvoice() {
+        return programInvoice;
+    }
+
+    public void setProgramInvoice(ProgramModel programInvoice) {
+        this.programInvoice = programInvoice;
     }
 }
