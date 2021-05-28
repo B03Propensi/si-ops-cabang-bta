@@ -70,6 +70,11 @@ public class SiswaModel implements Serializable {
     private String hpOrtu;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cabang_siswa", referencedColumnName = "id_cabang", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private CabangModel cabangSiswa;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pembuat_siswa", referencedColumnName = "id_user", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserModel pembuatSiswa;
