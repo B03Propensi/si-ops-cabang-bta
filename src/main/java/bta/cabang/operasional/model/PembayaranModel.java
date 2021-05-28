@@ -30,7 +30,7 @@ public class PembayaranModel implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "siswa_status", referencedColumnName = "id_siswa", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private SiswaModel siswaStatus;
+    private List<SiswaModel> siswaStatus;
 
     public Long getIdPembayaran() {
         return idPembayaran;
@@ -48,11 +48,11 @@ public class PembayaranModel implements Serializable {
         this.namaPembayaran = namaPembayaran;
     }
 
-    public SiswaModel getSiswaStatus() {
+    public List<SiswaModel> getSiswaStatus() {
         return siswaStatus;
     }
 
-    public void setSiswaStatus(SiswaModel siswaStatus) {
+    public void setSiswaStatus(List<SiswaModel> siswaStatus) {
         this.siswaStatus = siswaStatus;
     }
 }

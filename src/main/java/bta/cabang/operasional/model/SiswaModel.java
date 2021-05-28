@@ -218,4 +218,12 @@ public class SiswaModel implements Serializable {
     public void setPembayaran(PembayaranModel pembayaran) {
         this.pembayaran = pembayaran;
     }
+
+    public CabangModel getCabangSiswa() {
+        return cabangSiswa;
+    }
+
+    public void setCabangSiswa(CabangModel cabangSiswa) {
+        this.cabangSiswa = cabangSiswa;
+    }
 }

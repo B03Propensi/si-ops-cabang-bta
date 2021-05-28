@@ -35,12 +35,12 @@ public class ProgramModel implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "siswa_program", referencedColumnName = "id_siswa", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private SiswaModel siswaProgram;
+    private List<SiswaModel> siswaProgram;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "invoice_program", referencedColumnName = "id_invoice", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private InvoiceModel invoiceProgram;
+    private List<InvoiceModel> invoiceProgram;
 
     public Long getIdProgram() {
         return idProgram;
@@ -66,19 +66,19 @@ public class ProgramModel implements Serializable {
         this.biayaProgram = biayaProgram;
     }
 
-    public SiswaModel getSiswaProgram() {
+    public List<SiswaModel> getSiswaProgram() {
         return siswaProgram;
     }
 
-    public void setSiswaProgram(SiswaModel siswaProgram) {
+    public void setSiswaProgram(List<SiswaModel> siswaProgram) {
         this.siswaProgram = siswaProgram;
     }
 
-    public InvoiceModel getInvoiceProgram() {
+    public List<InvoiceModel> getInvoiceProgram() {
         return invoiceProgram;
     }
 
-    public void setInvoiceProgram(InvoiceModel invoiceProgram) {
+    public void setInvoiceProgram(List<InvoiceModel> invoiceProgram) {
         this.invoiceProgram = invoiceProgram;
     }
 }

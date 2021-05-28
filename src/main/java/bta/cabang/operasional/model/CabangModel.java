@@ -42,7 +42,7 @@ public class CabangModel implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "siswa_cabang", referencedColumnName = "id_siswa", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private SiswaModel siswaCabang;
+    private List<SiswaModel> siswaCabang;
 
 
     public Long getId_cabang() {
@@ -75,5 +75,13 @@ public class CabangModel implements Serializable {
 
     public void setKode_cabang(String kode_cabang) {
         this.kode_cabang = kode_cabang;
+    }
+
+    public List<SiswaModel> getSiswaCabang() {
+        return siswaCabang;
+    }
+
+    public void setSiswaCabang(List<SiswaModel> siswaCabang) {
+        this.siswaCabang = siswaCabang;
     }
 }
