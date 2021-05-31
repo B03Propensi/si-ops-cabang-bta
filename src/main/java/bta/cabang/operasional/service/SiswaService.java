@@ -8,4 +8,5 @@ import java.util.List;
 public interface SiswaService {
     void addSiswa(SiswaModel siswa);
     List<SiswaModel> getAllSiswa();
+    SiswaModel getSiswa(Long idSiswa);
 }

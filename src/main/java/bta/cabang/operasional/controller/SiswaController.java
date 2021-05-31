@@ -9,10 +9,12 @@ import bta.cabang.operasional.service.InvoiceService;
 import bta.cabang.operasional.service.ProgramService;
 import bta.cabang.operasional.service.SiswaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,8 +39,8 @@ public class SiswaController {
 
     @GetMapping("/siswa")
     public String viewAllSiswa(Model model) {
-        List<SiswaModel> siswa = siswaService.getAllSiswa();
-        model.addAttribute("siswa", siswa);
+        List<SiswaModel> listSiswa = siswaService.getAllSiswa();
+        model.addAttribute("listSiswa", listSiswa);
 
         return "siswa";
     }
@@ -65,5 +67,22 @@ public class SiswaController {
         redirectAttrs.addAttribute("siswa", siswa);
         redirectAttrs.addAttribute("invoice", invoice);
         return "invoice";
+    }
+
+    @GetMapping("/siswa/{idSiswa}")
+    public String siswaDetails(
+            @PathVariable Long idSiswa,
+            Model model,
+            RedirectAttributes redirectAttrs
+    ) {
+        try {
+            SiswaModel siswa = siswaService.getSiswa(idSiswa);
+            model.addAttribute("siswa", siswa);
+            return "siswa-details";
+
+        } catch (EmptyResultDataAccessException e) {
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/siswa";
+        }
     }
 }

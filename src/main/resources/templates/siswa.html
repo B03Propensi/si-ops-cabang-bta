@@ -21,35 +21,47 @@
             <table class="btatable">
                 <thead>
                 <tr>
-                    <th>No.</th>
+                    <th>ID</th>
                     <th>Nama Siswa</th>
                     <th>Asal Sekolah</th>
+                    <th>Tanggal Pendaftaran</th>
                     <th>Program</th>
-                    <th>Invoice</th>
-                    <th>Status Pembayaran</th>
+<!--                    <th>Invoice</th>-->
+<!--                    <th>Status Pembayaran</th>-->
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="siswa, iterationStatus: ${listSiswa}">
                     <td>
-                        <p th:text="${iterStat.count}"></p>
+                        <p th:text="${siswa.idSiswa}"></p>
                     </td>
                     <td>
                         <p th:text="${siswa.namaSiswa}"></p>
                     </td>
                     <td>
-                        <p th:text="${#dates.format(siswa.tanggalDaftar, 'd MMMM yyyy')}"></p>
+                        <p th:text="${siswa.asalSekolah}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${siswa.tanggalDaftar}"></p>
                     </td>
                     <td>
                         <p th:text="${siswa.program.namaProgram}"></p>
                     </td>
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.invoice.idInvoice}"></p>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <p th:if="${siswa.status} == 1" class="badge-menunggu">Belum Lunas</p>-->
+<!--                        <p th:if="${siswa.status} == 2" class="badge-disetujui">Sudah Lunas</p>-->
+<!--                    </td>-->
                     <td>
-                        <p th:text="${siswa.invoice.idInvoice}"></p>
-                    </td>
-                    <td>
-                        <p th:if="${siswa.status} == 1" class="badge-menunggu">Belum Lunas</p>
-                        <p th:if="${cuti.status} == 2" class="badge-disetujui">Sudah Lunas</p>
+                        <a th:href="@{/siswa/} + ${siswa.idSiswa}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </a>
                     </td>
                 </tr>
                 </tbody>
