@@ -4,18 +4,17 @@ import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.UserModel;
 import bta.cabang.operasional.security.AuthService;
 import bta.cabang.operasional.service.CutiService;
-import bta.cabang.operasional.service.UserService;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -55,13 +54,22 @@ public class CutiController {
     }
 
     @PostMapping("/cuti/add")
-    public String addCutiSubmit(@ModelAttribute CutiModel cuti, RedirectAttributes redirectAttrs){
+    public String addCutiSubmit(@ModelAttribute CutiModel cuti, @RequestParam(value = "attachment") MultipartFile file, RedirectAttributes redirectAttrs){
         try {
+            if (file.isEmpty()) {
+                cuti.setLampiran(null);
+            } else {
+                byte[] lampiran = file.getBytes();
+                cuti.setLampiran(lampiran);
+            }
             cuti.setPengaju(authService.getCurrentLoggedInUserByUsername());
             cutiService.addCuti(cuti);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/cuti";
 
+        } catch (FileSizeLimitExceededException e) {
+            redirectAttrs.addFlashAttribute("alert", "sizeLimit");
+            return "redirect:/cuti";
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("alert", "addFail");
             return "redirect:/cuti";
@@ -75,8 +83,10 @@ public class CutiController {
             CutiModel cuti = cutiService.getCutiByIdCuti(id);
             UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
             Long role = currentUser.getRole().getIdRole();
+            String base64EncodedImage = Base64.encodeBase64String(cuti.getLampiran());
 
             model.addAttribute("cuti", cuti);
+            model.addAttribute("image", base64EncodedImage);
             model.addAttribute("isPegawai", role == 3 || role == 4 || role ==5);
             model.addAttribute("isAbleToUpdateCuti", role == 1 || role == 2);
             return "view-cuti";

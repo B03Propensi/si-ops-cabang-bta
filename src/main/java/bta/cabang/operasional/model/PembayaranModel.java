@@ -27,8 +27,7 @@ public class PembayaranModel implements Serializable {
     @Column(name="nama_pembayaran", nullable = false)
     private String namaPembayaran;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "siswa_status", referencedColumnName = "id_siswa", nullable = false)
+    @OneToMany(mappedBy = "pembayaran", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<SiswaModel> siswaStatus;
 

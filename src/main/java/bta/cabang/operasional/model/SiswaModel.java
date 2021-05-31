@@ -70,32 +70,32 @@ public class SiswaModel implements Serializable {
     private String hpOrtu;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cabang_siswa", referencedColumnName = "id_cabang", nullable = false)
+    @JoinColumn(name = "cabang_siswa", referencedColumnName = "id_cabang")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private CabangModel cabangSiswa;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pembuat_siswa", referencedColumnName = "id_user", nullable = false)
+    @JoinColumn(name = "pembuat_siswa", referencedColumnName = "id_user")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserModel pembuatSiswa;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "program", referencedColumnName = "id_program", nullable = false)
+    @JoinColumn(name = "program_siswa", referencedColumnName = "id_program")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ProgramModel program;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "invoice", referencedColumnName = "id_invoice", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "invoice_siswa", referencedColumnName = "id_invoice")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private InvoiceModel invoice;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "kuitansi", referencedColumnName = "id_kuitansi", nullable = false)
+    @JoinColumn(name = "kuitansi_siswa", referencedColumnName = "id_kuitansi")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private KuitansiModel kuitansi;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pembayaran", referencedColumnName = "id_pembayaran", nullable = false)
+    @JoinColumn(name = "status_siswa", referencedColumnName = "id_pembayaran")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PembayaranModel pembayaran;
 

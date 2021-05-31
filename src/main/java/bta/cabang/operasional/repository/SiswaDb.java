@@ -15,9 +15,9 @@ import java.util.Optional;
 public interface SiswaDb extends JpaRepository<SiswaModel, Long>{
     Optional<SiswaModel> findSiswaByIdSiswa(Long idSiswa);
     Optional<SiswaModel> findSiswaByNamaSiswa(String namaSiswa);
-    List<SiswaModel> findSiswaByIdInvoice(InvoiceModel invoice);
-    List<SiswaModel> findSiswaByIdKuitansi(KuitansiModel kuitansi);
+    List<SiswaModel> findSiswaByInvoice(InvoiceModel invoice);
+    List<SiswaModel> findSiswaByKuitansi(KuitansiModel kuitansi);
     List<SiswaModel> findAllSiswaByPembayaran(PembayaranModel pembayaran);
-    List<SiswaModel> findAllSiswaByCabang(CabangModel cabangSiswa);
+    List<SiswaModel> findAllSiswaByCabangSiswa(CabangModel cabangSiswa);
     List<SiswaModel> findAllSiswaByProgram(ProgramModel program);
 }

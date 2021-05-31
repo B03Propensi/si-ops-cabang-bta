@@ -16,39 +16,39 @@ public class PresensiModel implements Serializable {
 	@Id
 	@Column(name="id_presensi")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idPresensi;
+	Integer idPresensi;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    UserModel user;
+	@JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	UserModel user;
 
 	@NotNull
 	@Column(name = "date")
-    Timestamp date;
+	Timestamp date;
 
 	@NotNull
 	@Column(name = "jabatan")
-    String jabatan;
+	String jabatan;
 
 	@NotNull
 	@Column(name = "status")
-    Integer status;
+	Integer status;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_cabang", referencedColumnName = "id_cabang", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    CabangModel lokasi;
+	@JoinColumn(name = "id_cabang", referencedColumnName = "id_cabang", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	CabangModel lokasi;
 
-    public Integer getIdPresensi(){
-        return this.idPresensi;
-    }
+	public Integer getIdPresensi(){
+		return this.idPresensi;
+	}
 
-    public void setIdPresensi(Integer idPresensi) {
-        this.idPresensi = idPresensi;
-    }
+	public void setIdPresensi(Integer idPresensi) {
+		this.idPresensi = idPresensi;
+	}
 
 	public UserModel getUser() {
 		return this.user;

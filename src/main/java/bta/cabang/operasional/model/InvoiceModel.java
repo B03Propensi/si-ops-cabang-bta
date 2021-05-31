@@ -34,7 +34,7 @@ public class InvoiceModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserModel pembuatInvoice;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "siswa_invoice", referencedColumnName = "id_siswa", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SiswaModel siswaInvoice;

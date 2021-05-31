@@ -39,8 +39,7 @@ public class CabangModel implements Serializable {
     @JsonIgnore
     private List<KelasModel> listKelas;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "siswa_cabang", referencedColumnName = "id_siswa", nullable = false)
+    @OneToMany(mappedBy = "cabangSiswa", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<SiswaModel> siswaCabang;
 

@@ -32,13 +32,11 @@ public class ProgramModel implements Serializable {
     @Column(name="biaya_program", nullable = false)
     private String biayaProgram;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "siswa_program", referencedColumnName = "id_siswa", nullable = false)
+    @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<SiswaModel> siswaProgram;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "invoice_program", referencedColumnName = "id_invoice", nullable = false)
+    @OneToMany(mappedBy = "programInvoice", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<InvoiceModel> invoiceProgram;
 
