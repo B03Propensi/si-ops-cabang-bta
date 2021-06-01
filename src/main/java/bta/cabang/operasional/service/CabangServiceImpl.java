@@ -34,6 +34,9 @@ public class CabangServiceImpl implements CabangService{
             targetCabang.setAlamat(cabangUpdate.getAlamat());
             targetCabang.setKode_cabang(cabangUpdate.getKode_cabang());
             targetCabang.setNama_cabang(cabangUpdate.getNama_cabang());
+            targetCabang.setEmail(cabangUpdate.getEmail());
+            targetCabang.setNomor_telepon(cabangUpdate.getNomor_telepon());
+            targetCabang.setLogo(cabangUpdate.getLogo());
             cabangDb.save(targetCabang);
             return targetCabang;
         }

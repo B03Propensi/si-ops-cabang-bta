@@ -21,7 +21,7 @@
             <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex; align-items: center"  > Formulir Cabang Baru</h2>
             <br>
             <br>
-            <form th:action="@{/cabang/add}" th:object = "${cabang}" method = "POST">
+            <form th:action="@{/cabang/add}" th:object = "${cabang}" method = "POST" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id_cabang}"/>
                 <div class="row">
                     <div class="col">
@@ -39,12 +39,32 @@
                 <br>
                 <div class="row">
                     <div class="col">
+                        <p> Email </p>
+                        <input required type="text" class="form-control"  name="email" placeholder="email"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Nomor Telepon</p>
+                        <input required type="text" class="form-control"  name="nomor_telepon" placeholder="nomor_telepon"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
                         <p>Alamat</p>
                         <textarea required type="text" class="form-control" name="alamat"
                                   rows="3" placeholder="Alamat Cabang" minlength="20"></textarea>
                     </div>
                 </div>
                 <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Logo(max 10mb):</p>
+                        <input type="file" id="attachment" name="attachment" accept="image/*">
+                    </div>
+                </div>
                 <div align="center">
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                     <a href="/cabang" class="btn btn-sm btn-outline-danger">Batal</a>

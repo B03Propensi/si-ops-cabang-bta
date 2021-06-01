@@ -5,11 +5,13 @@ import bta.cabang.operasional.repository.UserDb;
 import bta.cabang.operasional.security.AuthService;
 import bta.cabang.operasional.service.CabangService;
 import bta.cabang.operasional.service.UserService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -39,8 +41,14 @@ public class CabangController {
         return "add-cabang-form";
     }
     @PostMapping("/add")
-    private String addCabangSubmit(@ModelAttribute CabangModel cabang, RedirectAttributes redirectAttrs){
+    private String addCabangSubmit(@ModelAttribute CabangModel cabang, @RequestParam(value= "attachment") MultipartFile file, RedirectAttributes redirectAttrs){
         try{
+            if (file.isEmpty()) {
+                cabang.setLogo(null);
+            } else {
+                byte[] logo = file.getBytes();
+                cabang.setLogo(logo);
+            }
             cabangService.addCabang(cabang);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/cabang";
@@ -90,7 +98,11 @@ public class CabangController {
     private String detailCabang(@PathVariable Long id_cabang, Model model, RedirectAttributes redirectAttrs){
         try {
             CabangModel cabangModel = cabangService.getCabangbyId(id_cabang);
+            String base64EncodedImage = Base64.encodeBase64String(cabangModel.getLogo());
+
             model.addAttribute("cabang",cabangModel);
+            model.addAttribute("image", base64EncodedImage);
+
             return "view-cabang";
         }catch (EmptyResultDataAccessException e) {
             redirectAttrs.addFlashAttribute("alert", "notFound");
