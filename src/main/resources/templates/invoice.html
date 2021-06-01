@@ -11,8 +11,89 @@
 <div th:replace="fragments/fragment :: navbar('Siswa')"></div>
 
 <!--isinya invoice terus bisa print page -->
+<div class="main">
+    <div class="container" align="center">
+        <h3 th:text="'Siswa #' + ${siswa.idSiswa} + ' berhasil dibuat.'"></h3>
+        <br>
+<!--        Data Invoice-->
+        <div hidden>
+            <span id="idInv" th:text="${invoice.idInvoice}"></span>
+            <span id="tglInv" th:text="${#dates.format(invoice.tanggalInvoice, 'dd-MM-yyyy')}"></span>
+            <span id="pembuatInv" th:text="${invoice.pembuatInvoice.namaUser}"></span>
+            <span id="idSis" th:text="${siswa.idSiswa}"></span>
+            <span id="namaSis" th:text="${siswa.namaSiswa}"></span>
+            <span id="hpSis" th:text="${siswa.hpSiswa}"></span>
+            <span id="cabang" th:text="${siswa.cabangSiswa.nama_cabang}"></span>
+            <span id="program" th:text="${siswa.program.namaProgram}"></span>
+            <span id="biaya" th:text="${siswa.program.biayaProgram}"></span>
+        </div>
+<!--        Data Invoice-->
 
-<h3 th:text="'Siswa ' + ${siswa.idSiswa} + ' berhasil dibuat.'"></h3>
+        <canvas id="invoice" width="800" height="650"
+                style="border: 1px solid #d3d3d3; border-radius: 10px;">
+        </canvas>
+        <br><br>
 
+        <a id="download">
+            <button class="btn btabutton" onClick="download()">Download</button>
+        </a>
+        <br><br>
+
+    </div>
+</div>
+
+<script>
+    var idInv = document.getElementById("idInv").innerHTML
+    var tglInv = document.getElementById("tglInv").innerHTML
+    var pembuatInv = document.getElementById("pembuatInv").innerHTML
+    var idSis = document.getElementById("idSis").innerHTML
+    var namaSis = document.getElementById("namaSis").innerHTML
+    var hpSis = document.getElementById("hpSis").innerHTML
+    var cabang = document.getElementById("cabang").innerHTML
+    var program = document.getElementById("program").innerHTML
+    var biaya = document.getElementById("biaya").innerHTML
+
+    var canvas = document.getElementById("invoice");
+    var ctx = canvas.getContext("2d");
+
+    ctx.font = "bold 28px Roboto";
+    ctx.fillText("INVOICE #" + idInv, 300, 60);
+
+    ctx.font = "18px Arial";
+    ctx.fillText("No. Siswa              : " + idSis, 50, 125);
+    ctx.fillText("Nama Siswa          : " + namaSis, 50, 150);
+    ctx.fillText("No. Handphone     : " + hpSis, 50, 175);
+    ctx.fillText("Cabang                  : " + cabang, 50, 200);
+    ctx.fillText("Program                 : " + program, 50, 225);
+
+    ctx.fillStyle = "#FFE8E8";
+    ctx.fillRect(50, 280, 700, 45);
+    ctx.strokeStyle = "#FF4C4C";
+    ctx.strokeRect(50, 280, 700, 45);
+
+    ctx.fillStyle = "black";
+    ctx.fillText("Jumlah yang perlu dibayarkan", 80, 310)
+    ctx.font = "bold 20px Arial";
+    ctx.fillText("Rp." + biaya, 600, 310)
+
+    ctx.font = "16px Arial";
+    ctx.fillText("*Pembayaran ke rekening:", 50, 400)
+    ctx.fillText("  a.n " + "nama cabang", 50, 425)
+    ctx.fillText("  Bank " + "nama bank " + "no rek", 50, 450)
+    ctx.fillText("**Tolong masukkan nomor invoice pada bukti pembayaran", 50, 500)
+
+    ctx.font = "20px Arial";
+    ctx.fillText("Issuer     : " + pembuatInv, 	550, 575)
+    ctx.fillText("Tanggal  : " + tglInv, 	550, 600)
+
+
+    function download() {
+        var download = document.getElementById("download");
+        var image = document.getElementById("invoice").toDataURL("image/png").replace("image/png", "image/octet-stream");
+        var savename = "INV" + document.getElementById("idInv").innerHTML + ".png"
+        download.setAttribute("href", image);
+        download.setAttribute("download", savename);
+    }
+</script>
 </body>
 </html>

@@ -54,18 +54,16 @@ public class SiswaController {
     }
 
     @PostMapping("siswa/add")
-    public String addSiswaSubmit(@ModelAttribute SiswaModel siswa, RedirectAttributes redirectAttrs) {
-        System.out.println("invoice");
+    public String addSiswaSubmit(@ModelAttribute SiswaModel siswa, Model model) {
         InvoiceModel invoice = new InvoiceModel();
         invoice.setSiswaInvoice(siswa);
         invoice.setPembuatInvoice(authService.getCurrentLoggedInUserByUsername());
         invoice.setProgramInvoice(siswa.getProgram());
         invoiceService.addInvoice(invoice);
-        System.out.println("end invoice");
 
         siswaService.addSiswa(siswa);
-        redirectAttrs.addAttribute("siswa", siswa);
-        redirectAttrs.addAttribute("invoice", invoice);
+        model.addAttribute("siswa", siswa);
+        model.addAttribute("invoice", invoice);
         return "invoice";
     }
 
