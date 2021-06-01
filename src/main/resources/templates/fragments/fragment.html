@@ -46,7 +46,7 @@
 <!--        REGIS KELAS-->
         <a th:class="${page} == 'Registrasi Kelas'? 'active' : ''"
            th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1"
-           href="/registrasi-kelas">Registrasi Kelas</a>
+           href="/kelas">Registrasi Kelas</a>
 <!--        JADWAL KELAS-->
         <a th:class="${page} == 'Jadwal Kelas'? 'active' : ''"
            th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 1
