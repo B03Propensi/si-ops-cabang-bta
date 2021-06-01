@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ubah Jadwal</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Ubah Jadwal')"></div>
+<div th:replace="fragments/fragment :: navbar('Tambah Jadwal')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div class="btacard">
+            <form th:action="@{/kelas/ubah/} + ${kelas.idKelas}" th:object="${kelas}" method="POST">
+                <h6>Nama Kelas</h6>
+                <input th:value="*{namaKelas}" name="namaKelas" type="text" class="form-control">
+                <h6 style="margin-top: 10px;">Bidang</h6>
+                <select th:value="*{bidang}" name="bidang" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Bidang...</option>
+                    <option value="Biologi">Biologi</option>
+                    <option value="Fisika">Fisika</option>
+                    <option value="Kimia">Kimia</option>
+                    <option value="Ekonomi">Ekonomi</option>
+                    <option value="Geografi">Geografi</option>
+                    <option value="Sosiologi">Sosiologi</option>
+                    <option value="Sejarah">Sejarah</option>
+                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                    <option value="Bahasa Inggris">Bahasa Inggris</option>
+                    <option value="Matematika">Matematika</option>
+                </select>
+                <p th:text="*{bidang}"></p>
+                <h6 style="margin-top: 10px;">Cabang</h6>
+                <select th:value="*{cabang}" name="cabang" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Cabang...</option>
+                    <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
+                </select>
+                <p th:text="*{cabang.nama_cabang}"></p>
+                <h6 style="margin-top: 10px;">Hari</h6>
+                <select th:value="*{hari}" name="hari" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Hari...</option>
+                    <option value="Senin">Senin</option>
+                    <option value="Selasa">Selasa</option>
+                    <option value="Rabu">Rabu</option>
+                    <option value="Kamis">Kamis</option>
+                    <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
+                </select>
+                <p th:text="*{hari}"></p>
+                <h6 style="margin-top: 10px;">Waktu</h6>
+                <select th:value="*{waktu}" name="waktu" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Waktu...</option>
+                    <option th:each="waktu : ${listWaktu}" th:value="${waktu}" th:text="${waktu}"></option>
+                </select>
+                <p th:text="*{waktu}"></p>
+                <h6 style="margin-top: 10px;">Pengajar</h6>
+                <select th:value="*{pengajar}" name="pengajar" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Pengajar...</option>
+                    <option th:each="pengajar : ${listPengajar}" th:value="${pengajar.idUser}" th:text="${pengajar.namaUser}"></option>
+                </select>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a th:href="@{/kelas/} + ${kelas.idKelas}" type="button" class="btn btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

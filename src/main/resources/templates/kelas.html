@@ -62,7 +62,30 @@
                 </td>
                 <td class="btn-toolbar" style="justify-content: center">
                     <a th:href = "@{/kelas/ubah/} + ${kelas.idKelas}" class = "btn btn-outline-primary mr-2 mb-2">Ubah</a>
-                    <a th:href = "@{/kelas/hapus/} + ${kelas.idKelas}" class="btn btn-danger mr-2 mb-2">Hapus</a>
+                    <a class="btn btn-danger mr-2 mb-2" data-toggle="modal" th:attr="data-target='#hapusKelasModal'+${iterStat.index }">Hapus</a>
+                    <div class="modal fade" th:id="'hapusKelasModal' + ${iterStat.index }" tabindex="-1" role="dialog" aria-labelledby="hapusKelasModalLabel" aria-hidden="true">-->
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="hapusKelasModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h2 style="font-weight: bold; text-align: center;" th:text="'Apakah Anda yakin ingin menghapus kelas ' + ${kelas.namaKelas} + '?'"></h2>
+                                </div>
+                                <div class="modal-footer">
+                                    <a th:href="@{/kelas/hapus/} + ${kelas.idKelas}" class="btn btn-outline-secondary" >
+                                        <span>Hapus</span>
+                                    </a>
+                                    <button type="button" data-dismiss="modal" class="btn btn-danger">
+                                        <span>Batal</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             </tbody>

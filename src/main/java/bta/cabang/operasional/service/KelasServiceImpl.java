@@ -60,8 +60,8 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public List<UserModel> getAllPengajar(Long idRolePengajar) {
-        return userDb.findAllByRole_IdRole(idRolePengajar);
+    public List<UserModel> getAllPengajar() {
+        return userDb.findAllByRole_IdRole(5L);
     }
 
     @Override

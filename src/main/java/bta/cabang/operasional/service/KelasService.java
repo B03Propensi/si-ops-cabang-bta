@@ -14,7 +14,7 @@ public interface KelasService {
     void addKelas(KelasModel kelas);
     KelasModel editKelas(Long idKelas, KelasModel kelas);
     void deleteKelas(Long idKelas);
-    List<UserModel> getAllPengajar(Long idRolePengajar);
+    List<UserModel> getAllPengajar();
     KelasModel editPengajar(Long idKelas, KelasModel kelasUpdate);
     List<List<KelasModel>> getRowKelas(List<List<KelasModel>> allKelas, String waktu);
     List<List<KelasModel>> getAllCells();
