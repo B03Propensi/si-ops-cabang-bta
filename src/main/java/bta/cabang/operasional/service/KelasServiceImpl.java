@@ -50,8 +50,20 @@ public class KelasServiceImpl implements KelasService {
         kelas.setBidang(kelasUpdate.getBidang());
         kelas.setCabang(kelasUpdate.getCabang());
         kelas.setHari(kelasUpdate.getHari());
-        kelas.setWaktu(kelasUpdate.getWaktu());
+        kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
+        kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
         return kelasDb.save(kelas);
+    }
+
+    @Override
+    public void addJadwal(KelasModel kelasUpdate) {
+        KelasModel kelas = getKelas(kelasUpdate.getIdKelas());
+        kelas.setHari(kelasUpdate.getHari());
+        kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
+        kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        kelasDb.save(kelas);
     }
 
     @Override
@@ -141,5 +153,31 @@ public class KelasServiceImpl implements KelasService {
         listWaktu.add(java.sql.Time.valueOf("17:00:00"));
 
         return listWaktu;
+    }
+
+    @Override
+    public Time generateWaktu(Time waktuMulai) {
+        if (java.sql.Time.valueOf("17:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("17:00:00");
+        } else if (java.sql.Time.valueOf("16:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("16:00:00");
+        } else if (java.sql.Time.valueOf("15:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("15:00:00");
+        } else if (java.sql.Time.valueOf("14:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("14:00:00");
+        } else if (java.sql.Time.valueOf("13:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("13:00:00");
+        } else if (java.sql.Time.valueOf("12:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("12:00:00");
+        } else if (java.sql.Time.valueOf("11:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("11:00:00");
+        } else if (java.sql.Time.valueOf("10:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("10:00:00");
+        } else if (java.sql.Time.valueOf("09:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("09:00:00");
+        } else if (java.sql.Time.valueOf("08:00:00").compareTo(waktuMulai) <= 0) {
+            return java.sql.Time.valueOf("08:00:00");
+        }
+        return null;
     }
 }

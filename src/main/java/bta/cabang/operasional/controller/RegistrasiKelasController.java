@@ -91,7 +91,8 @@ public class RegistrasiKelasController {
     ) {
         try {
             kelasService.editKelas(idKelas, kelas);
-            return "redirect:/kelas/" + kelas.getIdKelas();
+            redirectAttrs.addFlashAttribute("alert", "editSuccess");
+            return "redirect:/kelas/";
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("alert", "editFail");
             return "redirect:/kelas";

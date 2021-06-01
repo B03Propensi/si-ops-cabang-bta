@@ -30,12 +30,20 @@ public class KelasModel implements Serializable {
 
     @NotNull
     @Size(max = 6)
-    @Column(name = "hari", nullable = false)
+    @Column(name = "hari")
     private String hari;
 
     @NotNull
-    @Column(name = "waktu", nullable = false)
+    @Column(name = "waktu")
     private Time waktu;
+
+    @NotNull
+    @Column(name = "waktu_mulai")
+    private Time waktuMulai;
+
+    @NotNull
+    @Column(name = "waktu_selesai")
+    private Time waktuSelesai;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cabang", referencedColumnName = "id_cabang", nullable = false)
@@ -103,5 +111,21 @@ public class KelasModel implements Serializable {
 
     public void setPengajar(UserModel pengajar) {
         this.pengajar = pengajar;
+    }
+
+    public Time getWaktuMulai() {
+        return waktuMulai;
+    }
+
+    public void setWaktuMulai(Time waktuMulai) {
+        this.waktuMulai = waktuMulai;
+    }
+
+    public Time getWaktuSelesai() {
+        return waktuSelesai;
+    }
+
+    public void setWaktuSelesai(Time waktuSelesai) {
+        this.waktuSelesai = waktuSelesai;
     }
 }

@@ -13,28 +13,14 @@
     <div class="container">
         <!--Isi di sini-->
         <div class="btacard">
-            <form th:action="@{/jadwal/tambah/}" th:object="${kelasBaru}" method="POST">
+            <form th:action="@{/jadwal/tambah/}" th:object="${jadwalBaru}" method="POST">
                 <h6>Nama Kelas</h6>
-                <input name="namaKelas" type="text" class="form-control" placeholder="contoh: Biologi 1">
-                <h6 style="margin-top: 10px;">Bidang</h6>
-                <select name="bidang" class="form-control" aria-label="Default select example">
-                    <option value="" disabled selected>Pilih Bidang...</option>
-                    <option value="Biologi">Biologi</option>
-                    <option value="Fisika">Fisika</option>
-                    <option value="Kimia">Kimia</option>
-                    <option value="Ekonomi">Ekonomi</option>
-                    <option value="Geografi">Geografi</option>
-                    <option value="Sosiologi">Sosiologi</option>
-                    <option value="Sejarah">Sejarah</option>
-                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                    <option value="Bahasa Inggris">Bahasa Inggris</option>
-                    <option value="Matematika">Matematika</option>
+                <select name="idKelas" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Kelas...</option>
+                    <option th:each="kelas : ${listKelas}" th:value="${kelas.idKelas}" th:text="${kelas.namaKelas}"></option>
                 </select>
-                <h6 style="margin-top: 10px;">Cabang</h6>
-                <select name="cabang" class="form-control" aria-label="Default select example">
-                    <option value="" disabled selected>Pilih Cabang...</option>
-                    <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
-                </select>
+                <input type="hidden" th:field="*{namaKelas}">
+                <input type="hidden" th:field="*{bidang}">
                 <h6 style="margin-top: 10px;">Hari</h6>
                 <select name="hari" class="form-control" aria-label="Default select example">
                     <option value="" disabled selected>Pilih Hari...</option>
@@ -45,11 +31,12 @@
                     <option value="Jumat">Jumat</option>
                     <option value="Sabtu">Sabtu</option>
                 </select>
-                <h6 style="margin-top: 10px;">Waktu</h6>
-                <select name="waktu" class="form-control" aria-label="Default select example">
-                    <option value="" disabled selected>Pilih Waktu...</option>
-                    <option th:each="waktu : ${listWaktu}" th:value="${waktu}" th:text="${waktu}"></option>
-                </select>
+                <h6 style="margin-top: 10px;">Waktu Mulai</h6>
+                <input type="time" name="waktuMulai" class="form-control"
+                       min="08:00" max="18:00" required>
+                <h6 style="margin-top: 10px;">Waktu Selesai</h6>
+                <input type="time" name="waktuSelesai" class="form-control"
+                       min="08:00" max="18:00" required>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a th:href="@{/jadwal/}" type="button" class="btn btn-outline-danger">Batal</a>

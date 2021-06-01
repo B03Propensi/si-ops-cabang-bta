@@ -54,12 +54,13 @@ public class JadwalController {
 
     @PostMapping("/jadwal/tambah")
     public String tambahJadwal(
-            @ModelAttribute KelasModel kelasBaru,
-            Model model,
+            @ModelAttribute KelasModel jadwalBaru,
             RedirectAttributes redirectAttrs
     ) {
         try {
-            kelasService.addKelas(kelasBaru);
+            Time waktu = kelasService.generateWaktu(jadwalBaru.getWaktuMulai());
+            jadwalBaru.setWaktu(waktu);
+            kelasService.addJadwal(jadwalBaru);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/jadwal";
 
@@ -71,13 +72,13 @@ public class JadwalController {
 
     @GetMapping("/jadwal/tambah")
     public String tambahJadwalForm(Model model) {
-        KelasModel kelasBaru = new KelasModel();
-        List<Time> listWaktu = kelasService.getListWaktu();
-        List<CabangModel> listCabang = cabangService.getCabangList();
+        KelasModel jadwalBaru = new KelasModel();
+        jadwalBaru.setNamaKelas("Dummy");
+        jadwalBaru.setBidang("Dummy");
+        List<KelasModel> listKelas = kelasService.getAllKelas();
 
-        model.addAttribute("kelasBaru", kelasBaru);
-        model.addAttribute("listWaktu", listWaktu);
-        model.addAttribute("listCabang", listCabang);
+        model.addAttribute("jadwalBaru", jadwalBaru);
+        model.addAttribute("listKelas", listKelas);
         return "form-tambahJadwal";
     }
 
@@ -89,11 +90,9 @@ public class JadwalController {
         KelasModel kelas = kelasService.getKelas(idKelas);
         System.out.println(idKelas);
         System.out.println(kelas.getNamaKelas());
-        List<Time> listWaktu = kelasService.getListWaktu();
         List<CabangModel> listCabang = cabangService.getCabangList();
 
         model.addAttribute("kelas", kelas);
-        model.addAttribute("listWaktu", listWaktu);
         model.addAttribute("listCabang", listCabang);
 
         return "form-ubahJadwal";
