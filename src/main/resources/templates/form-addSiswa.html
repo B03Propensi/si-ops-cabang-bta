@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Siswa</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
+<div th:replace="fragments/fragment :: navbar('Cuti')"></div>
+<div class="main">
+    <div class="container">
+        <h1>Tambah Siswa</h1><br>
+        <div class="btacard" style="width: 50%">
+            <h1 align="center">Form Tambah Siswa</h1><br>
+            <h2>A. Informasi Pribadi Siswa</h2>
+            <form th:action="@{/siswa/add}" th:object = "${siswa}" method = "POST">
+                <div class="row">
+                    <div class="col">
+                        <p>Nama Siswa: <span style="color: red">*</span></p>
+                        <input required type="text" class="form-control" name="namaSiswa">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Tanggal Lahir: <span style="color: red">*</span></p>
+                        <input required type="date" class="form-control" name="tanggalLahir">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Asal Sekolah: <span style="color: red">*</span></p>
+                        <input required type="text" class="form-control" name="asalSekolah">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Email Siswa: <span style="color: red">*</span></p>
+                        <input required type="email" class="form-control" name="emailSiswa">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>HP Siswa: <span style="color: red">*</span></p>
+                        <input required type="text" class="form-control" name="hpSiswa">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Alamat: <span style="color: red">*</span></p>
+                        <textarea required type="text" class="form-control" name="alamatSiswa"
+                                  rows="3" maxlength="255"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Nama Orang Tua: <span style="color: red">*</span></p>
+                        <input required type="text" class="form-control" name="namaOrtu">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>HP Orang Tua: <span style="color: red">*</span></p>
+                        <input required type="text" class="form-control" name="hpOrtu">
+                    </div>
+                </div>
+                <br>
+
+                <h2>B. Informasi Program Siswa</h2>
+                <div class="row">
+                    <div class="col">
+                        <p>Cabang: <span style="color: red">*</span></p>
+                        <select class="form-control" name="cabangSiswa">
+                            <option th:each="cabang : ${listCabang}" th:value="${cabang.id_cabang}" th:text="${cabang.nama_cabang}"></option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Program: <span style="color: red">*</span></p>
+                        <select class="form-control" name="program">
+                            <option th:each="program : ${listProgram}" th:value="${program.idProgram}" th:text="${program.namaProgram}"></option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-sm btn-primary">Kirim</button>
+                    <a href="/siswa" class="btn btn-sm btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

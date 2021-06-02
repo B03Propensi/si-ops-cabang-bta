@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Siswa</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Siswa')"></div>
+<div th:replace="fragments/fragment :: navbar('Siswa')"></div>
+<div class="main">
+    <div class="container">
+
+        <div>
+            <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Siswa Baru</h1>
+        </div>
+
+        <a th:href="@{/siswa/add/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Siswa</a>
+
+        <div>
+            <table class="btatable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Siswa</th>
+                    <th>Asal Sekolah</th>
+                    <th>Tanggal Pendaftaran</th>
+                    <th>Program</th>
+                    <!--                    <th>Invoice</th>-->
+                    <!--                    <th>Status Pembayaran</th>-->
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="siswa, iterationStatus: ${listSiswa}">
+                    <td>
+                        <p th:text="${siswa.idSiswa}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${siswa.namaSiswa}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${siswa.asalSekolah}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${siswa.tanggalDaftar}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${siswa.program.namaProgram}"></p>
+                    </td>
+                    <!--                    <td>-->
+                    <!--                        <p th:text="${invoice.idInvoice}"></p>-->
+                    <!--                    </td>-->
+                    <!--                    <td>-->
+                    <!--                        <p th:if="${siswa.status} == 1" class="badge-menunggu">Belum Lunas</p>-->
+                    <!--                        <p th:if="${siswa.status} == 2" class="badge-disetujui">Sudah Lunas</p>-->
+                    <!--                    </td>-->
+                    <td>
+                        <a th:href="@{/siswa/} + ${siswa.idSiswa}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>
