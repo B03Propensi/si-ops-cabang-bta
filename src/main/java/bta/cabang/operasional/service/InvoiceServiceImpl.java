@@ -17,5 +17,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void addInvoice(InvoiceModel invoice) {
-        invoiceDb.save(invoice); }
+        invoiceDb.save(invoice);
+    }
+
+    @Override
+    public InvoiceModel getInvoiceByIdSiswa(Long idSiswa) {
+        return invoiceDb.findInvoiceBySiswaInvoice_IdSiswa(idSiswa).get();
+    }
 }
