@@ -99,6 +99,7 @@ public class SiswaModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PembayaranModel pembayaran;
 
+
     public Long getIdSiswa() {
         return idSiswa;
     }

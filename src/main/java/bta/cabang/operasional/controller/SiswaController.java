@@ -1,13 +1,8 @@
 package bta.cabang.operasional.controller;
 
-import bta.cabang.operasional.model.InvoiceModel;
-import bta.cabang.operasional.model.KelasModel;
-import bta.cabang.operasional.model.SiswaModel;
+import bta.cabang.operasional.model.*;
 import bta.cabang.operasional.security.AuthService;
-import bta.cabang.operasional.service.CabangService;
-import bta.cabang.operasional.service.InvoiceService;
-import bta.cabang.operasional.service.ProgramService;
-import bta.cabang.operasional.service.SiswaService;
+import bta.cabang.operasional.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -33,6 +28,9 @@ public class SiswaController {
 
     @Autowired
     CabangService cabangService;
+
+    @Autowired
+    KuitansiService kuitansiService;
 
     @Autowired
     AuthService authService;
@@ -85,15 +83,29 @@ public class SiswaController {
         }
     }
 
-//    @GetMapping("/siswa/{idSiswa}/pembayaran")
-//    public String siswaPembayaran(
-//            @PathVariable Long idSiswa,
-//            Model model,
-//            RedirectAttributes redirectAttrs
-//    ) {
-//        model.addAttribute("siswa", new SiswaModel());
-//        model.addAttribute("listCabang", cabangService.getCabangList());
-//        model.addAttribute("listProgram", programService.getAllProgram());
-//        return "form-siswaPembayaran";
-//    }
+    @GetMapping("/siswa/{idSiswa}/pembayaran")
+    public String siswaPembayaran(
+            @PathVariable Long idSiswa,
+            Model model,
+            RedirectAttributes redirectAttrs
+    ) {
+        model.addAttribute("siswa", new SiswaModel());
+        model.addAttribute("listCabang", cabangService.getCabangList());
+        model.addAttribute("listProgram", programService.getAllProgram());
+        return "form-siswaPembayaran";
+    }
+
+    @PostMapping("siswa/{idSiswa}/kuitansi")
+    public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
+        KuitansiModel kuitansi = new KuitansiModel();
+        kuitansi.setSiswaKuitansi(kuitansi);
+        kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
+        kuitansi.setProgramKuitansi(siswa.getProgram());
+        kuitansiService.addKuitansi(kuitansi);
+
+        siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(kuitansi.getIdSiswa()));
+        model.addAttribute("siswa", siswa);
+        model.addAttribute("kuitansi", kuitansi);
+        return "kuitansi";
+    }
 }

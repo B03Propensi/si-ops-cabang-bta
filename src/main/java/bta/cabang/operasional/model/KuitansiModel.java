@@ -43,6 +43,16 @@ public class KuitansiModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserModel pembuatKuitansi;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "siswa_kuitansi", referencedColumnName = "id_siswa", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private SiswaModel siswaKuitansi;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "program_kuitansi", referencedColumnName = "id_program", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private ProgramModel programKuitansi;
+
     public Long getIdKuitansi() {
         return idKuitansi;
     }
@@ -81,5 +91,21 @@ public class KuitansiModel implements Serializable {
 
     public void setPembuatKuitansi(UserModel pembuatKuitansi) {
         this.pembuatKuitansi = pembuatKuitansi;
+    }
+
+    public SiswaModel getSiswaKuitansi() {
+        return siswaKuitansi;
+    }
+
+    public void setSiswaKuitansi(SiswaModel siswaKuitansi) {
+        this.siswaKuitansi = siswaKuitansi;
+    }
+
+    public ProgramModel getProgramKuitansi() {
+        return programKuitansi;
+    }
+
+    public void setProgramKuitansi(ProgramModel programKuitansi) {
+        this.programKuitansi = programKuitansi;
     }
 }

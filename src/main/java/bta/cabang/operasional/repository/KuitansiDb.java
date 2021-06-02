@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface KuitansiDb extends JpaRepository<KuitansiModel, Long> {
     Optional<KuitansiModel> findKuitansiByIdKuitansi(Long idKuitansi);
+    Optional<KuitansiModel> findKuitansiBySiswaKuitansi_IdSiswa(Long idSiswa);
 }

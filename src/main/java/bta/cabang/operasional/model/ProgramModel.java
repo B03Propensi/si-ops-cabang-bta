@@ -40,6 +40,10 @@ public class ProgramModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<InvoiceModel> invoiceProgram;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<KuitansiModel> kuitansiProgram;
+
     public Long getIdProgram() {
         return idProgram;
     }
@@ -78,5 +82,13 @@ public class ProgramModel implements Serializable {
 
     public void setInvoiceProgram(List<InvoiceModel> invoiceProgram) {
         this.invoiceProgram = invoiceProgram;
+    }
+
+    public List<KuitansiModel> getKuitansiProgram() {
+        return kuitansiProgram;
+    }
+
+    public void setKuitansiProgram(List<KuitansiModel> kuitansiProgram) {
+        this.kuitansiProgram = kuitansiProgram;
     }
 }
