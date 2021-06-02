@@ -52,6 +52,12 @@ public class CabangModel implements Serializable {
     @JsonIgnore
     private List<KelasModel> listKelas;
 
+    @Size(max = 30)
+    @Column(name = "nomor_rekening",unique = true)
+    private String nomor_rekening;
+
+    @Column(name = "bank_cabang")
+    private String bank_cabang;
 
     public Long getId_cabang() {
         return id_cabang;
@@ -116,5 +122,21 @@ public class CabangModel implements Serializable {
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
+    }
+
+    public String getNomor_rekening() {
+        return nomor_rekening;
+    }
+
+    public void setNomor_rekening(String nomor_rekening) {
+        this.nomor_rekening = nomor_rekening;
+    }
+
+    public String getBank_cabang() {
+        return bank_cabang;
+    }
+
+    public void setBank_cabang(String bank_cabang) {
+        this.bank_cabang = bank_cabang;
     }
 }
