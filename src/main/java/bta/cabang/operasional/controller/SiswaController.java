@@ -61,6 +61,7 @@ public class SiswaController {
         invoice.setProgramInvoice(siswa.getProgram());
         invoiceService.addInvoice(invoice);
 
+        siswa.setInvoice(invoiceService.getInvoiceByIdSiswa(siswa.getIdSiswa()));
         siswaService.addSiswa(siswa);
         model.addAttribute("siswa", siswa);
         model.addAttribute("invoice", invoice);
