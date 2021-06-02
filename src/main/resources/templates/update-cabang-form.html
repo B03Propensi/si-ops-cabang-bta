@@ -37,6 +37,34 @@
                 <br>
                 <div class="row">
                     <div class="col">
+                        <p> Email </p>
+                        <input  type="text" th:field="*{email}" class="form-control"  name="email" placeholder="email"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Nomor Telepon </p>
+                        <input  type="text" th:field="*{nomor_telepon}" class="form-control"  name="nomor_telepon" placeholder="nomor_telepon"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Nomor Rekening Cabang </p>
+                        <input  type="text" th:field="*{nomor_rekening}" class="form-control"  name="kode_cabang" placeholder="nomor_rekening"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Bank  Cabang </p>
+                        <input  type="text" th:field="*{nomor_rekening}" class="form-control"  name="kode_cabang" placeholder="bank_cabang"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
                         <p>Alamat</p>
                         <textarea required type="text" th:field="*{alamat}" class="form-control" name="alamat"
                                   rows="3" placeholder="Alamat Cabang" minlength="20"></textarea>

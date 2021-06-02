@@ -74,6 +74,12 @@ public class UserModel implements Serializable {
     @JsonIgnore
     private List<CutiModel> listCuti;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<PresensiModel> listPresensi;
+
+
     public Long getIdUser() {
         return idUser;
     }
@@ -160,5 +166,13 @@ public class UserModel implements Serializable {
 
     public void setListCuti(List<CutiModel> listCuti) {
         this.listCuti = listCuti;
+    }
+
+    public List<PresensiModel> getListPresensi() {
+        return listPresensi;
+    }
+
+    public void setListPresensi(List<PresensiModel> listPresensi) {
+        this.listPresensi = listPresensi;
     }
 }
