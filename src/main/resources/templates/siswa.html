@@ -11,13 +11,14 @@
 <div th:replace="fragments/fragment :: navbar('Siswa')"></div>
 <div class="main">
     <div class="container">
+
         <div>
             <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Siswa Baru</h1>
         </div>
+
         <a th:href="@{/siswa/add/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Siswa</a>
 
         <div>
-
             <table class="btatable">
                 <thead>
                 <tr>
@@ -50,7 +51,7 @@
                         <p th:text="${siswa.program.namaProgram}"></p>
                     </td>
 <!--                    <td>-->
-<!--                        <p th:text="${siswa.invoice.idInvoice}"></p>-->
+<!--                        <p th:text="${invoice.idInvoice}"></p>-->
 <!--                    </td>-->
 <!--                    <td>-->
 <!--                        <p th:if="${siswa.status} == 1" class="badge-menunggu">Belum Lunas</p>-->

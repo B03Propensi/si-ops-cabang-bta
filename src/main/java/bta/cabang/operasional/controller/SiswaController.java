@@ -83,4 +83,16 @@ public class SiswaController {
             return "redirect:/siswa";
         }
     }
+
+//    @GetMapping("/siswa/{idSiswa}/pembayaran")
+//    public String siswaPembayaran(
+//            @PathVariable Long idSiswa,
+//            Model model,
+//            RedirectAttributes redirectAttrs
+//    ) {
+//        model.addAttribute("siswa", new SiswaModel());
+//        model.addAttribute("listCabang", cabangService.getCabangList());
+//        model.addAttribute("listProgram", programService.getAllProgram());
+//        return "form-siswaPembayaran";
+//    }
 }
