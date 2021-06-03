@@ -55,9 +55,22 @@ public class JadwalController {
     @PostMapping("/jadwal/tambah")
     public String tambahJadwal(
             @ModelAttribute KelasModel jadwalBaru,
+            @ModelAttribute String dummyWaktuMulai,
+            @ModelAttribute String dummyWaktuSelesai,
+            @ModelAttribute String hari,
             RedirectAttributes redirectAttrs
     ) {
         try {
+            System.out.println(jadwalBaru.getNamaKelas());
+            System.out.println(dummyWaktuMulai);
+            System.out.println(dummyWaktuSelesai);
+            System.out.println(hari);
+            jadwalBaru.setWaktuMulai(java.sql.Time.valueOf(dummyWaktuMulai));
+            jadwalBaru.setWaktuSelesai(java.sql.Time.valueOf(dummyWaktuSelesai));
+            jadwalBaru.setHari(hari);
+            System.out.println(jadwalBaru.getWaktuMulai());
+            System.out.println(jadwalBaru.getWaktuSelesai());
+            System.out.println(jadwalBaru.getHari());
             Time waktu = kelasService.generateWaktu(jadwalBaru.getWaktuMulai());
             jadwalBaru.setWaktu(waktu);
             kelasService.addJadwal(jadwalBaru);
@@ -73,12 +86,13 @@ public class JadwalController {
     @GetMapping("/jadwal/tambah")
     public String tambahJadwalForm(Model model) {
         KelasModel jadwalBaru = new KelasModel();
-        jadwalBaru.setNamaKelas("Dummy");
-        jadwalBaru.setBidang("Dummy");
         List<KelasModel> listKelas = kelasService.getAllKelas();
 
         model.addAttribute("jadwalBaru", jadwalBaru);
         model.addAttribute("listKelas", listKelas);
+        model.addAttribute("hari", "");
+        model.addAttribute("dummyWaktuMulai", "");
+        model.addAttribute("dummyWaktuSelesai", "");
         return "form-tambahJadwal";
     }
 
