@@ -89,9 +89,9 @@ public class SiswaController {
             Model model,
             RedirectAttributes redirectAttrs
     ) {
-        model.addAttribute("siswa", new SiswaModel());
-        model.addAttribute("listCabang", cabangService.getCabangList());
-        model.addAttribute("listProgram", programService.getAllProgram());
+        model.addAttribute("kuitansi", new KuitansiModel());
+//        model.addAttribute("listCabang", cabangService.getCabangList());
+//        model.addAttribute("listProgram", programService.getAllProgram());
         return "form-siswaPembayaran";
     }
 

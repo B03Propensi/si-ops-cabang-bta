@@ -33,6 +33,12 @@ public class KuitansiModel implements Serializable {
     private String nominalKuitansi;
 
     @NotNull
+    @Column(name = "tanggal_pembayaran", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Jakarta")
+    private Date tanggalPembayaran;
+
+    @NotNull
     @Column(name = "tanggal_kuitansi", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Jakarta")
@@ -52,6 +58,7 @@ public class KuitansiModel implements Serializable {
     @JoinColumn(name = "program_kuitansi", referencedColumnName = "id_program", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ProgramModel programKuitansi;
+
 
     public Long getIdKuitansi() {
         return idKuitansi;
@@ -107,5 +114,13 @@ public class KuitansiModel implements Serializable {
 
     public void setProgramKuitansi(ProgramModel programKuitansi) {
         this.programKuitansi = programKuitansi;
+    }
+
+    public Date getTanggalPembayaran() {
+        return tanggalPembayaran;
+    }
+
+    public void setTanggalPembayaran(Date tanggalPembayaran) {
+        this.tanggalPembayaran = tanggalPembayaran;
     }
 }
