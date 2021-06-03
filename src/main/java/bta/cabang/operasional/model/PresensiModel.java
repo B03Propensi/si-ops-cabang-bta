@@ -42,7 +42,12 @@ public class PresensiModel implements Serializable {
     @JsonIgnore
     CabangModel lokasi;
 
-    public Integer getIdPresensi(){
+	@Column(name = "alasan", nullable = false)
+	private String alasan;
+
+
+
+	public Integer getIdPresensi(){
         return this.idPresensi;
     }
 
@@ -89,5 +94,14 @@ public class PresensiModel implements Serializable {
 	public void setLokasi(CabangModel lokasi) {
 		this.lokasi = lokasi;
 	}
+
+	public String getAlasan() {
+		return alasan;
+	}
+
+	public void setAlasan(String alasan) {
+		this.alasan = alasan;
+	}
+
 
 }
