@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Time;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class JadwalController {
     private CabangService cabangService;
 
     @GetMapping("/jadwal")
-    public String viewAllJadwal(Model model) {
+    public String viewAllJadwal(Model model) throws Exception {
         List<List<KelasModel>> cells = kelasService.getAllCells();
         model.addAttribute("cells", cells);
 
@@ -57,22 +59,22 @@ public class JadwalController {
             @ModelAttribute KelasModel jadwalBaru,
             @ModelAttribute String dummyWaktuMulai,
             @ModelAttribute String dummyWaktuSelesai,
-            @ModelAttribute String hari,
+//            @ModelAttribute String hari,
             RedirectAttributes redirectAttrs
     ) {
         try {
-            System.out.println(jadwalBaru.getNamaKelas());
-            System.out.println(dummyWaktuMulai);
-            System.out.println(dummyWaktuSelesai);
-            System.out.println(hari);
-            jadwalBaru.setWaktuMulai(java.sql.Time.valueOf(dummyWaktuMulai));
-            jadwalBaru.setWaktuSelesai(java.sql.Time.valueOf(dummyWaktuSelesai));
-            jadwalBaru.setHari(hari);
-            System.out.println(jadwalBaru.getWaktuMulai());
-            System.out.println(jadwalBaru.getWaktuSelesai());
+            System.out.println(jadwalBaru.getIdKelas());
+//            System.out.println(java.sql.Time.valueOf(jadwalBaru.getWaktuMulai());
+//            System.out.println(java.sql.Time.valueOf(dummyWaktuSelesai));
             System.out.println(jadwalBaru.getHari());
-            Time waktu = kelasService.generateWaktu(jadwalBaru.getWaktuMulai());
-            jadwalBaru.setWaktu(waktu);
+//            jadwalBaru.setWaktuMulai(java.sql.Time.valueOf(dummyWaktuMulai));
+//            jadwalBaru.setWaktuSelesai(java.sql.Time.valueOf(dummyWaktuSelesai));
+//            jadwalBaru.setHari(jadwalBaru.getHari());
+//            System.out.println(jadwalBaru.getWaktuMulai());
+//            System.out.println(jadwalBaru.getWaktuSelesai());
+//            System.out.println(jadwalBaru.getHari());
+//            Time waktu = kelasService.generateWaktu(jadwalBaru.getWaktuMulai());
+//            jadwalBaru.setWaktu(waktu);
             kelasService.addJadwal(jadwalBaru);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/jadwal";
@@ -90,9 +92,6 @@ public class JadwalController {
 
         model.addAttribute("jadwalBaru", jadwalBaru);
         model.addAttribute("listKelas", listKelas);
-        model.addAttribute("hari", "");
-        model.addAttribute("dummyWaktuMulai", "");
-        model.addAttribute("dummyWaktuSelesai", "");
         return "form-tambahJadwal";
     }
 

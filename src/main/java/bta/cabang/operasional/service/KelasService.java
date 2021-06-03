@@ -5,6 +5,7 @@ import bta.cabang.operasional.model.KelasModel;
 import bta.cabang.operasional.model.UserModel;
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 public interface KelasService {
@@ -12,14 +13,14 @@ public interface KelasService {
     KelasModel getKelasByNamaKelas(String namaKelas);
     List<KelasModel> getAllKelas();
     void addKelas(KelasModel kelas);
-    void addJadwal(KelasModel kelas);
+    void addJadwal(KelasModel kelas) throws Exception;
     KelasModel editKelas(Long idKelas, KelasModel kelas);
     void deleteKelas(Long idKelas);
     List<UserModel> getAllPengajar();
     KelasModel editPengajar(Long idKelas, KelasModel kelasUpdate);
-    List<List<KelasModel>> getRowKelas(List<List<KelasModel>> allKelas, String waktu);
-    List<List<KelasModel>> getAllCells();
-    List<Time> getListWaktu();
-    Time generateWaktu(Time waktuMulai);
+    List<List<KelasModel>> getRowKelas(List<List<KelasModel>> allKelas, String waktu) throws Exception;
+    List<List<KelasModel>> getAllCells() throws Exception;
+    List<Date> getListWaktu() throws Exception;
+    Date generateWaktu(Date waktuMulai) throws Exception;
 
 }

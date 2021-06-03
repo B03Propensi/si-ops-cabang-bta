@@ -13,14 +13,16 @@
     <div class="container">
         <!--Isi di sini-->
         <div class="btacard">
-            <form th:action="@{/jadwal/tambah/}" method="POST">
+            <form th:action="@{/jadwal/tambah/}" th:object="${jadwalBaru}" method="POST">
                 <h6>Nama Kelas</h6>
-                <select th:name="${jadwalBaru}" class="form-control" aria-label="Default select example">
+                <select name="idKelas" class="form-control" aria-label="Default select example">
                     <option value="" disabled selected>Pilih Kelas...</option>
                     <option th:each="kelas : ${listKelas}" th:value="${kelas.idKelas}" th:text="${kelas.namaKelas}"></option>
                 </select>
+                <input type="hidden" th:field="*{namaKelas}">
+                <input type="hidden" th:field="*{bidang}">
                 <h6 style="margin-top: 10px;">Hari</h6>
-                <select th:name="${hari}" class="form-control" aria-label="Default select example">
+                <select name="hari" class="form-control" aria-label="Default select example" required>
                     <option value="" disabled selected>Pilih Hari...</option>
                     <option value="Senin">Senin</option>
                     <option value="Selasa">Selasa</option>
@@ -30,10 +32,10 @@
                     <option value="Sabtu">Sabtu</option>
                 </select>
                 <h6 style="margin-top: 10px;">Waktu Mulai</h6>
-                <input type="time" th:name="${dummyWaktuMulai}" class="form-control"
+                <input type="time" name="waktuMulai" th:text="${#dates.format(standardDate, 'HH:mm')}" th:value="*{#dates.format(waktuMulai, 'HH:mm')}" class="form-control"
                        min="08:00" max="18:00" required>
                 <h6 style="margin-top: 10px;">Waktu Selesai</h6>
-                <input type="time" th:name="${dummyWaktuSelesai}" class="form-control"
+                <input type="time" name="waktuSelesai" th:text="${#dates.format(standardDate, 'HH:mm')}" th:value="*{#dates.format(waktuMulai, 'HH:mm')}" class="form-control"
                        min="08:00" max="18:00" required>
                 <div style="text-align: right;  margin-top: 20px;">
                     <button type="submit" class="btn btn-primary">Simpan</button>

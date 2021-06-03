@@ -3,10 +3,12 @@ package bta.cabang.operasional.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,20 +32,26 @@ public class KelasModel implements Serializable {
 
     @NotNull
     @Size(max = 6)
-    @Column(name = "hari")
+    @Column(name = "hari", nullable = true)
     private String hari;
 
     @NotNull
-    @Column(name = "waktu")
-    private Time waktu;
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
+    @Column(name = "waktu", nullable = true)
+    private Date waktu;
 
     @NotNull
-    @Column(name = "waktu_mulai")
-    private Time waktuMulai;
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
+    @Column(name = "waktu_mulai", nullable = true)
+    private Date waktuMulai;
 
     @NotNull
-    @Column(name = "waktu_selesai")
-    private Time waktuSelesai;
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
+    @Column(name = "waktu_selesai", nullable = true)
+    private Date waktuSelesai;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_cabang", referencedColumnName = "id_cabang", nullable = false)
@@ -89,11 +97,11 @@ public class KelasModel implements Serializable {
         this.hari = hari;
     }
 
-    public Time getWaktu() {
+    public Date getWaktu() {
         return waktu;
     }
 
-    public void setWaktu(Time waktu) {
+    public void setWaktu(Date waktu) {
         this.waktu = waktu;
     }
 
@@ -113,19 +121,19 @@ public class KelasModel implements Serializable {
         this.pengajar = pengajar;
     }
 
-    public Time getWaktuMulai() {
+    public Date getWaktuMulai() {
         return waktuMulai;
     }
 
-    public void setWaktuMulai(Time waktuMulai) {
+    public void setWaktuMulai(Date waktuMulai) {
         this.waktuMulai = waktuMulai;
     }
 
-    public Time getWaktuSelesai() {
+    public Date getWaktuSelesai() {
         return waktuSelesai;
     }
 
-    public void setWaktuSelesai(Time waktuSelesai) {
+    public void setWaktuSelesai(Date waktuSelesai) {
         this.waktuSelesai = waktuSelesai;
     }
 }

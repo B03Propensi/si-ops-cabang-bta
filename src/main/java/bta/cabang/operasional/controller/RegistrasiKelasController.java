@@ -40,15 +40,15 @@ public class RegistrasiKelasController {
             @ModelAttribute KelasModel kelasBaru,
             RedirectAttributes redirectAttrs
     ) {
-        try {
+//        try {
             kelasService.addKelas(kelasBaru);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/kelas";
 
-        } catch (Exception e) {
-            redirectAttrs.addFlashAttribute("alert", "addFail");
-            return "redirect:/kelas";
-        }
+//        } catch (Exception e) {
+//            redirectAttrs.addFlashAttribute("alert", "addFail");
+//            return "redirect:/kelas";
+//        }
     }
 
     @GetMapping("/kelas/tambah")
@@ -71,12 +71,12 @@ public class RegistrasiKelasController {
         KelasModel kelas = kelasService.getKelas(idKelas);
         System.out.println(idKelas);
         System.out.println(kelas.getNamaKelas());
-        List<Time> listWaktu = kelasService.getListWaktu();
+//        List<Time> listWaktu = kelasService.getListWaktu();
         List<CabangModel> listCabang = cabangService.getCabangList();
         List<UserModel> listPengajar = kelasService.getAllPengajar();
 
         model.addAttribute("kelas", kelas);
-        model.addAttribute("listWaktu", listWaktu);
+//        model.addAttribute("listWaktu", listWaktu);
         model.addAttribute("listCabang", listCabang);
         model.addAttribute("listPengajar", listPengajar);
 
@@ -90,6 +90,8 @@ public class RegistrasiKelasController {
             RedirectAttributes redirectAttrs
     ) {
         try {
+            System.out.println(kelas.getCabang().getNama_cabang());
+            System.out.println(idKelas);
             kelasService.editKelas(idKelas, kelas);
             redirectAttrs.addFlashAttribute("alert", "editSuccess");
             return "redirect:/kelas/";
