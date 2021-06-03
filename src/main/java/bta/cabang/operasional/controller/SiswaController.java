@@ -83,29 +83,29 @@ public class SiswaController {
         }
     }
 
-//    @GetMapping("/siswa/{idSiswa}/pembayaran")
-//    public String siswaPembayaran(
-//            @PathVariable Long idSiswa,
-//            Model model,
-//            RedirectAttributes redirectAttrs
-//    ) {
-//        model.addAttribute("siswa", new SiswaModel());
-//        model.addAttribute("listCabang", cabangService.getCabangList());
-//        model.addAttribute("listProgram", programService.getAllProgram());
-//        return "form-siswaPembayaran";
-//    }
-//
-//    @PostMapping("siswa/{idSiswa}/kuitansi")
-//    public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
-//        KuitansiModel kuitansi = new KuitansiModel();
-//        kuitansi.setSiswaKuitansi(kuitansi);
-//        kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
-//        kuitansi.setProgramKuitansi(siswa.getProgram());
-//        kuitansiService.addKuitansi(kuitansi);
-//
-//        siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(kuitansi.getIdSiswa()));
-//        model.addAttribute("siswa", siswa);
-//        model.addAttribute("kuitansi", kuitansi);
-//        return "kuitansi";
-//    }
+    @GetMapping("/siswa/{idSiswa}/pembayaran")
+    public String siswaPembayaran(
+            @PathVariable Long idSiswa,
+            Model model,
+            RedirectAttributes redirectAttrs
+    ) {
+        model.addAttribute("siswa", new SiswaModel());
+        model.addAttribute("listCabang", cabangService.getCabangList());
+        model.addAttribute("listProgram", programService.getAllProgram());
+        return "form-siswaPembayaran";
+    }
+
+    @PostMapping("siswa/{idSiswa}/kuitansi")
+    public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
+        KuitansiModel kuitansi = new KuitansiModel();
+        kuitansi.setSiswaKuitansi(kuitansi);
+        kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
+        kuitansi.setProgramKuitansi(siswa.getProgram());
+        kuitansiService.addKuitansi(kuitansi);
+
+        siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(siswa.getIdSiswa()));
+        model.addAttribute("siswa", siswa);
+        model.addAttribute("kuitansi", kuitansi);
+        return "kuitansi";
+    }
 }
