@@ -40,7 +40,7 @@ public class ProgramModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<InvoiceModel> invoiceProgram;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "programKuitansi", fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<KuitansiModel> kuitansiProgram;
 
