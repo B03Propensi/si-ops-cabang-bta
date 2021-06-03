@@ -56,4 +56,9 @@ public class PresensiServiceImpl implements PresensiService {
     public PresensiModel getPresensibyId(Integer id_presensi) {
        return presensiDb.findById(Long.valueOf(id_presensi)).get();
     }
+
+    @Override
+    public List<PresensiModel> getAllPresensiByUser(Long idUser) {
+        return presensiDb.findAllByUser_IdUser(idUser);
+    }
 }

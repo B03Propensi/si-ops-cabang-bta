@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface PresensiDb extends JpaRepository<PresensiModel, Long> {
     Optional<PresensiModel> findById(Long id);
+    List<PresensiModel> findAllByUser_IdUser(Long id_user);
     List<PresensiModel> findAllByUser(UserModel user);
     List<PresensiModel> findByLokasi(CabangModel lokasi);
     List<PresensiModel> findByUserAndLokasi(UserModel user, CabangModel lokasi);

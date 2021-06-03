@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div th:replace="fragments/fragment :: navbar('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <div>
+            <h4 style="font-family: Roboto;color: black;font-style: normal;font-size: 36px; font-weight: 900;line-height: 42px"> Presensi Baru </h4>
+        </div>
+
+            <div class="btacard" id="font-presensi" style="width: 70%" >
+                <br>
+            <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex; align-items: center"  > Formulir Presensi Baru</h2>
+            <br>
+            <br>
+            <form th:action="@{/presensi/add}" th:object = "${presensi}" method = "POST">
+                <div class="row">
+                    <div class="col-4">
+                        <p>Tanggal Absensi :</p>
+                    </div>
+                    <div class="col">
+                        <p th:text="${tanggal}"></p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-4">
+                        <p>Waktu Kehadiran :</p>
+                    </div>
+                    <div class="col">
+                        <p><span th:text="${waktu}"></span></p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-4">
+                        <p>Status Kehadiran :</p>
+                    </div>
+                    <div class="col">
+                        <p>
+                        <span th:if="${status} == 0" th:value="0" style="color: red" name="status" >Terlambat</span>
+                        <span th:if="${status} == 1" th:value="1" style="color: green" name="status">Hadir tepat waktu</span>
+                        </p>
+                    </div>
+                </div>
+                    <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Cabang </p>
+                        <select name="lokasi" class="form-control" aria-label="Default select example" style="width: 50%">
+                            <option value="" disabled selected>Pilih Cabang...</option>
+                            <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row" th:if="${isPengajar}">
+                    <div class="col">
+                        <p> Kelas </p>
+                        <select name="kelas" class="form-control" aria-label="Default select example" style="width: 50%">
+                            <option value="" disabled selected>Pilih Kelas...</option>
+                            <option th:each="i : ${listKelas}" th:value="${i.id_kelas}" th:text="${i.nama_kelas}"></option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Alasan: <span style="color: red">*</span></p>
+                        <textarea required type="text" class="form-control" name="alasan"
+                                  rows="3" placeholder="Alasan terlambat" maxlength="255" style="width: 70%"></textarea>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-sm btn-primary">Kirim</button>
+                    <a href="/presensi" class="btn btn-sm btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
