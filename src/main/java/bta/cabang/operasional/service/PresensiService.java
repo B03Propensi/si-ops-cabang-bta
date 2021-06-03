@@ -14,6 +14,7 @@ public interface PresensiService {
     PresensiModel updatePresensi(Integer id_presensi, PresensiModel presensiModel);
 
     List<PresensiModel> getPresensiList();
+    List<PresensiModel> getAllPresensiByUser(Long idUser);
 
     PresensiModel getPresensibyId(Integer id_presensi);
 }

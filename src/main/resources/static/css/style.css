@@ -115,6 +115,35 @@ body p {
     color: white;
 }
 
+#font-presensi {
+    font-family: "Times New Roman";
+    font-size: larger;
+    font-weight: bold;
+}
+.badge-hadir {
+    width: auto;
+    border-radius: 20px;
+    padding: 6px;
+    color: white;
+    background-color: #28a745;
+}
+
+.badge-terlambat {
+    width: auto;
+    border-radius: 20px;
+    padding: 6px;
+    color: white;
+    background-color: #ed1d24;
+}
+.presensi-alert .alert {
+    width: fit-content;
+    position: fixed;
+    left: 50%;
+    top: 140px;
+    font-size: 12px;
+    padding: 8px 15px;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}

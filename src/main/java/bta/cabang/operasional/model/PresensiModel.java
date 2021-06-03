@@ -28,7 +28,7 @@ public class PresensiModel implements Serializable {
 	@Column(name = "date")
     Timestamp date;
 
-	@NotNull
+//	@NotNull
 	@Column(name = "jabatan")
     String jabatan;
 
@@ -42,10 +42,20 @@ public class PresensiModel implements Serializable {
     @JsonIgnore
     CabangModel lokasi;
 
-	@Column(name = "alasan", nullable = false)
+	@Column(name = "alasan")
 	private String alasan;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_kelas", referencedColumnName = "id_kelas", nullable = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	KelasModel kelas;
 
+	@Column(name = "tanggal")
+	private String tanggal;
+
+	@Column(name = "waktu")
+	private String waktu;
 
 	public Integer getIdPresensi(){
         return this.idPresensi;
@@ -103,5 +113,27 @@ public class PresensiModel implements Serializable {
 		this.alasan = alasan;
 	}
 
+	public KelasModel getKelas() {
+		return kelas;
+	}
 
+	public void setKelas(KelasModel kelas) {
+		this.kelas = kelas;
+	}
+
+	public String getTanggal() {
+		return tanggal;
+	}
+
+	public void setTanggal(String tanggal) {
+		this.tanggal = tanggal;
+	}
+
+	public String getWaktu() {
+		return waktu;
+	}
+
+	public void setWaktu(String waktu) {
+		this.waktu = waktu;
+	}
 }
