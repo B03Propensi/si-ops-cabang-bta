@@ -98,7 +98,7 @@ public class SiswaController {
     @PostMapping("siswa/{idSiswa}/kuitansi")
     public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
         KuitansiModel kuitansi = new KuitansiModel();
-        kuitansi.setSiswaKuitansi(kuitansi);
+        kuitansi.setSiswaKuitansi(siswa);
         kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
         kuitansi.setProgramKuitansi(siswa.getProgram());
         kuitansiService.addKuitansi(kuitansi);
