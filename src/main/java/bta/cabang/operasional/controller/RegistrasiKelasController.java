@@ -145,11 +145,11 @@ public class RegistrasiKelasController {
     ) {
         try {
             kelasService.deletePengajar(idKelas);
-            redirectAttrs.addFlashAttribute("alert", "delSuccess");
+            redirectAttrs.addFlashAttribute("alert", "delPengajarSuccess");
             return "redirect:/kelas";
 
         } catch (Exception e) {
-            redirectAttrs.addFlashAttribute("alert", "delFail");
+            redirectAttrs.addFlashAttribute("alert", "delPengajarFail");
             return "redirect:/kelas";
         }
     }

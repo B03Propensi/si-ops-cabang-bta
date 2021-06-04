@@ -45,12 +45,12 @@
                 <h6 style="margin-top: 10px;">Pengajar</h6>
                 <div th:if="*{pengajar != null }">
                     <select name="pengajar" class="form-control" aria-label="Default select example">
-                        <option th:each="pengajar : ${listPengajar}" th:selected="(${pengajar.idUser} == *{pengajar.idUser})" th:value="${pengajar.idUser}" th:text="${pengajar.namaUser}"></option>
+                        <option th:each="m : ${listPengajar}" th:selected="(${m.idUser} == *{pengajar.idUser})" th:value="${m.idUser}" th:text="${m.namaUser}"></option>
                     </select>
                 </div>
                 <div th:if="*{pengajar == null }">
                     <select name="pengajar" class="form-control" aria-label="Default select example">
-                        <option disabled selected>Pilih Pengajar...</option>
+                        <option value="" disabled selected>Pilih Pengajar...</option>
                         <option th:each="pengajar : ${listPengajar}" th:value="${pengajar.idUser}" th:text="${pengajar.namaUser}"></option>
                     </select>
                 </div>
