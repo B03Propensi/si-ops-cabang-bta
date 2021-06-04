@@ -28,13 +28,19 @@
                 Terjadi error saat membuat kelas!
             </div>
             <div th:if="${alert} == 'editFail'" class="alert alert-success" role="alert">
-                Kelas berhasil diubah!
+                Terjadi error saat mengubah kelas!
             </div>
             <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
                 Terjadi error saat menghapus kelas!
             </div>
             <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
                 Kelas tidak ditemukan!
+            </div>
+            <div th:if="${alert} == 'delPengajarSuccess'" class="alert alert-success" role="alert">
+                Pengajar berhasil dihapus dari kelas!
+            </div>
+            <div th:if="${alert} == 'delPengajarFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus pengajar!
             </div>
         </div>
         <a th:href="@{/kelas/tambah/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Kelas</a>

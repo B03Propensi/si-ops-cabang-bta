@@ -55,6 +55,7 @@ public class KelasServiceImpl implements KelasService {
         kelas.setHari(kelasUpdate.getHari());
         kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
         kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+        kelas.setPengajar(kelasUpdate.getPengajar());
         kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
         return kelasDb.save(kelas);
     }
