@@ -13,30 +13,19 @@
     <div class="container">
         <!--Isi di sini-->
         <div class="btacard">
-            <form th:action="@{/jadwal/tambah/}" th:object="${kelasBaru}" method="POST">
+            <form th:action="@{/jadwal/tambah/}" th:object="${jadwalBaru}" method="POST">
                 <h6>Nama Kelas</h6>
-                <input name="namaKelas" type="text" class="form-control" placeholder="contoh: Biologi 1">
-                <h6 style="margin-top: 10px;">Bidang</h6>
-                <select name="bidang" class="form-control" aria-label="Default select example">
-                    <option value="" disabled selected>Pilih Bidang...</option>
-                    <option value="Biologi">Biologi</option>
-                    <option value="Fisika">Fisika</option>
-                    <option value="Kimia">Kimia</option>
-                    <option value="Ekonomi">Ekonomi</option>
-                    <option value="Geografi">Geografi</option>
-                    <option value="Sosiologi">Sosiologi</option>
-                    <option value="Sejarah">Sejarah</option>
-                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                    <option value="Bahasa Inggris">Bahasa Inggris</option>
-                    <option value="Matematika">Matematika</option>
+                <select name="idKelas" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Kelas...</option>
+                    <option th:each="kelas : ${listKelas}" th:value="${kelas.idKelas}" th:text="${kelas.namaKelas}"></option>
                 </select>
-                <h6 style="margin-top: 10px;">Cabang</h6>
-                <select name="cabang" class="form-control" aria-label="Default select example">
-                    <option value="" disabled selected>Pilih Cabang...</option>
-                    <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
-                </select>
+                <div th:if="${#lists.isEmpty(listKelas)}">
+                    <p>Belum ada kelas yang terdaftar. Silakan registrasi kelas pada halaman <a th:href="@{/kelas/tambah/}">Registrasi Kelas</a>.</p>
+                </div>
+                <input type="hidden" th:field="*{namaKelas}">
+                <input type="hidden" th:field="*{bidang}">
                 <h6 style="margin-top: 10px;">Hari</h6>
-                <select name="hari" class="form-control" aria-label="Default select example">
+                <select name="hari" class="form-control" aria-label="Default select example" required>
                     <option value="" disabled selected>Pilih Hari...</option>
                     <option value="Senin">Senin</option>
                     <option value="Selasa">Selasa</option>
@@ -45,12 +34,17 @@
                     <option value="Jumat">Jumat</option>
                     <option value="Sabtu">Sabtu</option>
                 </select>
-                <h6 style="margin-top: 10px;">Waktu</h6>
-                <select name="waktu" class="form-control" aria-label="Default select example">
-                    <option value="" disabled selected>Pilih Waktu...</option>
-                    <option th:each="waktu : ${listWaktu}" th:value="${waktu}" th:text="${waktu}"></option>
-                </select>
-                <div style="text-align: right;">
+                <h6 style="margin-top: 10px;">Waktu Mulai</h6>
+                <input type="time" name="waktuMulai" th:text="${#dates.format(standardDate, 'HH:mm')}" th:value="*{#dates.format(waktuMulai, 'HH:mm')}" class="form-control"
+                       min="08:00" max="18:00" required>
+                <h6 style="margin-top: 10px;">Waktu Selesai</h6>
+                <input type="time" name="waktuSelesai" th:text="${#dates.format(standardDate, 'HH:mm')}" th:value="*{#dates.format(waktuMulai, 'HH:mm')}" class="form-control"
+                       min="08:00" max="18:00" required>
+                <div th:if="${#lists.isEmpty(listKelas)}" style="text-align: right;  margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary" disabled>Simpan</button>
+                    <a th:href="@{/jadwal/}" type="button" class="btn btn-outline-danger">Batal</a>
+                </div>
+                <div th:unless="${#lists.isEmpty(listKelas)}" style="text-align: right;  margin-top: 20px;">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a th:href="@{/jadwal/}" type="button" class="btn btn-outline-danger">Batal</a>
                 </div>
