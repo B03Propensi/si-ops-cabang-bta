@@ -7,15 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class SiswaController {
@@ -199,4 +194,93 @@ public class SiswaController {
         programService.addProgram(program);
         return "redirect:/program/";
     }
+
+    @GetMapping("/siswa/stats/")
+    public String siswaStats(Model model) {
+        List<SiswaModel> siswa = siswaService.getAllSiswa();
+        model.addAttribute("siswa", siswa);
+        return "siswa-stats";
+    }
+
+
+//    @GetMapping("/siswa/filter")
+//    public String filterPesawat(
+//            @RequestParam(name="idSiswa") Optional<Long> idSiswa,
+//            @RequestParam(name="idCabang") Optional<Long> idCabang,
+//            @RequestParam(name="idProgram") Optional<Long> idProgram,
+//            @RequestParam(name="statusPembayaran") Optional<Integer> statusPembayaran,
+//            Model model
+//    ){
+//        List<SiswaModel> listSiswa = siswaService.getAllSiswa();
+//        model.addAttribute("listSiswa", listSiswa);
+//        List<CabangModel> listCabang = cabangService.getCabangList();
+//        model.addAttribute("listCabang", listCabang);
+//        List<ProgramModel> listProgram = programService.getAllProgram();
+//        model.addAttribute("listProgram", listProgram);
+//
+//        Boolean containsObject = false;
+//        model.addAttribute("containsObject", containsObject);
+//
+//        Long idSiswa = Long.parseLong("0");
+//        try{
+//            idSiswa = idSiswa.get();
+//        }catch(Exception e){
+//
+//        }
+//
+//        Long idCabang = Long.parseLong("0");
+//        try{
+//            idCabang = idCabang.get();
+//        }catch(Exception e){
+//
+//        }
+//
+//        Long idProgram = Long.parseLong("0");
+//        try{
+//            idProgram = idProgram.get();
+//        }catch(Exception e){
+//
+//        }
+//        Boolean bool = ((idPenerbangan!=0) || (idTipe!=0) || (idTeknisi!=0));
+//        if(bool){
+//            List<PesawatModel> listPesawat2 = pesawatService.getListPesawat();
+//            List<PesawatModel> listPesawat = new ArrayList<PesawatModel>();
+//            for(PesawatModel pesawat : listPesawat2){
+//                listPesawat.add(pesawat);
+//            }
+//
+//            for(PesawatModel pesawat : listPesawat2){
+//                if(!(idPenerbangan == 0)){
+//                    PenerbanganModel tp = penerbanganService.getPenerbanganById(idPenerbangan);
+//                    List<PenerbanganModel> lp = pesawat.getListPenerbangan();
+//                    if (!lp.contains(tp)){
+//                        listPesawat.remove(pesawat);
+//                        continue;
+//                    }
+//                }
+//                if(!(idTipe == 0)){
+//                    TipeModel tt = tipeService.getTipeById(idTipe);
+//                    TipeModel lt = pesawat.getTipe();
+//                    if(lt.getId() != tt.getId()){
+//                        listPesawat.remove(pesawat);
+//                        continue;
+//                    }
+//                }
+//                if(!(idTeknisi == 0)){
+//                    TeknisiModel tt = teknisiService.getTeknisiById(idTeknisi);
+//                    List<TeknisiModel> lt = pesawat.getListTeknisi();
+//                    if(!lt.contains(tt)){
+//                        listPesawat.remove(pesawat);
+//                        continue;
+//                    }
+//                }
+//            }
+//            if(listPesawat.size()!=0) containsObject = true;
+//            model.addAttribute("containsObject", containsObject);
+//            model.addAttribute("listPesawat", listPesawat);
+//        }
+//        return "pesawat-filter";
+//
+//    }
+
 }
