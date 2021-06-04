@@ -197,6 +197,6 @@ public class SiswaController {
     @PostMapping("/program/add/")
     public String programAdded(@ModelAttribute ProgramModel program, Model model) {
         programService.addProgram(program);
-        return "program";
+        return "redirect:/program/";
     }
 }
