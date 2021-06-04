@@ -69,6 +69,10 @@ public class SiswaModel implements Serializable {
     @Column(name="hp_ortu", nullable = false)
     private String hpOrtu;
 
+    @NotNull
+    @Column(name = "status_pembayaran", nullable = false)
+    private Integer statusPembayaran = 0;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cabang_siswa", referencedColumnName = "id_cabang")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -93,11 +97,6 @@ public class SiswaModel implements Serializable {
     @JoinColumn(name = "kuitansi_siswa", referencedColumnName = "id_kuitansi")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private KuitansiModel kuitansi;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "status_siswa", referencedColumnName = "id_pembayaran")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private PembayaranModel pembayaran;
 
 
     public Long getIdSiswa() {
@@ -212,19 +211,19 @@ public class SiswaModel implements Serializable {
         this.kuitansi = kuitansi;
     }
 
-    public PembayaranModel getPembayaran() {
-        return pembayaran;
-    }
-
-    public void setPembayaran(PembayaranModel pembayaran) {
-        this.pembayaran = pembayaran;
-    }
-
     public CabangModel getCabangSiswa() {
         return cabangSiswa;
     }
 
     public void setCabangSiswa(CabangModel cabangSiswa) {
         this.cabangSiswa = cabangSiswa;
+    }
+
+    public Integer getStatusPembayaran() {
+        return statusPembayaran;
+    }
+
+    public void setStatusPembayaran(Integer statusPembayaran) {
+        this.statusPembayaran = statusPembayaran;
     }
 }

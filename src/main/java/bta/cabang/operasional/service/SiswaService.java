@@ -1,6 +1,7 @@
 package bta.cabang.operasional.service;
 
 import bta.cabang.operasional.model.InvoiceModel;
+import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.KelasModel;
 import bta.cabang.operasional.model.KuitansiModel;
 import bta.cabang.operasional.model.SiswaModel;
@@ -13,4 +14,5 @@ public interface SiswaService {
     SiswaModel getSiswa(Long idSiswa);
     SiswaModel editSiswa(Long idSiswa, SiswaModel siswaUpdate);
     void deleteSiswa(Long idSiswa);
+    List<SiswaModel> getAllSiswaByPembayaran(Integer statusPembayaran);
 }

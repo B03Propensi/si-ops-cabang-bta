@@ -49,35 +49,47 @@ public class KelasServiceImpl implements KelasService {
     @Override
     public KelasModel editKelas(Long idKelas, KelasModel kelasUpdate) throws Exception {
         KelasModel kelas = getKelas(idKelas);
-        kelas.setNamaKelas(kelasUpdate.getNamaKelas());
-        kelas.setBidang(kelasUpdate.getBidang());
-        kelas.setCabang(kelasUpdate.getCabang());
-        kelas.setHari(kelasUpdate.getHari());
-        kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
-        kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+        if (kelasUpdate.getWaktuMulai().compareTo(kelasUpdate.getWaktuSelesai()) < 0) {
+            kelas.setNamaKelas(kelasUpdate.getNamaKelas());
+            kelas.setBidang(kelasUpdate.getBidang());
+            kelas.setCabang(kelasUpdate.getCabang());
+            kelas.setHari(kelasUpdate.getHari());
+            kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
+            kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+            kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        } else {
+            throw new Exception();
+        }
         kelas.setPengajar(kelasUpdate.getPengajar());
-        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
         return kelasDb.save(kelas);
     }
 
     @Override
     public KelasModel editJadwal(Long idKelas, KelasModel kelasUpdate) throws Exception {
         KelasModel kelas = getKelas(idKelas);
-        kelas.setNamaKelas(kelasUpdate.getNamaKelas());
-        kelas.setHari(kelasUpdate.getHari());
-        kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
-        kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
-        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        if (kelasUpdate.getWaktuMulai().compareTo(kelasUpdate.getWaktuSelesai()) < 0) {
+            kelas.setNamaKelas(kelasUpdate.getNamaKelas());
+            kelas.setHari(kelasUpdate.getHari());
+            kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
+            kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+            kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        } else {
+            throw new Exception();
+        }
         return kelasDb.save(kelas);
     }
 
     @Override
     public void addJadwal(KelasModel kelasUpdate) throws Exception {
         KelasModel kelas = getKelas(kelasUpdate.getIdKelas());
-        kelas.setHari(kelasUpdate.getHari());
-        kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
-        kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
-        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        if (kelasUpdate.getWaktuMulai().compareTo(kelasUpdate.getWaktuSelesai()) < 0) {
+            kelas.setHari(kelasUpdate.getHari());
+            kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
+            kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+            kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        } else {
+            throw new Exception();
+        }
         kelasDb.save(kelas);
     }
 
