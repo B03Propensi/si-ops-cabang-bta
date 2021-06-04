@@ -16,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,7 +31,7 @@ public class JadwalController {
     private CabangService cabangService;
 
     @GetMapping("/jadwal")
-    public String viewAllJadwal(Model model) {
+    public String viewAllJadwal(Model model) throws Exception {
         List<List<KelasModel>> cells = kelasService.getAllCells();
         model.addAttribute("cells", cells);
 
@@ -54,12 +57,22 @@ public class JadwalController {
 
     @PostMapping("/jadwal/tambah")
     public String tambahJadwal(
-            @ModelAttribute KelasModel kelasBaru,
-            Model model,
+            @ModelAttribute KelasModel jadwalBaru,
+            @ModelAttribute String dummyWaktuMulai,
+            @ModelAttribute String dummyWaktuSelesai,
+//            @ModelAttribute String hari,
             RedirectAttributes redirectAttrs
     ) {
         try {
-            kelasService.addKelas(kelasBaru);
+//            jadwalBaru.setWaktuMulai(java.sql.Time.valueOf(dummyWaktuMulai));
+//            jadwalBaru.setWaktuSelesai(java.sql.Time.valueOf(dummyWaktuSelesai));
+//            jadwalBaru.setHari(jadwalBaru.getHari());
+//            System.out.println(jadwalBaru.getWaktuMulai());
+//            System.out.println(jadwalBaru.getWaktuSelesai());
+//            System.out.println(jadwalBaru.getHari());
+//            Time waktu = kelasService.generateWaktu(jadwalBaru.getWaktuMulai());
+//            jadwalBaru.setWaktu(waktu);
+            kelasService.addJadwal(jadwalBaru);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/jadwal";
 
@@ -71,13 +84,11 @@ public class JadwalController {
 
     @GetMapping("/jadwal/tambah")
     public String tambahJadwalForm(Model model) {
-        KelasModel kelasBaru = new KelasModel();
-        List<Time> listWaktu = kelasService.getListWaktu();
-        List<CabangModel> listCabang = cabangService.getCabangList();
+        KelasModel jadwalBaru = new KelasModel();
+        List<KelasModel> listKelas = kelasService.getAllKelas();
 
-        model.addAttribute("kelasBaru", kelasBaru);
-        model.addAttribute("listWaktu", listWaktu);
-        model.addAttribute("listCabang", listCabang);
+        model.addAttribute("jadwalBaru", jadwalBaru);
+        model.addAttribute("listKelas", listKelas);
         return "form-tambahJadwal";
     }
 
@@ -87,14 +98,17 @@ public class JadwalController {
             Model model
     ) {
         KelasModel kelas = kelasService.getKelas(idKelas);
-        System.out.println(idKelas);
-        System.out.println(kelas.getNamaKelas());
-        List<Time> listWaktu = kelasService.getListWaktu();
-        List<CabangModel> listCabang = cabangService.getCabangList();
+        List<String> listHari = new ArrayList<>();
+
+        listHari.add("Senin");
+        listHari.add("Selasa");
+        listHari.add("Rabu");
+        listHari.add("Kamis");
+        listHari.add("Jumat");
+        listHari.add("Sabtu");
 
         model.addAttribute("kelas", kelas);
-        model.addAttribute("listWaktu", listWaktu);
-        model.addAttribute("listCabang", listCabang);
+        model.addAttribute("listHari", listHari);
 
         return "form-ubahJadwal";
     }
@@ -103,11 +117,10 @@ public class JadwalController {
     public String ubahJadwal(
             @PathVariable Long idKelas,
             @ModelAttribute KelasModel kelas,
-            Model model,
             RedirectAttributes redirectAttrs
     ) {
         try {
-            kelasService.editKelas(idKelas, kelas);
+            kelasService.editJadwal(idKelas, kelas);
             return "redirect:/jadwal/" + kelas.getIdKelas();
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("alert", "editFail");
@@ -121,7 +134,7 @@ public class JadwalController {
             RedirectAttributes redirectAttrs
     ) {
         try {
-            kelasService.deleteKelas(idKelas);
+            kelasService.deleteJadwal(idKelas);
             redirectAttrs.addFlashAttribute("alert", "delSuccess");
             return "redirect:/jadwal";
 

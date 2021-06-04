@@ -14,11 +14,11 @@
         <div>
             <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Registrasi Kelas</h1>
         </div>
-        <div>
+        <div class="cuti-alert">
             <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
                 Kelas baru berhasil dibuat
             </div>
-            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+            <div th:if="${alert} == 'editSuccess'" class="alert alert-success" role="alert">
                 Kelas berhasil diubah!
             </div>
             <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
@@ -27,6 +27,9 @@
             <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
                 Terjadi error saat membuat kelas!
             </div>
+            <div th:if="${alert} == 'editFail'" class="alert alert-success" role="alert">
+                Kelas berhasil diubah!
+            </div>
             <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
                 Terjadi error saat menghapus kelas!
             </div>
@@ -34,14 +37,20 @@
                 Kelas tidak ditemukan!
             </div>
         </div>
-        <a th:href="@{/kelas/tambah/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah kelas</a>
-        <table class="btatable">
+        <a th:href="@{/kelas/tambah/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Kelas</a>
+        <div th:if="${#lists.isEmpty(listKelas)}">
+            <h4 style="text-align: center">Belum ada kelas yang terdaftar.</h4>
+            <h4 style="text-align: center">Silakan daftarkan kelas dengan menekan tombol <a th:href="@{/kelas/tambah/}">+ Tambah Kelas</a>.</h4>
+        </div>
+        <table class="btatable" th:unless="${#lists.isEmpty(listKelas)}">
             <thead>
             <tr>
                 <th>Nomor</th>
                 <th>Nama Kelas</th>
                 <th>Bidang</th>
                 <th>Cabang</th>
+                <th>Pengajar</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -60,9 +69,48 @@
                 <td>
                     <p th:text="${kelas.cabang.nama_cabang}"></p>
                 </td>
+                <td>
+                    <p th:if="${kelas.pengajar} != null" th:text="${kelas.pengajar.namaUser}"></p>
+                    <p th:if="${kelas.pengajar} == null">-</p>
+                </td>
                 <td class="btn-toolbar" style="justify-content: center">
                     <a th:href = "@{/kelas/ubah/} + ${kelas.idKelas}" class = "btn btn-outline-primary mr-2 mb-2">Ubah</a>
-                    <a th:href = "@{/kelas/hapus/} + ${kelas.idKelas}" class="btn btn-danger mr-2 mb-2">Hapus</a>
+                    <a class="btn btn-danger mr-2 mb-2" data-toggle="modal" th:attr="data-target='#hapusKelasModal'+${iterStat.index }">Hapus</a>
+                    <a class="btn btn-outline-danger mr-2 mb-2" data-toggle="modal" th:if="${kelas.pengajar} != null" th:attr="data-target='#hapusPengajarModal'+${iterStat.index }">Hapus Pengajar</a>
+                    <div class="modal fade" th:id="'hapusKelasModal' + ${iterStat.index }" tabindex="-1" role="dialog" aria-labelledby="hapusKelasModalLabel" aria-hidden="true">-->
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h5 style="font-weight: bold; text-align: center;" th:text="'Apakah Anda yakin ingin menghapus kelas ' + ${kelas.namaKelas} + '?'"></h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <a th:href="@{/kelas/hapus/} + ${kelas.idKelas}" class="btn btn-outline-secondary" >
+                                        <span>Hapus</span>
+                                    </a>
+                                    <button type="button" data-dismiss="modal" class="btn btn-danger">
+                                        <span>Batal</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" th:id="'hapusPengajarModal' + ${iterStat.index }" tabindex="-1" role="dialog" aria-labelledby="hapusPengajarModalLabel" aria-hidden="true">-->
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h5 style="font-weight: bold; text-align: center;" th:if="${kelas.pengajar} != null" th:text="'Apakah Anda yakin ingin menghapus pengajar ' + ${kelas.pengajar.namaUser} + ' dari ' + ${kelas.namaKelas} + '?'"></h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <a th:href="@{/kelas/hapus-pengajar/} + ${kelas.idKelas}" class="btn btn-outline-secondary" >
+                                        <span>Hapus</span>
+                                    </a>
+                                    <button type="button" data-dismiss="modal" class="btn btn-danger">
+                                        <span>Batal</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             </tbody>
