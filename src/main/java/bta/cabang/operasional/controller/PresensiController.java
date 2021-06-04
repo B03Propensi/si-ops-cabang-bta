@@ -216,7 +216,7 @@ public class PresensiController {
                 if(objekCuti.getStatus() !=0) {
                     LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
                     LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
-                    holidays.addAll(start.datesUntil(end).collect(Collectors.toList()));
+                    holidays.addAll(getDatesBetween(start, end));
                 }
             }
             long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
@@ -248,4 +248,14 @@ public class PresensiController {
                 .filter(isHoliday.or(isWeekend).negate()).count();
         return businessDays;
     }
+
+    public static List<LocalDate> getDatesBetween(
+  LocalDate startDate, LocalDate endDate) { 
+ 
+    long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate); 
+    return IntStream.iterate(0, i -> i + 1)
+      .limit(numOfDaysBetween)
+      .mapToObj(i -> startDate.plusDays(i))
+      .collect(Collectors.toList()); 
+}
 }
