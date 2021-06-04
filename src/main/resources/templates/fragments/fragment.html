@@ -57,6 +57,7 @@
 <!--        PRESENSI-->
         <a th:class="${page} == 'Presensi'? 'active' : ''"
            th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 2
+                  OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 3
                   OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 4
                   OR ${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 5"
            href="/presensi">Presensi</a>
