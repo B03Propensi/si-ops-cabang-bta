@@ -96,7 +96,7 @@ public class SiswaController {
         return "form-siswaPembayaran";
     }
 
-    @PostMapping("siswa/{idSiswa}/kuitansi")
+    @PostMapping("siswa/{idSiswa}/pembayaran")
     public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
         KuitansiModel kuitansi = new KuitansiModel();
         kuitansi.setSiswaKuitansi(siswa);
