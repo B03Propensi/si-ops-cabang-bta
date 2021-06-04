@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Siswa</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <div th:replace="fragments/fragment :: sidenav('Siswa')"></div>
+    <div th:replace="fragments/fragment :: navbar('Siswa')"></div>
+    <div class="main">
+        <div class="container">
+            <div class="card card-success">
+                <div class="card-header" style="background-color: #FF4C4C;">
+                    <h3 class="card-title">Statistik Siswa</h3>
+
+                    <div class="card-tools">
+<!--                        <button type="button" class="btn btn-tool" data-card-widget="collapse">-->
+<!--                            <i class="fas fa-minus"></i>-->
+<!--                        </button>-->
+<!--                        <button type="button" class="btn btn-tool" data-card-widget="remove">-->
+<!--                            <i class="fas fa-times"></i>-->
+<!--                        </button>-->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart">
+                        <canvas id="stackedBarChart" style="height: 10vw; width: 10vw;"></canvas>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            //---------------------
+            //- STACKED BAR CHART -
+            //---------------------
+            var stackedBarChartCanvas = document.getElementById("siswa").getContext('2d')
+            var stackedBarChartData = $.extend(true, {}, barChartData)
+            var stackedBarChartOptions = {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+
+            new Chart(stackedBarChartCanvas, {
+                type: 'bar',
+                data: stackedBarChartData,
+                options: stackedBarChartOptions
+            })
+        })
+    </script>
+</body>
+</html>

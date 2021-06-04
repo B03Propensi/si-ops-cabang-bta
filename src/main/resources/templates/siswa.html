@@ -39,7 +39,15 @@
             <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Siswa Baru</h1>
         </div>
 
-        <a th:href="@{/siswa/add/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Siswa</a>
+        <div class="row">
+            <div class="col-sm-3">
+                <a th:href="@{/siswa/add/}" class="btn btn-outline-danger" style="margin-bottom: 20px;">+ Tambah Siswa</a>
+            </div>
+            <div class="col-sm-3">
+                <a th:href="@{/siswa/stats/}" class="btn btn-primary" style="margin-bottom: 20px;">Lihat Statistik</a>
+            </div>
+            <div class="col-sm-6"></div>
+        </div>
 
         <div>
             <table class="btatable">
