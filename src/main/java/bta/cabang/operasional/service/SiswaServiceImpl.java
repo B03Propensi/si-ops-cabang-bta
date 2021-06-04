@@ -3,6 +3,10 @@ package bta.cabang.operasional.service;
 import bta.cabang.operasional.model.*;
 import bta.cabang.operasional.repository.InvoiceDb;
 import bta.cabang.operasional.repository.KuitansiDb;
+import bta.cabang.operasional.model.CabangModel;
+import bta.cabang.operasional.model.CutiModel;
+import bta.cabang.operasional.model.KelasModel;
+import bta.cabang.operasional.model.SiswaModel;
 import bta.cabang.operasional.repository.SiswaDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,4 +69,7 @@ public class SiswaServiceImpl implements SiswaService{
         }
         siswaDb.deleteByIdSiswa(idSiswa);
     }
+
+    public List<SiswaModel> getAllSiswaByPembayaran(Integer statusPembayaran) {
+        return siswaDb.findAllSiswaByStatusPembayaran(statusPembayaran); }
 }
