@@ -23,9 +23,6 @@ import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -187,8 +184,22 @@ public class PresensiController {
     public String viewAllPresensi(Model model){
         UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
         if(currentUser.getRole().getNamaRole().equals("Direktur Operasional")) {
-            List<UserModel> listPegawai = userService.findObjekPresensi(1);
-            
+            List<UserModel> listPegawaibaru = userService.findObjekPresensi(1);
+            List<UserModel> listPegawai = new ArrayList<UserModel>();
+            for(UserModel pegawai:listPegawaibaru) {
+                if(pegawai.getListPresensi() != null) {
+                    if(!pegawai.getListPresensi().isEmpty()) {
+                        listPegawai.add(pegawai);
+                    }
+                }
+            }
+
+            List<HashMap<String, String>> chart = new ArrayList<HashMap<String, String>>();
+            int totalCuti = 0;
+            int totalPenuh = 0;
+            int totalTerlambat = 0;
+            int totalAbsen = 0;
+
             String[][] list = new String[listPegawai.size()][8];
             int i = 0;
             for(UserModel pegawai : listPegawai) {
@@ -238,14 +249,47 @@ public class PresensiController {
                         list[i][6] = Integer.toString(absen);
                         list[i][7] = Integer.toString(hadir);
                         i++;
+
+                        totalCuti += hariCuti;
+                        totalAbsen += absen;
+                        totalPenuh += hadir;
+                        totalTerlambat += terlambat;
                     }
                 }
             } 
+
+            HashMap<String, String> objekCuti = new HashMap<String, String>();
+            objekCuti.put("label", "cuti");
+            objekCuti.put("value", Integer.toString(totalCuti));
+            chart.add(objekCuti);
+            HashMap<String, String> objekTerlambat = new HashMap<String, String>();
+            objekTerlambat.put("label", "terlambat");
+            objekTerlambat.put("value", Integer.toString(totalTerlambat));
+            chart.add(objekTerlambat);
+            HashMap<String, String> objekAbsen = new HashMap<String, String>();
+            objekAbsen.put("label", "absen");
+            objekAbsen.put("value", Integer.toString(totalAbsen));
+            chart.add(objekAbsen);
+            HashMap<String, String> objekPenuh = new HashMap<String, String>();
+            objekPenuh.put("label", "penuh");
+            objekPenuh.put("value", Integer.toString(totalPenuh));
+            chart.add(objekPenuh);
+
+            System.out.println(chart + "----------------------------");
+            model.addAttribute("chart", chart);
             model.addAttribute("list", list);
             return "daftar-presensi";
         } else if(currentUser.getRole().getNamaRole().equals("Koordinator Bidang Studi")) {
-            List<UserModel> listPegawai = userService.findObjekPresensi(2);
+            List<UserModel> listPegawaibaru = userService.findObjekPresensi(2);
             
+            List<UserModel> listPegawai = new ArrayList<UserModel>();
+            for(UserModel pegawai:listPegawaibaru) {
+                if(pegawai.getListPresensi() != null) {
+                    if(!pegawai.getListPresensi().isEmpty()) {
+                        listPegawai.add(pegawai);
+                    }
+                }
+            }
             String[][] list = new String[listPegawai.size()][8];
             int i = 0;
             for(UserModel pegawai : listPegawai) {
@@ -296,7 +340,7 @@ public class PresensiController {
                 }
             } 
             model.addAttribute("list", list);
-            return "daftar-presensi";
+            return "daftar-presensi-pengajar";
         } else {
             return "error/403";
         }
