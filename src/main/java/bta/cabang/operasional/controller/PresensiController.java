@@ -192,47 +192,49 @@ public class PresensiController {
             String[][] list = new String[listPegawai.size()][8];
             int i = 0;
             for(UserModel pegawai : listPegawai) {
-                list[i][0] = pegawai.getNamaUser();
-                list[i][1] = pegawai.getRole().getNamaRole();
-                list[i][2] = "Bekerja";
-                
-                int terlambat = 0;
-                int absen = 0;
-                int hadir = 0;
-                for(PresensiModel presensi : pegawai.getListPresensi()) {
-                    if(presensi.getStatus().equals(0)) {
-                        terlambat++;
-                    } else if(presensi.getStatus().equals(1)) {
-                        hadir++;
+                if(!(pegawai.getListPresensi()==null)) {
+                    list[i][0] = pegawai.getNamaUser();
+                    list[i][1] = pegawai.getRole().getNamaRole();
+                    list[i][2] = "Bekerja";
+                    
+                    int terlambat = 0;
+                    int absen = 0;
+                    int hadir = 0;
+                    for(PresensiModel presensi : pegawai.getListPresensi()) {
+                        if(presensi.getStatus().equals(0)) {
+                            terlambat++;
+                        } else if(presensi.getStatus().equals(1)) {
+                            hadir++;
+                        }
                     }
-                }
 
-                PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
-                PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
-                LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
-                LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
+                    PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
+                    PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
+                    LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
+                    LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
 
-                List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
-                List<LocalDate> holidays = new ArrayList<LocalDate>();
-                for(CutiModel objekCuti : listCuti) {
-                    if(objekCuti.getStatus() !=0) {
-                        LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
-                        LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
-                        holidays.addAll(getDatesBetween(start, end));
+                    List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
+                    List<LocalDate> holidays = new ArrayList<LocalDate>();
+                    for(CutiModel objekCuti : listCuti) {
+                        if(objekCuti.getStatus() !=0) {
+                            LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
+                            LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
+                            holidays.addAll(getDatesBetween(start, end));
+                        }
                     }
+                    long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
+                    List<LocalDate> emptyList = null;
+                    long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
+
+                    absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
+
+                    list[i][3] = String.valueOf(hariPresensi);
+                    list[i][4] = Integer.toString(terlambat);
+                    list[i][5] = String.valueOf(hariCuti);
+                    list[i][6] = Integer.toString(absen);
+                    list[i][7] = Integer.toString(hadir);
+                    i++;
                 }
-                long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
-                List<LocalDate> emptyList = null;
-                long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
-
-                absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
-
-                list[i][3] = String.valueOf(hariPresensi);
-                list[i][4] = Integer.toString(terlambat);
-                list[i][5] = String.valueOf(hariCuti);
-                list[i][6] = Integer.toString(absen);
-                list[i][7] = Integer.toString(hadir);
-                i++;
             } 
             model.addAttribute("list", list);
             return "daftar-presensi";
@@ -242,47 +244,49 @@ public class PresensiController {
             String[][] list = new String[listPegawai.size()][8];
             int i = 0;
             for(UserModel pegawai : listPegawai) {
-                list[i][0] = pegawai.getNamaUser();
-                list[i][1] = pegawai.getRole().getNamaRole();
-                list[i][2] = "Bekerja";
-                
-                int terlambat = 0;
-                int absen = 0;
-                int hadir = 0;
-                for(PresensiModel presensi : pegawai.getListPresensi()) {
-                    if(presensi.getStatus().equals(0)) {
-                        terlambat++;
-                    } else if(presensi.getStatus().equals(1)) {
-                        hadir++;
+                if(!pegawai.getListPresensi().isEmpty()) {
+                    list[i][0] = pegawai.getNamaUser();
+                    list[i][1] = pegawai.getRole().getNamaRole();
+                    list[i][2] = "Bekerja";
+                    
+                    int terlambat = 0;
+                    int absen = 0;
+                    int hadir = 0;
+                    for(PresensiModel presensi : pegawai.getListPresensi()) {
+                        if(presensi.getStatus().equals(0)) {
+                            terlambat++;
+                        } else if(presensi.getStatus().equals(1)) {
+                            hadir++;
+                        }
                     }
-                }
 
-                PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
-                PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
-                LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
-                LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
+                    PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
+                    PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
+                    LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
+                    LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
 
-                List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
-                List<LocalDate> holidays = new ArrayList<LocalDate>();
-                for(CutiModel objekCuti : listCuti) {
-                    if(objekCuti.getStatus() !=0) {
-                        LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
-                        LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
-                        holidays.addAll(getDatesBetween(start, end));
+                    List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
+                    List<LocalDate> holidays = new ArrayList<LocalDate>();
+                    for(CutiModel objekCuti : listCuti) {
+                        if(objekCuti.getStatus() !=0) {
+                            LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
+                            LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
+                            holidays.addAll(getDatesBetween(start, end));
+                        }
                     }
+                    long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
+                    List<LocalDate> emptyList = null;
+                    long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
+
+                    absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
+
+                    list[i][3] = String.valueOf(hariPresensi);
+                    list[i][4] = Integer.toString(terlambat);
+                    list[i][5] = String.valueOf(hariCuti);
+                    list[i][6] = Integer.toString(absen);
+                    list[i][7] = Integer.toString(hadir);
+                    i++;
                 }
-                long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
-                List<LocalDate> emptyList = null;
-                long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
-
-                absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
-
-                list[i][3] = String.valueOf(hariPresensi);
-                list[i][4] = Integer.toString(terlambat);
-                list[i][5] = String.valueOf(hariCuti);
-                list[i][6] = Integer.toString(absen);
-                list[i][7] = Integer.toString(hadir);
-                i++;
             } 
             model.addAttribute("list", list);
             return "daftar-presensi";
