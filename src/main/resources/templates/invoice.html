@@ -26,6 +26,8 @@
             <span id="cabang" th:text="${siswa.cabangSiswa.nama_cabang}"></span>
             <span id="program" th:text="${siswa.program.namaProgram}"></span>
             <span id="biaya" th:text="${siswa.program.biayaProgram}"></span>
+            <span id="rekening" th:text="${siswa.cabangSiswa.nomor_rekening}"></span>\
+            <span id="bank" th:text="${siswa.cabangSiswa.bank_cabang}"></span>
         </div>
         <!--        Data Invoice-->
 
@@ -52,6 +54,8 @@
     var cabang = document.getElementById("cabang").innerHTML
     var program = document.getElementById("program").innerHTML
     var biaya = document.getElementById("biaya").innerHTML
+    var rekening = document.getElementById("rekening").innerHTML
+    var bank = document.getElementById("bank").innerHTML
 
     var canvas = document.getElementById("invoice");
     var ctx = canvas.getContext("2d");
@@ -77,9 +81,9 @@
     ctx.fillText("Rp." + biaya, 600, 310)
 
     ctx.font = "16px Arial";
-    ctx.fillText("*Pembayaran ke rekening:", 50, 400)
-    ctx.fillText("  a.n " + "nama cabang", 50, 425)
-    ctx.fillText("  Bank " + "nama bank " + "no rek", 50, 450)
+    ctx.fillText("*Pembayaran ke rekening: ", 50, 400)
+    ctx.fillText("  a.n " + cabang, 50, 425)
+    ctx.fillText("  Bank " + bank + rekening, 50, 450)
     ctx.fillText("**Tolong masukkan nomor invoice pada bukti pembayaran", 50, 500)
 
     ctx.font = "20px Arial";

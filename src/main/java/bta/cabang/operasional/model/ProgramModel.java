@@ -91,4 +91,5 @@ public class ProgramModel implements Serializable {
     public void setKuitansiProgram(List<KuitansiModel> kuitansiProgram) {
         this.kuitansiProgram = kuitansiProgram;
     }
+
 }
