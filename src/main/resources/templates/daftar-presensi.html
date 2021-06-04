@@ -5,6 +5,10 @@
     <title>Beranda</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <!-- Step 1 - Include the fusioncharts core library -->
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <!-- Step 2 - Include the fusion theme -->
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 </head>
 <body>
     <div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
@@ -59,24 +63,8 @@
                     </table>
                 </div>
             </div>
-            <!--
-            <div id="piechart"></div>
-
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
             
-            <script type="text/javascript" th:inline="javascript">
-                google.charts.load('current', {'packages':['corechart']});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var list = /*[[${list}]]*/ [];
-                    var data = google.visualization.arrayToDataTable(list);
-
-                    var options = {'title':'Grafik Absensi Kepegawaian', 'width':550, 'height':400};
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                    chart.draw(data, options);
-                }
-            </script>
-            -->
+            
         </div>
     </div>
 </body>

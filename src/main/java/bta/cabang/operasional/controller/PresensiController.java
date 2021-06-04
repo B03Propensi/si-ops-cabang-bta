@@ -10,6 +10,7 @@ import bta.cabang.operasional.service.KelasService;
 import bta.cabang.operasional.service.PresensiService;
 import bta.cabang.operasional.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.hibernate.type.LocalDateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -307,6 +308,7 @@ public class PresensiController {
         Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
                 || date.getDayOfWeek() == DayOfWeek.SUNDAY;
  
+        endDate = endDate.plusDays(1);
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
  
         long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysBetween)
@@ -316,7 +318,7 @@ public class PresensiController {
 
     public static List<LocalDate> getDatesBetween(
   LocalDate startDate, LocalDate endDate) { 
- 
+        endDate = endDate.plusDays(1);
         long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate); 
         return IntStream.iterate(0, i -> i + 1)
         .limit(numOfDaysBetween)
