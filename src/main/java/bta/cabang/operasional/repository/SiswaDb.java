@@ -20,4 +20,5 @@ public interface SiswaDb extends JpaRepository<SiswaModel, Long>{
     Optional<SiswaModel> findSiswaByKuitansi(KuitansiModel kuitansi);
     List<SiswaModel> findAllSiswaByCabangSiswa(CabangModel cabangSiswa);
     List<SiswaModel> findAllSiswaByProgram(ProgramModel program);
+    void deleteByIdSiswa(Long idSiswa);
 }

@@ -11,6 +11,29 @@
 <div th:replace="fragments/fragment :: navbar('Siswa')"></div>
 <div class="main">
     <div class="container">
+        <div class="cuti-alert">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Siswa baru berhasil dibuat
+            </div>
+            <div th:if="${alert} == 'editSuccess'" class="alert alert-success" role="alert">
+                Siswa berhasil diubah!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Siswa berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat siswa!
+            </div>
+            <div th:if="${alert} == 'editFail'" class="alert alert-success" role="alert">
+                erjadi error saat mengubah siswa!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus siswa!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Siswa tidak ditemukan!
+            </div>
+        </div>
 
         <div>
             <h1 style="font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Siswa Baru</h1>

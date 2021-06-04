@@ -1,5 +1,8 @@
 package bta.cabang.operasional.service;
 
+import bta.cabang.operasional.model.*;
+import bta.cabang.operasional.repository.InvoiceDb;
+import bta.cabang.operasional.repository.KuitansiDb;
 import bta.cabang.operasional.model.CabangModel;
 import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.KelasModel;
@@ -19,6 +22,12 @@ public class SiswaServiceImpl implements SiswaService{
     @Autowired
     SiswaDb siswaDb;
 
+    @Autowired
+    InvoiceDb invoiceDb;
+
+    @Autowired
+    KuitansiDb kuitansiDb;
+
     @Override
     public void addSiswa(SiswaModel siswa) { siswaDb.save(siswa); }
 
@@ -33,6 +42,34 @@ public class SiswaServiceImpl implements SiswaService{
     }
 
     @Override
+    public SiswaModel editSiswa(Long idSiswa, SiswaModel siswaUpdate) {
+        SiswaModel siswa = getSiswa(idSiswa);
+        siswa.setNamaSiswa(siswaUpdate.getNamaSiswa());
+        siswa.setAsalSekolah(siswaUpdate.getAsalSekolah());
+        siswa.setProgram(siswaUpdate.getProgram());
+        siswa.setTanggalLahir(siswaUpdate.getTanggalLahir());
+        siswa.setHpSiswa(siswaUpdate.getHpSiswa());
+        siswa.setEmailSiswa(siswaUpdate.getEmailSiswa());
+        siswa.setAlamatSiswa(siswaUpdate.getAlamatSiswa());
+        siswa.setNamaOrtu(siswaUpdate.getNamaOrtu());
+        siswa.setHpOrtu(siswaUpdate.getHpOrtu());
+        return siswaDb.save(siswa);
+    }
+
+    @Override
+    public void deleteSiswa(Long idSiswa) {
+        SiswaModel siswa = getSiswa(idSiswa);
+        InvoiceModel invoice = siswa.getInvoice();
+        KuitansiModel kuitansi = siswa.getKuitansi();
+        if (kuitansi != null) {
+            kuitansiDb.deleteByIdKuitansi(kuitansi.getIdKuitansi());
+        }
+        if (invoice != null) {
+            invoiceDb.deleteByIdInvoice(invoice.getIdInvoice());
+        }
+        siswaDb.deleteByIdSiswa(idSiswa);
+    }
+
     public List<SiswaModel> getAllSiswaByPembayaran(Integer statusPembayaran) {
         return siswaDb.findAllSiswaByStatusPembayaran(statusPembayaran); }
 }

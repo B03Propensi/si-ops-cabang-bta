@@ -12,6 +12,29 @@
 
 <div class="main">
     <div class="container">
+        <div class="cuti-alert">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Siswa baru berhasil dibuat
+            </div>
+            <div th:if="${alert} == 'editSuccess'" class="alert alert-success" role="alert">
+                Siswa berhasil diubah!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Siswa berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat siswa!
+            </div>
+            <div th:if="${alert} == 'editFail'" class="alert alert-success" role="alert">
+                erjadi error saat mengubah siswa!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus siswa!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Siswa tidak ditemukan!
+            </div>
+        </div>
 
         <!--    Page Title    -->
         <div class="fs-2 mb-3">
@@ -23,61 +46,130 @@
             <h3 th:text="'Siswa #' + ${siswa.idSiswa}"></h3>
         </div>
 
-        <!--    Siswa Table   -->
-        <div>
-            <table class="btatable">
+        <div class="detailcard">
+            <div style="text-align: right;">
+                <a type="button" th:href = "@{/siswa/edit/} + ${siswa.idSiswa}" class = "btn btn-outline-primary mr-2">
+                    <span>Ubah Informasi Siswa</span></a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusSiswaModal" style="margin-left: 20px;">
+                    <span>Hapus Siswa</span>
+                </button>
+            </div>
+            <table class="table" style="width: 60%;">
                 <tbody>
                 <tr>
-                    <th>No. Siswa</th>
-                    <td>
-                        <p th:text="${siswa.idSiswa}"></p>
-                    </td>
+                    <th scope="row">Nama Lengkap</th>
+                    <td th:text="${siswa.namaSiswa}"></td>
                 </tr>
                 <tr>
-                    <th>Tanggal Daftar</th>
-                    <td>
-                        <p th:text="${siswa.tanggalDaftar}"></p>
-                    </td>
+                    <th scope="row">Asal Sekolah</th>
+                    <td th:text="${siswa.asalSekolah}"></td>
                 </tr>
                 <tr>
-                    <th>Nama Siswa</th>
-                    <td>
-                        <p th:text="${siswa.namaSiswa}"></p>
-                    </td>
+                    <th scope="row">Program</th>
+                    <td th:text="${siswa.program.namaProgram}"></td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <th scope="row">Tanggal Lahir</th>
+                    <td th:text="${#dates.format(siswa.tanggalLahir, 'yyyy-MM-dd')}"></td>
                 </tr>
                 <tr>
-                    <th>Asal Sekolah</th>
-                    <td>
-                        <p th:text="${siswa.asalSekolah}"></p>
-                    </td>
+                    <th scope="row">No. Handphone</th>
+                    <td th:text="${siswa.hpSiswa}" ></td>
                 </tr>
                 <tr>
-                    <th>Tanggal Lahir</th>
-                    <td>
-                        <p th:text="${siswa.tanggalLahir}"></p>
-                    </td>
+                    <th scope="row">Email</th>
+                    <td th:text="${siswa.emailSiswa}"></td>
                 </tr>
                 <tr>
-                    <th>No. Handphone</th>
-                    <td>
-                        <p th:text="${siswa.hpSiswa}"></p>
-                    </td>
+                    <th scope="row">Alamat</th>
+                    <td th:text="${siswa.alamatSiswa}"></td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <th scope="row">Nama Orang Tua</th>
+                    <td th:text="${siswa.namaOrtu}"></td>
                 </tr>
                 <tr>
-                    <th>Email</th>
-                    <td>
-                        <p th:text="${siswa.emailSiswa}"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Nama Orangtua</th>
-                    <td>
-                        <p th:text="${siswa.hpOrtu}"></p>
-                    </td>
+                    <th scope="row">No. Handphone Orang Tua</th>
+                    <td th:text="${siswa.hpOrtu}"></td>
                 </tr>
                 </tbody>
             </table>
+            <div class="modal fade" id="hapusSiswaModal" tabindex="-1" role="dialog" aria-labelledby="hapusSiswaModalLabel" aria-hidden="true">-->
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h5 style="font-weight: bold; text-align: center;" th:text="'Apakah Anda yakin ingin menghapus siswa ' + ${siswa.namaSiswa} + '?'"></h5>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/siswa/delete/} + ${siswa.idSiswa}" class="btn btn-outline-secondary" >
+                                <span>Hapus</span>
+                            </a>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">
+                                <span>Batal</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!--    Siswa Table   -->
+<!--        <div>-->
+<!--            <table class="btatable">-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <th>No. Siswa</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.idSiswa}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Tanggal Daftar</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.tanggalDaftar}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Nama Siswa</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.namaSiswa}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Asal Sekolah</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.asalSekolah}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Tanggal Lahir</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.tanggalLahir}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>No. Handphone</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.hpSiswa}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Email</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.emailSiswa}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Nama Orangtua</th>-->
+<!--                    <td>-->
+<!--                        <p th:text="${siswa.hpOrtu}"></p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
     </div>
 </div>
 
