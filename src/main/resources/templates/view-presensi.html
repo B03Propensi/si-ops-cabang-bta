@@ -36,7 +36,7 @@
                 <div class="col-4" style="margin-left: 0px"><p id="judul" >Waktu Kehadiran</p></div>
                 <div class="col"><p th:text="${presensi.waktu}"></p></div>
             </div>
-            <div class="row">
+            <div class="row" th:if="${presensi.status} == 1">
                 <div class="col-4" style="margin-left: 0px"><p id="judul" >Kelas</p></div>
                 <div class="col"><p th:text="${presensi.kelas}"></p></div>
             </div>

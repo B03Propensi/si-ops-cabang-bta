@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
+                <div class="row" th:if="${status} == 0">
                     <div class="col">
                         <p>Alasan: <span style="color: red">*</span></p>
                         <textarea required type="text" class="form-control" name="alasan"
