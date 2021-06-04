@@ -39,7 +39,7 @@
                 Presensi tidak ditemukan!
             </div>
         </div>
-        <div th:if="${isAbleToAddPresensi}"  class="row justify-content-between">
+        <div th:if="${isAbleToAddPresensi} AND ${DifferentDate}"  class="row justify-content-between">
             <a th:href = "@{/presensi/add}" class = "btn btn-outline-danger " > Lakukan Presensi</a>
         </div>
         <br>
@@ -71,7 +71,7 @@
                     <p th:text="${presensi.waktu}"></p>
                 </td>
                 <td th:if="${isPengajar}">
-                    <p th:text="${presensi.kelas}"></p>
+                    <p th:text="${presensi.kelas.namaKelas}"></p>
                 </td>
                 <td>
                     <p th:if="${presensi.status} == 0" class="badge-terlambat">Terlambat</p>
