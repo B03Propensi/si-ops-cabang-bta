@@ -47,13 +47,21 @@ public class PresensiController {
         Long id_user = currentUser.getIdUser();
 
         List<PresensiModel> listpresensi = new ArrayList<>();
+        String tanggal_terakhir;
         if (role == 3 || role == 4 || role == 5) {
             listpresensi = presensiService.getAllPresensiByUser(id_user);
+
         } else if (role == 2){
             listpresensi = listpresensi;
         }else{
             listpresensi = presensiService.getPresensiList();
         }
+        if(listpresensi.size() != 0){
+            tanggal_terakhir = listpresensi.get(listpresensi.size()-1).getTanggal();
+        }else{
+            tanggal_terakhir = "";
+        }
+
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMMM yyyy", new java.util.Locale("id"));
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm");
@@ -74,11 +82,17 @@ public class PresensiController {
         } else {
             System.out.println("hadiir");
         }
+        model.addAttribute("tanggal", tanggal);
+        model.addAttribute("tanggal_terakhir", tanggal_terakhir);
+        System.out.println(tanggal);
+        System.out.println(tanggal_terakhir);
+
         model.addAttribute("listPresensi", listpresensi);
         model.addAttribute("isDirop", role == 2);
         model.addAttribute("isPegawai", role == 3 || role == 4);
         model.addAttribute("isPengajar", role == 5);
         model.addAttribute("isAbleToAddPresensi", role == 3 || role == 4 || role == 5);
+        model.addAttribute("DifferentDate", tanggal.compareTo(tanggal_terakhir));
 
         return "view-all-presensi-pegawai";
     }
@@ -87,7 +101,6 @@ public class PresensiController {
     UserModel currentUser;
     SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMMM yyyy", new java.util.Locale("id"));
     SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
-
 
     @GetMapping("/presensi/add")
     public String addPresensiForm(Model model) {
@@ -110,7 +123,7 @@ public class PresensiController {
         }
 
         model.addAttribute("isPengajar", role == 5);
-        model.addAttribute("listKelas", kelasService.getAllKelas());
+        model.addAttribute("listKelas", currentUser.getKelasPengajar());
         model.addAttribute("listCabang", cabangService.getCabangList());
         model.addAttribute("tanggal", tanggal);
         model.addAttribute("waktu", waktu);
@@ -126,26 +139,31 @@ public class PresensiController {
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm",Locale.getDefault());
             dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
             timestamp = new Timestamp(System.currentTimeMillis());
-            presensiModel.setDate(timestamp);
-            presensiModel.setUser(authService.getCurrentLoggedInUserByUsername());
-            presensiModel.setJabatan(currentUser.getRole().getNamaRole());
-            presensiModel.setTanggal(dateFormat.format(timestamp));
-            presensiModel.setWaktu(dateFormat2.format(timestamp));
 
-            if (timestamp.getHours() > 8) {
-                presensiModel.setStatus(0);
-                System.out.println("Telattttt");
-            } else if (timestamp.getHours() == 8 && timestamp.getMinutes() > 0) {
-                presensiModel.setStatus(0);
-                System.out.println("Telattttt");
-            } else {
-                presensiModel.setStatus(1);
-                System.out.println("hadiir");
-            }
+                presensiModel.setDate(timestamp);
+                presensiModel.setUser(authService.getCurrentLoggedInUserByUsername());
+                presensiModel.setJabatan(currentUser.getRole().getNamaRole());
+                presensiModel.setTanggal(dateFormat.format(timestamp));
+                presensiModel.setWaktu(dateFormat2.format(timestamp));
 
-            presensiService.addPresensi(presensiModel);
-            redirectAttrs.addFlashAttribute("alert", "addSuccess");
-            return "redirect:/presensi";
+
+
+                if (timestamp.getHours() > 8) {
+                    presensiModel.setStatus(0);
+                    System.out.println("Telattttt");
+                } else if (timestamp.getHours() == 8 && timestamp.getMinutes() > 0) {
+                    presensiModel.setStatus(0);
+                    System.out.println("Telattttt");
+                } else {
+                    presensiModel.setStatus(1);
+                    System.out.println("hadiir");
+                }
+
+                presensiService.addPresensi(presensiModel);
+                redirectAttrs.addFlashAttribute("alert", "addSuccess");
+                return "redirect:/presensi";
+
+
 
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("alert", "addFail");
