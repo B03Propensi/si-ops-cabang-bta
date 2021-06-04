@@ -1,5 +1,6 @@
 package bta.cabang.operasional.controller;
 
+import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.PresensiModel;
 import bta.cabang.operasional.model.UserModel;
 import bta.cabang.operasional.security.AuthService;
@@ -7,11 +8,13 @@ import bta.cabang.operasional.service.CabangService;
 import bta.cabang.operasional.service.KelasService;
 import bta.cabang.operasional.service.PresensiService;
 import bta.cabang.operasional.service.UserService;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class PresensiController {
@@ -146,5 +150,22 @@ public class PresensiController {
             return "redirect:/presensi";
         }
 
+    }
+    @GetMapping("presensi/view/{id_presensi}")
+    public String viewDetailPresensi (@PathVariable Integer id_presensi, Model model, RedirectAttributes redirectAttrs){
+        try {
+            PresensiModel presensi = presensiService.getPresensibyId(id_presensi);
+            UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
+            Long role = currentUser.getRole().getIdRole();
+
+            model.addAttribute("presensi", presensi);;
+            model.addAttribute("isPegawai", role == 3 || role == 4 );
+            model.addAttribute("isPengajar", role == 5 );
+            return "view-presensi";
+
+        } catch (NoSuchElementException e) {
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/presensi";
+        }
     }
 }

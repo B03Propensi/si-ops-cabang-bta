@@ -54,7 +54,8 @@ public class PresensiServiceImpl implements PresensiService {
 
     @Override
     public PresensiModel getPresensibyId(Integer id_presensi) {
-       return presensiDb.findById(Long.valueOf(id_presensi)).get();
+        return presensiDb.findById(id_presensi).get();
+//       return presensiDb.findById(Long.valueOf(id_presensi)).get();
     }
 
     @Override

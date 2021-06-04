@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PresensiDb extends JpaRepository<PresensiModel, Long> {
-    Optional<PresensiModel> findById(Long id);
+public interface PresensiDb extends JpaRepository<PresensiModel, Integer> {
+    Optional<PresensiModel> findById( Integer id);
     List<PresensiModel> findAllByUser_IdUser(Long id_user);
     List<PresensiModel> findAllByUser(UserModel user);
     List<PresensiModel> findByLokasi(CabangModel lokasi);

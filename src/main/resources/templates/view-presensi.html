@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-
+<div th:replace="fragments/fragment :: sidenav('Detail Presensi')"></div>
+<div th:replace="fragments/fragment :: navbar('Detail Presensi')"></div>
+<div class="main">
+    <div class="container">
+        <div>
+            <h4 style="font-family: Roboto;color: black;font-style: normal;font-size: 36px; font-weight: 900;line-height: 42px"> Detail Presensi  </h4>
+        </div>
+        <br>
+        <br>
+        <div class="btacard">
+            <h2 th:text="'Detail Presensi ' + ${presensi.user.namaUser}" class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"></h2>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul">Nama </p></div>
+                <div class="col"><p th:text="${presensi.user.namaUser}"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul" >Jabatan</p></div>
+                <div class="col"><p th:text="${presensi.jabatan}"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul" >Hari, Tanggal</p></div>
+                <div class="col"><p th:text="${presensi.tanggal}"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul" >Waktu Kehadiran</p></div>
+                <div class="col"><p th:text="${presensi.waktu}"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul" >Kelas</p></div>
+                <div class="col"><p th:text="${presensi.kelas}"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul" >Status</p></div>
+                <div class="col">
+                    <p th:if="${presensi.status} == 0" style="color: red">Terlambat</p>
+                    <p th:if="${presensi.status} == 1" style="color: green">Hadir Tepat Waktu</p>
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-4" style="margin-left: 0px"><p id="judul" >Alasan </p></div>
+                <div class="col"><p th:text="${presensi.alasan}"></p></div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="margin-left: 0px"><p id="judul" >Lokasi</p></div>
+                <div class="col"><p th:text="${presensi.lokasi.nama_cabang}"></p></div>
+            </div>
+        </div>
+</div>
 </body>
 </html>
