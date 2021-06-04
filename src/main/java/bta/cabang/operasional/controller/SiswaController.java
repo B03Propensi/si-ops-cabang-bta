@@ -178,4 +178,25 @@ public class SiswaController {
             return "redirect:/siswa";
         }
     }
+
+    @GetMapping("/program")
+    public String viewProgram(Model model) {
+        List<ProgramModel> listProgram = programService.getAllProgram();
+        model.addAttribute("listProgram", listProgram);
+
+        return "program";
+    }
+
+    @GetMapping("/program/add/")
+    public String addProgram(Model model) {
+        ProgramModel program = new ProgramModel();
+        model.addAttribute("program", program);
+        return "form-addProgram";
+    }
+
+    @PostMapping("/program/add/")
+    public String programAdded(@ModelAttribute ProgramModel program, Model model) {
+        programService.addProgram(program);
+        return "program";
+    }
 }
