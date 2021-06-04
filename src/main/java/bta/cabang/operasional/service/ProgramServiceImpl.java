@@ -1,6 +1,9 @@
 package bta.cabang.operasional.service;
 
+import bta.cabang.operasional.model.InvoiceModel;
+import bta.cabang.operasional.model.KuitansiModel;
 import bta.cabang.operasional.model.ProgramModel;
+import bta.cabang.operasional.model.SiswaModel;
 import bta.cabang.operasional.repository.ProgramDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,4 +21,10 @@ public class ProgramServiceImpl implements ProgramService {
 
     @Override
     public List<ProgramModel> getAllProgram() { return programDb.findAll(); }
+
+    @Override
+    public void addProgram(ProgramModel program) {
+        programDb.save(program);
+    }
+
 }

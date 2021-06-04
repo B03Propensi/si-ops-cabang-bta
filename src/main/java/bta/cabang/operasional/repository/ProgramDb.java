@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProgramDb extends JpaRepository<ProgramModel, Long>{
-    RoleModel findProgramByIdProgram(Long idProgram);
-    RoleModel findProgramByNamaProgram(String namaProgram);
+    ProgramModel findProgramByIdProgram(Long idProgram);
+    ProgramModel findProgramByNamaProgram(String namaProgram);
 }

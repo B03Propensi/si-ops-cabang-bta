@@ -68,6 +68,10 @@
         <a th:class="${page} == 'Siswa'? 'active' : ''"
            th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 4"
            href="/siswa">Siswa</a>
+<!--        SISWA-->
+        <a th:class="${page} == 'Program'? 'active' : ''"
+           th:if="${@authServiceImpl.getCurrentLoggedInUserByUsername().getRole().getIdRole()} == 4"
+           href="/program">Program</a>
 
         <br><br>
         <a href="/logout">Log Out</a>
