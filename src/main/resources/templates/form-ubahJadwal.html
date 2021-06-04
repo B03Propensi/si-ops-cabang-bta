@@ -36,6 +36,7 @@
                 <h6 style="margin-top: 10px;">Waktu Selesai</h6>
                 <input type="time" th:value="*{waktuSelesai}" name="waktuSelesai" class="form-control"
                        min="08:00" max="18:00" required>
+                <p style="text-align: center">Untuk mengubah data kelas silakan menuju halaman “<a th:href="@{/kelas}">Registrasi Kelas</a>.”</p>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a th:href="@{/jadwal/} + ${kelas.idKelas}" type="button" class="btn btn-outline-danger">Batal</a>

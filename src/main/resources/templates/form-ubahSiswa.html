@@ -41,6 +41,7 @@
                     <h6 style="margin-top: 10px;">No. Handphone Orang Tua<span style="color: #ff0000">*</span></h6>
                     <input th:value="*{hpOrtu}" name="hpOrtu" type="tel" class="form-control" required>
                 </div>
+                <p style="color: #ff0000">*Required</p>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a th:href="@{/siswa/} + ${siswa.idSiswa}" type="button" class="btn btn-outline-danger">Batal</a>
