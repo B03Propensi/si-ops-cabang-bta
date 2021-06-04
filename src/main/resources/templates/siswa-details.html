@@ -101,7 +101,7 @@
                         <p th:if="${siswa.statusPembayaran} == 1" class="badge-disetujui">Sudah Lunas</p>
                     </td>
                     <td>
-                        <a th:href = "@{/siswa/(${siswa.idSiswa})/pembayaran}" class="btn btn-sm btn-primary">Ubah Status Pembayaran</a>
+                        <a th:href = "@{/siswa/} + ${siswa.idSiswa} + @{/pembayaran/}" class="btn btn-sm btn-primary">Ubah Status Pembayaran</a>
                     </td>
                 </tr>
                 </tbody>

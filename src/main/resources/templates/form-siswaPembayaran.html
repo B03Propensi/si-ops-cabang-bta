@@ -14,7 +14,7 @@
         <h1>Ubah Status Pembayaran</h1><br>
         <div class="btacard" style="width: 50%">
             <h1 align="center">Form Kuitansi</h1><br>
-            <form th:action="@{/siswa/(${siswa.idSiswa})/pembayaran}" th:object = "${kuitansi}" method = "POST">
+            <form th:action="@{/siswa/(${siswa.idSiswa})/pembayaran/}" th:object = "${kuitansi}" method = "POST">
                 <div class="row">
                     <div class="col">
                         <p>Bank Tujuan: <span style="color: #ff0000">*</span></p>
