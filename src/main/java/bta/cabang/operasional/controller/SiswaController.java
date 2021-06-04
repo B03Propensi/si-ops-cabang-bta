@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -91,21 +92,38 @@ public class SiswaController {
             RedirectAttributes redirectAttrs
     ) {
         model.addAttribute("kuitansi", new KuitansiModel());
+        model.addAttribute("idSiswa", idSiswa);
 //        model.addAttribute("listCabang", cabangService.getCabangList());
 //        model.addAttribute("listProgram", programService.getAllProgram());
         return "form-siswaPembayaran";
     }
 
-    @PostMapping("siswa/{idSiswa}/kuitansi")
-    public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
-        KuitansiModel kuitansi = new KuitansiModel();
-        kuitansi.setSiswaKuitansi(siswa);
-        kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
-        kuitansi.setProgramKuitansi(siswa.getProgram());
-        kuitansiService.addKuitansi(kuitansi);
-        siswaService.getSiswa(siswa.getIdSiswa());
+//    @PostMapping("siswa/{idSiswa}/pembayaran")
+//    public String kuitansiPembayaran(@ModelAttribute SiswaModel siswa, Model model) {
+//        KuitansiModel kuitansi = new KuitansiModel();
+//        kuitansi.setSiswaKuitansi(siswa);
+//        kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
+//        kuitansi.setProgramKuitansi(siswa.getProgram());
+//        kuitansiService.addKuitansi(kuitansi);
+//        siswaService.getSiswa(siswa.getIdSiswa());
+//        siswa.setStatusPembayaran(1);
+//        siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(siswa.getIdSiswa()));
+//        model.addAttribute("siswa", siswa);
+//        model.addAttribute("kuitansi", kuitansi);
+//        return "kuitansi";
+//    }
 
-        siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(siswa.getIdSiswa()));
+    @PostMapping("siswa/{idSiswa}/pembayaran")
+    public String kuitansiPembayaran(@ModelAttribute KuitansiModel kuitansi, @PathVariable Long idSiswa, Model model) {
+        SiswaModel siswa = siswaService.getSiswa(idSiswa);
+        kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
+        kuitansi.setTanggalPembayaran(new Date());
+        kuitansi.setProgramKuitansi(siswa.getProgram());
+        kuitansi.setSiswaKuitansi(siswa);
+        kuitansiService.addKuitansi(kuitansi);
+
+        siswa.setStatusPembayaran(1);
+        siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(idSiswa));
         model.addAttribute("siswa", siswa);
         model.addAttribute("kuitansi", kuitansi);
         return "kuitansi";
