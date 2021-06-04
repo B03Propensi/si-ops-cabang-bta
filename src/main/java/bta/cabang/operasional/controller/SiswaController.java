@@ -102,6 +102,7 @@ public class SiswaController {
         kuitansi.setPembuatKuitansi(authService.getCurrentLoggedInUserByUsername());
         kuitansi.setProgramKuitansi(siswa.getProgram());
         kuitansiService.addKuitansi(kuitansi);
+        siswaService.getSiswa(siswa.getIdSiswa());
 
         siswa.setKuitansi(kuitansiService.getKuitansiByIdSiswa(siswa.getIdSiswa()));
         model.addAttribute("siswa", siswa);

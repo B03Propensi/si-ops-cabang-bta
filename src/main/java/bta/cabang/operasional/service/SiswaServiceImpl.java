@@ -1,6 +1,7 @@
 package bta.cabang.operasional.service;
 
 import bta.cabang.operasional.model.CabangModel;
+import bta.cabang.operasional.model.CutiModel;
 import bta.cabang.operasional.model.KelasModel;
 import bta.cabang.operasional.model.SiswaModel;
 import bta.cabang.operasional.repository.SiswaDb;
@@ -26,7 +27,12 @@ public class SiswaServiceImpl implements SiswaService{
         return siswaDb.findAll();
     }
 
+    @Override
     public SiswaModel getSiswa(Long idSiswa) {
         return siswaDb.findSiswaByIdSiswa(idSiswa).get();
     }
+
+    @Override
+    public List<SiswaModel> getAllSiswaByPembayaran(Integer statusPembayaran) {
+        return siswaDb.findAllSiswaByStatusPembayaran(statusPembayaran); }
 }
