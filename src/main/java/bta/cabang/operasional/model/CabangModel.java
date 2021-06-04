@@ -3,6 +3,7 @@ package bta.cabang.operasional.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -44,6 +45,7 @@ public class CabangModel implements Serializable {
     private String nomor_telepon;
 
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     @Column(name = "logo", nullable = true, length = 10485760)
     private byte[] logo;
 

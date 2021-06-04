@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -43,6 +44,7 @@ public class CutiModel implements Serializable {
     private String alasan;
 
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     @Column(name = "lampiran", length = 10485760)
     private byte[] lampiran;
 
