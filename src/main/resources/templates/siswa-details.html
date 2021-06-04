@@ -22,7 +22,25 @@
             </a>
             <h3 th:text="'Siswa #' + ${siswa.idSiswa}"></h3>
         </div>
-
+        <a th:href = "@{/siswa/edit/} + ${siswa.idSiswa}" class = "btn btn-outline-primary mr-2 mb-2">Ubah Informasi Siswa</a>
+        <a class="btn btn-danger mr-2 mb-2" data-toggle="modal" data-target="#hapusSiswaModal">Hapus Siswa</a>
+        <div class="modal fade" id="hapusSiswaModal" tabindex="-1" role="dialog" aria-labelledby="hapusSiswaModalLabel" aria-hidden="true">-->
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h5 style="font-weight: bold; text-align: center;" th:text="'Apakah Anda yakin ingin menghapus siswa ' + ${siswa.namaSiswa} + '?'"></h5>
+                    </div>
+                    <div class="modal-footer">
+                        <a th:href="@{/siswa/delete/} + ${siswa.idSiswa}" class="btn btn-outline-secondary" >
+                            <span>Hapus</span>
+                        </a>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">
+                            <span>Batal</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--    Siswa Table   -->
         <div>
             <table class="btatable">

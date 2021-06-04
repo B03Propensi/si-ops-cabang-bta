@@ -109,8 +109,6 @@ public class RegistrasiKelasController {
             RedirectAttributes redirectAttrs
     ) {
         try {
-            System.out.println(kelas.getCabang().getNama_cabang());
-            System.out.println(idKelas);
             kelasService.editKelas(idKelas, kelas);
             redirectAttrs.addFlashAttribute("alert", "editSuccess");
             return "redirect:/kelas/";

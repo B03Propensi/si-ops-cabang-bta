@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -107,5 +108,55 @@ public class SiswaController {
         model.addAttribute("siswa", siswa);
         model.addAttribute("kuitansi", kuitansi);
         return "kuitansi";
+    }
+
+    @GetMapping("/siswa/edit/{idSiswa}")
+    public String editSiswaForm(
+            @PathVariable Long idSiswa,
+            Model model
+    ) {
+        SiswaModel siswa = siswaService.getSiswa(idSiswa);
+        List<ProgramModel> listProgram = programService.getAllProgram();
+
+        model.addAttribute("siswa", siswa);
+        model.addAttribute("listProgram", listProgram);
+
+        return "form-ubahSiswa";
+    }
+
+    @PostMapping("/siswa/edit/{idSiswa}")
+    public String editSiswa(
+            @PathVariable Long idSiswa,
+            @ModelAttribute SiswaModel siswa,
+            RedirectAttributes redirectAttrs
+    ) {
+        try {
+            siswaService.editSiswa(idSiswa, siswa);
+            redirectAttrs.addFlashAttribute("alert", "editSuccess");
+            return "redirect:/siswa/" + idSiswa;
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "editFail");
+            return "redirect:/siswa/" + idSiswa;
+        }
+    }
+
+    @GetMapping("/siswa/delete/{idSiswa}")
+    public String deleteSiswa(
+            @PathVariable Long idSiswa,
+            RedirectAttributes redirectAttrs
+    ) {
+        try {
+            siswaService.deleteSiswa(idSiswa);
+            redirectAttrs.addFlashAttribute("alert", "delSuccess");
+            return "redirect:/siswa";
+
+        } catch (EmptyResultDataAccessException e) {
+            redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/siswa";
+
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "delFail");
+            return "redirect:/siswa";
+        }
     }
 }
