@@ -71,7 +71,7 @@
                     <p th:text="${presensi.waktu}"></p>
                 </td>
                 <td th:if="${isPengajar}">
-                    <p th:text="${presensi.kelas}"></p>
+                    <p th:text="${presensi.kelas.namaKelas}"></p>
                 </td>
                 <td>
                     <p th:if="${presensi.status} == 0" class="badge-terlambat">Terlambat</p>

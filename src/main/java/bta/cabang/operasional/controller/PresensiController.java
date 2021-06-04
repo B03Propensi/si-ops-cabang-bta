@@ -62,6 +62,7 @@ public class PresensiController {
         String dayOfTheWeek = dateFormat.format(d);
         String tanggal = dateFormat.format(timestamp);
         String waktu = dateFormat2.format(timestamp);
+        dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         System.out.println(dayOfTheWeek);
         System.out.println("COBAIN TIMESTAMP : " + tanggal);
         System.out.println("COBAIN Waktu : " + waktu);
@@ -121,6 +122,10 @@ public class PresensiController {
     @PostMapping("/presensi/add")
     public String addPresensiSubmit(@ModelAttribute PresensiModel presensiModel, RedirectAttributes redirectAttrs) {
         try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMMM yyyy", new java.util.Locale("id"));
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm",Locale.getDefault());
+            dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+            timestamp = new Timestamp(System.currentTimeMillis());
             presensiModel.setDate(timestamp);
             presensiModel.setUser(authService.getCurrentLoggedInUserByUsername());
             presensiModel.setJabatan(currentUser.getRole().getNamaRole());
