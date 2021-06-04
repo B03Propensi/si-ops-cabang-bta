@@ -94,6 +94,16 @@
                     <th scope="row">No. Handphone Orang Tua</th>
                     <td th:text="${siswa.hpOrtu}"></td>
                 </tr>
+                <tr>
+                    <th scope="row">Status Pembayaran</th>
+                    <td>
+                        <p th:if="${siswa.statusPembayaran} == 0" class="badge-menunggu">Belum Lunas</p>
+                        <p th:if="${siswa.statusPembayaran} == 1" class="badge-disetujui">Sudah Lunas</p>
+                    </td>
+                    <td>
+                        <a th:href = "@{/siswa/} + ${siswa.idSiswa} + @{/pembayaran/}" class="btn btn-sm btn-primary">Ubah Status Pembayaran</a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <div class="modal fade" id="hapusSiswaModal" tabindex="-1" role="dialog" aria-labelledby="hapusSiswaModalLabel" aria-hidden="true">-->

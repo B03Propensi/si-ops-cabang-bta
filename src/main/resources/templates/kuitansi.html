@@ -13,7 +13,7 @@
 <!--isinya invoice terus bisa print page-->
 <div class="main">
     <div class="container" align="center">
-        <h3 th:text="'Siswa #' + ${siswa.idSiswa} + ' berhasil dibuat.'"></h3>
+        <h3 th:text="'Kuitansi Siswa #' + ${siswa.idSiswa} + ' berhasil dibuat.'"></h3>
         <br>
         <!--        Data Invoice        -->
         <div hidden>
@@ -66,13 +66,13 @@
     ctx.fillText("Nama Siswa          : " + namaSis, 50, 150);
     ctx.fillText("Cabang                  : " + cabang, 50, 200);
     ctx.fillText("Program                 : " + program, 50, 225);
-    ctx.fillText("Bank Tujuan                 : " + bank, 50, 275);
-    ctx.fillText("Tanggal Pembayaran                 : " + tglByr, 50, 300);
+    ctx.fillText("Bank Tujuan             : " + bank, 50, 275);
+    ctx.fillText("Tanggal Pembayaran      : " + tglByr, 50, 300);
 
     ctx.fillStyle = "#FFE8E8";
-    ctx.fillRect(50, 280, 700, 45);
+    ctx.fillRect(50, 355, 700, 45);
     ctx.strokeStyle = "#FF4C4C";
-    ctx.strokeRect(50, 280, 700, 45);
+    ctx.strokeRect(50, 355, 700, 45);
 
     ctx.fillStyle = "black";
     ctx.fillText("Jumlah yang dibayarkan", 80, 385)
