@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,15 +41,15 @@ public class RegistrasiKelasController {
             @ModelAttribute KelasModel kelasBaru,
             RedirectAttributes redirectAttrs
     ) {
-//        try {
+        try {
             kelasService.addKelas(kelasBaru);
             redirectAttrs.addFlashAttribute("alert", "addSuccess");
             return "redirect:/kelas";
 
-//        } catch (Exception e) {
-//            redirectAttrs.addFlashAttribute("alert", "addFail");
-//            return "redirect:/kelas";
-//        }
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "addFail");
+            return "redirect:/kelas";
+        }
     }
 
     @GetMapping("/kelas/tambah")
@@ -69,16 +70,34 @@ public class RegistrasiKelasController {
             Model model
     ) {
         KelasModel kelas = kelasService.getKelas(idKelas);
-        System.out.println(idKelas);
-        System.out.println(kelas.getNamaKelas());
-//        List<Time> listWaktu = kelasService.getListWaktu();
         List<CabangModel> listCabang = cabangService.getCabangList();
         List<UserModel> listPengajar = kelasService.getAllPengajar();
+        List<String> listHari = new ArrayList<>();
+        List<String> listBidang = new ArrayList<>();
+
+        listHari.add("Senin");
+        listHari.add("Selasa");
+        listHari.add("Rabu");
+        listHari.add("Kamis");
+        listHari.add("Jumat");
+        listHari.add("Sabtu");
+
+        listBidang.add("Bahasa Indonesia");
+        listBidang.add("Bahasa Inggris");
+        listBidang.add("Matematika");
+        listBidang.add("Biologi");
+        listBidang.add("Kimia");
+        listBidang.add("Fisika");
+        listBidang.add("Sejarah");
+        listBidang.add("Geografi");
+        listBidang.add("Sosiologi");
+        listBidang.add("Ekonomi");
 
         model.addAttribute("kelas", kelas);
-//        model.addAttribute("listWaktu", listWaktu);
         model.addAttribute("listCabang", listCabang);
         model.addAttribute("listPengajar", listPengajar);
+        model.addAttribute("listHari", listHari);
+        model.addAttribute("listBidang", listBidang);
 
         return "form-ubahKelas";
     }
@@ -113,6 +132,22 @@ public class RegistrasiKelasController {
 
         } catch (EmptyResultDataAccessException e) {
             redirectAttrs.addFlashAttribute("alert", "notFound");
+            return "redirect:/kelas";
+
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("alert", "delFail");
+            return "redirect:/kelas";
+        }
+    }
+
+    @GetMapping("/kelas/hapus-pengajar/{idKelas}")
+    public String deletePengajar(
+            @PathVariable Long idKelas,
+            RedirectAttributes redirectAttrs
+    ) {
+        try {
+            kelasService.deletePengajar(idKelas);
+            redirectAttrs.addFlashAttribute("alert", "delSuccess");
             return "redirect:/kelas";
 
         } catch (Exception e) {

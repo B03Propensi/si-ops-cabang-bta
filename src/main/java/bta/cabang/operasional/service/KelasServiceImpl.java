@@ -47,7 +47,7 @@ public class KelasServiceImpl implements KelasService {
     }
 
     @Override
-    public KelasModel editKelas(Long idKelas, KelasModel kelasUpdate) {
+    public KelasModel editKelas(Long idKelas, KelasModel kelasUpdate) throws Exception {
         KelasModel kelas = getKelas(idKelas);
         kelas.setNamaKelas(kelasUpdate.getNamaKelas());
         kelas.setBidang(kelasUpdate.getBidang());
@@ -55,7 +55,18 @@ public class KelasServiceImpl implements KelasService {
         kelas.setHari(kelasUpdate.getHari());
         kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
         kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
-//        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
+        return kelasDb.save(kelas);
+    }
+
+    @Override
+    public KelasModel editJadwal(Long idKelas, KelasModel kelasUpdate) throws Exception {
+        KelasModel kelas = getKelas(idKelas);
+        kelas.setNamaKelas(kelasUpdate.getNamaKelas());
+        kelas.setHari(kelasUpdate.getHari());
+        kelas.setWaktuMulai(kelasUpdate.getWaktuMulai());
+        kelas.setWaktuSelesai(kelasUpdate.getWaktuSelesai());
+        kelas.setWaktu(generateWaktu(kelasUpdate.getWaktuMulai()));
         return kelasDb.save(kelas);
     }
 
@@ -72,6 +83,23 @@ public class KelasServiceImpl implements KelasService {
     @Override
     public void deleteKelas(Long idKelas) {
         kelasDb.deleteByIdKelas(idKelas);
+    }
+
+    @Override
+    public KelasModel deleteJadwal(Long idKelas) {
+        KelasModel kelas = getKelas(idKelas);
+        kelas.setHari(null);
+        kelas.setWaktu(null);
+        kelas.setWaktuMulai(null);
+        kelas.setWaktuSelesai(null);
+        return kelasDb.save(kelas);
+    }
+
+    @Override
+    public KelasModel deletePengajar(Long idKelas) {
+        KelasModel kelas = getKelas(idKelas);
+        kelas.setPengajar(null);
+        return kelasDb.save(kelas);
     }
 
     @Override

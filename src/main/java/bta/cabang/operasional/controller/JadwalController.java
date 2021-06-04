@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -63,10 +64,6 @@ public class JadwalController {
             RedirectAttributes redirectAttrs
     ) {
         try {
-            System.out.println(jadwalBaru.getIdKelas());
-//            System.out.println(java.sql.Time.valueOf(jadwalBaru.getWaktuMulai());
-//            System.out.println(java.sql.Time.valueOf(dummyWaktuSelesai));
-            System.out.println(jadwalBaru.getHari());
 //            jadwalBaru.setWaktuMulai(java.sql.Time.valueOf(dummyWaktuMulai));
 //            jadwalBaru.setWaktuSelesai(java.sql.Time.valueOf(dummyWaktuSelesai));
 //            jadwalBaru.setHari(jadwalBaru.getHari());
@@ -101,12 +98,17 @@ public class JadwalController {
             Model model
     ) {
         KelasModel kelas = kelasService.getKelas(idKelas);
-        System.out.println(idKelas);
-        System.out.println(kelas.getNamaKelas());
-        List<CabangModel> listCabang = cabangService.getCabangList();
+        List<String> listHari = new ArrayList<>();
+
+        listHari.add("Senin");
+        listHari.add("Selasa");
+        listHari.add("Rabu");
+        listHari.add("Kamis");
+        listHari.add("Jumat");
+        listHari.add("Sabtu");
 
         model.addAttribute("kelas", kelas);
-        model.addAttribute("listCabang", listCabang);
+        model.addAttribute("listHari", listHari);
 
         return "form-ubahJadwal";
     }
@@ -115,11 +117,10 @@ public class JadwalController {
     public String ubahJadwal(
             @PathVariable Long idKelas,
             @ModelAttribute KelasModel kelas,
-            Model model,
             RedirectAttributes redirectAttrs
     ) {
         try {
-            kelasService.editKelas(idKelas, kelas);
+            kelasService.editJadwal(idKelas, kelas);
             return "redirect:/jadwal/" + kelas.getIdKelas();
         } catch (Exception e) {
             redirectAttrs.addFlashAttribute("alert", "editFail");
@@ -133,7 +134,7 @@ public class JadwalController {
             RedirectAttributes redirectAttrs
     ) {
         try {
-            kelasService.deleteKelas(idKelas);
+            kelasService.deleteJadwal(idKelas);
             redirectAttrs.addFlashAttribute("alert", "delSuccess");
             return "redirect:/jadwal";
 

@@ -14,8 +14,11 @@ public interface KelasService {
     List<KelasModel> getAllKelas();
     void addKelas(KelasModel kelas);
     void addJadwal(KelasModel kelas) throws Exception;
-    KelasModel editKelas(Long idKelas, KelasModel kelas);
+    KelasModel editJadwal(Long idKelas, KelasModel kelasUpdate) throws Exception;
+    KelasModel editKelas(Long idKelas, KelasModel kelas) throws Exception;
     void deleteKelas(Long idKelas);
+    KelasModel deleteJadwal(Long idKelas);
+    KelasModel deletePengajar(Long idKelas);
     List<UserModel> getAllPengajar();
     KelasModel editPengajar(Long idKelas, KelasModel kelasUpdate);
     List<List<KelasModel>> getRowKelas(List<List<KelasModel>> allKelas, String waktu) throws Exception;

@@ -30,24 +30,20 @@ public class KelasModel implements Serializable {
     @Column(name = "bidang", nullable = false)
     private String bidang;
 
-    @NotNull
     @Size(max = 6)
     @Column(name = "hari", nullable = true)
     private String hari;
 
-    @NotNull
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
     @Column(name = "waktu", nullable = true)
     private Date waktu;
 
-    @NotNull
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
     @Column(name = "waktu_mulai", nullable = true)
     private Date waktuMulai;
 
-    @NotNull
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
     @Column(name = "waktu_selesai", nullable = true)
