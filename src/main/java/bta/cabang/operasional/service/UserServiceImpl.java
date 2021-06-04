@@ -39,9 +39,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserModel> findObjekPresensi() {
+    public List<UserModel> findObjekPresensi(int i) {
         List<UserModel> list = new ArrayList<>();
-        list.addAll(userDb.findByRole_IdRoleGreaterThan(2L));
+        if(i == 1) {
+            list.addAll(userDb.findAllByRole_IdRole(3L));
+            list.addAll(userDb.findAllByRole_IdRole(4L));
+            list.addAll(userDb.findAllByRole_IdRole(5L));
+        } else if(i == 2) {
+            list.addAll(userDb.findAllByRole_IdRole(5L));
+        }
         return list;
     }
 }
