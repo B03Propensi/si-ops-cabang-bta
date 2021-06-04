@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Siswa</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Siswa')"></div>
+<div th:replace="fragments/fragment :: navbar('Siswa')"></div>
+
+<div class="main">
+    <div class="container">
+
+        <!--    Page Title    -->
+        <div class="fs-2 mb-3">
+            <a th:href="@{/siswa/}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                </svg>
+            </a>
+            <h3 th:text="'Siswa #' + ${siswa.idSiswa}"></h3>
+        </div>
+
+        <!--    Siswa Table   -->
+        <div>
+            <table class="btatable">
+                <tbody>
+                <tr>
+                    <th>No. Siswa</th>
+                    <td>
+                        <p th:text="${siswa.idSiswa}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tanggal Daftar</th>
+                    <td>
+                        <p th:text="${siswa.tanggalDaftar}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nama Siswa</th>
+                    <td>
+                        <p th:text="${siswa.namaSiswa}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Asal Sekolah</th>
+                    <td>
+                        <p th:text="${siswa.asalSekolah}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tanggal Lahir</th>
+                    <td>
+                        <p th:text="${siswa.tanggalLahir}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>No. Handphone</th>
+                    <td>
+                        <p th:text="${siswa.hpSiswa}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>
+                        <p th:text="${siswa.emailSiswa}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nama Orangtua</th>
+                    <td>
+                        <p th:text="${siswa.hpOrtu}"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
