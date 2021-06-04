@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+
+    <div class="main">
+        <div class="container">
+            <h1>Daftar Presensi Pegawai Cabang</h1><br>
+
+            <div align="center">
+                <div style="width: 95%">
+                    <table class="btatable">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Pegawai</th>
+                            <th>Jabatan</th>
+                            <th>Status</th>
+                            <th>Akumulasi Keterlambatan</th>
+                            <th>Akumulasi Cuti</th>
+                            <th>Akumulasi Ketidakhadiran</th>
+                            <th>Akumulasi Presensi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pegawai, iterStat : ${list}">
+                            <td>
+                                <p th:text="${iterStat.count}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[0]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[1]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[2]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[4]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[5]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[6]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[7]}"></p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--
+            <div id="piechart"></div>
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            
+            <script type="text/javascript" th:inline="javascript">
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var list = /*[[${list}]]*/ [];
+                    var data = google.visualization.arrayToDataTable(list);
+
+                    var options = {'title':'Grafik Absensi Kepegawaian', 'width':550, 'height':400};
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart.draw(data, options);
+                }
+            </script>
+            -->
+        </div>
+    </div>
+</body>

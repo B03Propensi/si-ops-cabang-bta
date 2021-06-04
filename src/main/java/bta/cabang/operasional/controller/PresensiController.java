@@ -5,6 +5,7 @@ import bta.cabang.operasional.model.PresensiModel;
 import bta.cabang.operasional.model.UserModel;
 import bta.cabang.operasional.security.AuthService;
 import bta.cabang.operasional.service.CabangService;
+import bta.cabang.operasional.service.CutiService;
 import bta.cabang.operasional.service.KelasService;
 import bta.cabang.operasional.service.PresensiService;
 import bta.cabang.operasional.service.UserService;
@@ -17,7 +18,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.lang.String;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -42,6 +52,9 @@ public class PresensiController {
 
     @Autowired
     KelasService kelasService;
+
+    @Autowired
+    CutiService cutiService;
 
     @GetMapping("/presensi")
     public String viewAllpresensi(Model model) {
@@ -167,5 +180,72 @@ public class PresensiController {
             redirectAttrs.addFlashAttribute("alert", "notFound");
             return "redirect:/presensi";
         }
+    }
+
+    @GetMapping(value = "/presensi/pegawai")
+    public String viewAllPresensi(Model model){
+        List<UserModel> listPegawai = userService.findObjekPresensi();
+        
+        String[][] list = new String[listPegawai.size()][8];
+        int i = 0;
+        for(UserModel pegawai : listPegawai) {
+            list[i][0] = pegawai.getNamaUser();
+            list[i][1] = pegawai.getRole().getNamaRole();
+            list[i][2] = "Bekerja";
+            
+            int terlambat = 0;
+            int cuti = 0;
+            int absen = 0;
+            int hadir = 0;
+            for(PresensiModel presensi : pegawai.getListPresensi()) {
+                if(presensi.getStatus().equals(0)) {
+                    terlambat++;
+                } else if(presensi.getStatus().equals(1)) {
+                    hadir++;
+                }
+            }
+
+            PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
+            PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
+            LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
+            LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
+
+            List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
+            List<LocalDate> holidays = new ArrayList<LocalDate>();
+            for(CutiModel objekCuti : listCuti) {
+                if(objekCuti.getStatus() !=0) {
+                    LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
+                    LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
+                    holidays.addAll(start.datesUntil(end).collect(Collectors.toList()));
+                }
+            }
+            long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
+            List<LocalDate> emptyList = null;
+            long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
+
+            absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
+
+            list[i][3] = String.valueOf(hariPresensi);
+            list[i][4] = Integer.toString(terlambat);
+            list[i][5] = String.valueOf(hariCuti);
+            list[i][6] = Integer.toString(absen);
+            list[i][7] = Integer.toString(hadir);
+            i++;
+        } 
+        model.addAttribute("list", list);
+        return "daftar-presensi";
+    }
+
+    private static long countBusinessDaysBetween(LocalDate startDate, LocalDate endDate, List<LocalDate> holidays) {
+        Predicate<LocalDate> isHoliday = date -> !holidays.isEmpty() ? holidays.contains(date) : false;
+ 
+        Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
+                || date.getDayOfWeek() == DayOfWeek.SUNDAY;
+ 
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+ 
+        long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysBetween)
+                .filter(isHoliday.or(isWeekend).negate()).count();
+        return businessDays;
     }
 }
