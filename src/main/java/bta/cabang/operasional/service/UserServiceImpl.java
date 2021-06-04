@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,5 +36,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel findByUsername(String username) {
         return userDb.findByUsername(username);
+    }
+
+    @Override
+    public List<UserModel> findObjekPresensi(int i) {
+        List<UserModel> list = new ArrayList<>();
+        if(i == 1) {
+            list.addAll(userDb.findAllByRole_IdRole(3L));
+            list.addAll(userDb.findAllByRole_IdRole(4L));
+            list.addAll(userDb.findAllByRole_IdRole(5L));
+        } else if(i == 2) {
+            list.addAll(userDb.findAllByRole_IdRole(5L));
+        }
+        return list;
     }
 }

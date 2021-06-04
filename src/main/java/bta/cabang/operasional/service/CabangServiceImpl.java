@@ -13,7 +13,6 @@ import java.util.List;
 @Qualifier
 @Service
 @Transactional
-
 public class CabangServiceImpl implements CabangService{
     @Autowired
     CabangDb cabangDb;

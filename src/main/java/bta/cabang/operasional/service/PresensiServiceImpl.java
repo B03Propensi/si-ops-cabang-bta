@@ -14,7 +14,6 @@ import java.util.List;
 @Qualifier
 @Service
 @Transactional
-
 public class PresensiServiceImpl implements PresensiService {
     @Autowired
     PresensiDb presensiDb;
