@@ -109,8 +109,6 @@ public class RegistrasiKelasController {
             RedirectAttributes redirectAttrs
     ) {
         try {
-            System.out.println(kelas.getCabang().getNama_cabang());
-            System.out.println(idKelas);
             kelasService.editKelas(idKelas, kelas);
             redirectAttrs.addFlashAttribute("alert", "editSuccess");
             return "redirect:/kelas/";
@@ -147,11 +145,11 @@ public class RegistrasiKelasController {
     ) {
         try {
             kelasService.deletePengajar(idKelas);
-            redirectAttrs.addFlashAttribute("alert", "delSuccess");
+            redirectAttrs.addFlashAttribute("alert", "delPengajarSuccess");
             return "redirect:/kelas";
 
         } catch (Exception e) {
-            redirectAttrs.addFlashAttribute("alert", "delFail");
+            redirectAttrs.addFlashAttribute("alert", "delPengajarFail");
             return "redirect:/kelas";
         }
     }
