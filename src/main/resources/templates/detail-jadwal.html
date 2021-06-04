@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Detail Kelas</title>
+    <title>Detail Jadwal</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<div th:replace="fragments/fragment :: sidenav('Detail Kelas')"></div>
-<div th:replace="fragments/fragment :: navbar('Detail Kelas')"></div>
+<div th:replace="fragments/fragment :: sidenav('Detail Jadwal')"></div>
+<div th:replace="fragments/fragment :: navbar('Detail Jadwal')"></div>
 <div class="main">
     <div class="container">
         <div class="detailcard">
@@ -40,8 +40,12 @@
                         <td th:text="${kelas.hari}"></td>
                     </tr>
                     <tr>
-                        <th scope="row">Waktu</th>
-                        <td th:text="${kelas.waktu}"></td>
+                        <th scope="row">Waktu Mulai</th>
+                        <td th:text="${kelas.waktuMulai}" ></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Waktu Selesai</th>
+                        <td th:text="${kelas.waktuSelesai}"></td>
                     </tr>
                 </tbody>
             </table>
