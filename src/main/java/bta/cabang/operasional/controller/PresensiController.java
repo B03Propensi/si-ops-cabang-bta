@@ -284,7 +284,6 @@ public class PresensiController {
                         long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
 
                         absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
-                        System.out.println(absen + "-----------------" + hariPresensi + "-----------------"+ hariCuti);
 
                         list[i][3] = String.valueOf(hariPresensi);
                         list[i][4] = Integer.toString(terlambat);
