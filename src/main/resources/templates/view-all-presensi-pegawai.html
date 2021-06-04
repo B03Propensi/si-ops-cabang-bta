@@ -44,11 +44,11 @@
         </div>
         <br>
         <br>
-        <div class="row justify-content-between">
+        <div class="row justify-content-between" th:if="${!isDirop}">
             <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"> Rekapitulasi Presensi</h2>
         </div>
         <br>
-        <table class="btatable">
+        <table class="btatable" th:if="${!isDirop}">
             <thead>
             <tr>
                 <th>Nomor</th>
