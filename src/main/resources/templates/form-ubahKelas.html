@@ -54,6 +54,7 @@
                         <option th:each="pengajar : ${listPengajar}" th:value="${pengajar.idUser}" th:text="${pengajar.namaUser}"></option>
                     </select>
                 </div>
+                <p style="color: #ff0000">*Required</p>
                 <div style="text-align: right;">
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a th:href="@{/kelas/}" type="button" class="btn btn-outline-danger">Batal</a>
