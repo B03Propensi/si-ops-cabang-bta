@@ -52,25 +52,25 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col">
-                        <p> Cabang </p>
-                        <select th:field="*{lokasi}" name="lokasi" class="form-control" aria-label="Default select example" style="width: 50%">
-                            <option value="" disabled selected>Pilih Cabang...</option>
-                            <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="row" th:if="${isPengajar}">
-                    <div class="col">
-                        <p> Kelas </p>
-                        <select th:field="*{kelas}" name="kelas" class="form-control" aria-label="Default select example" style="width: 50%">
-                            <option value="" disabled selected>Pilih Kelas...</option>
-                            <option th:each="i : ${listKelas}" th:value="${i.idKelas}" th:text="${i.namaKelas}"></option>
-                        </select>
-                    </div>
-                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col">-->
+<!--                        <p> Cabang </p>-->
+<!--                        <select th:field="*{lokasi}" name="lokasi" class="form-control" aria-label="Default select example" style="width: 50%">-->
+<!--                            <option value="" disabled selected>Pilih Cabang...</option>-->
+<!--                            <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <br>-->
+<!--                <div class="row" th:if="${isPengajar}">-->
+<!--                    <div class="col">-->
+<!--                        <p> Kelas </p>-->
+<!--                        <select th:field="*{kelas}" name="kelas" class="form-control" aria-label="Default select example" style="width: 50%">-->
+<!--                            <option value="" disabled selected>Pilih Kelas...</option>-->
+<!--                            <option th:each="i : ${listKelas}" th:value="${i.idKelas}" th:text="${i.namaKelas}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <br>
                 <div class="row" th:if="${presensi.status} == 0">
                     <div class="col">
