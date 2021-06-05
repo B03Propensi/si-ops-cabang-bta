@@ -1,0 +1,69 @@
+.menunggu {
+    color: #ffc107;
+}
+
+.disetujui {
+    color: #28a745;
+}
+
+.ditolak {
+    color: #ed1d24;
+}
+
+.badge-menunggu {
+    width: auto;
+    border-radius: 20px;
+    padding: 6px;
+    color: white;
+    background-color: #ffc107;
+}
+
+.badge-disetujui {
+    width: auto;
+    border-radius: 20px;
+    padding: 6px;
+    color: white;
+    background-color: #28a745;
+}
+
+.badge-ditolak {
+    width: auto;
+    border-radius: 20px;
+    padding: 6px;
+    color: white;
+    background-color: #ed1d24;
+}
+
+.cuti-alert .alert {
+    width: fit-content;
+    position: fixed;
+    left: 50%;
+    top: 200px;
+    font-size: 12px;
+    padding: 8px 15px;
+}
+
+.detail-cuti p {
+    width: fit-content;
+    margin: 0 0 15px 0;
+}
+
+.detail-cuti .col-4 {
+    padding-right: 0;
+}
+
+.detail-cuti .col {
+    padding-left: 0;
+}
+
+form p {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.empty-cuti {
+    padding: 30px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    width: 40%;
+}

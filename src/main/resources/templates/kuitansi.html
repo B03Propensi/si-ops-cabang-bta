@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kuitansi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Siswa')"></div>
+<div th:replace="fragments/fragment :: navbar('Siswa')"></div>
+
+<!--isinya invoice terus bisa print page-->
+<div class="main">
+    <div class="container" align="center">
+        <h3 th:text="'Kuitansi Siswa #' + ${siswa.idSiswa} + ' berhasil dibuat.'"></h3>
+        <br>
+        <!--        Data Invoice        -->
+        <div hidden>
+            <span id="idKui" th:text="${kuitansi.idKuitansi}"></span>
+            <span id="tglKui" th:text="${#dates.format(kuitansi.tanggalKuitansi, 'dd-MM-yyyy')}"></span>
+            <span id="pembuatKui" th:text="${kuitansi.pembuatKuitansi.namaUser}"></span>
+            <span id="idSis" th:text="${siswa.idSiswa}"></span>
+            <span id="namaSis" th:text="${siswa.namaSiswa}"></span>
+            <span id="cabang" th:text="${siswa.cabangSiswa.nama_cabang}"></span>
+            <span id="program" th:text="${siswa.program.namaProgram}"></span>
+            <span id="bank" th:text="${siswa.kuitansi.bankTujuan}"></span>
+            <span id="nominal" th:text="${siswa.kuitansi.nominalKuitansi}"></span>
+            <span id="tglByr" th:text="${siswa.kuitansi.tanggalPembayaran}"></span>
+        </div>
+        <!--        Data Kuitansi        -->
+
+        <canvas id="kuitansi" width="800" height="650"
+                style="border: 1px solid #d3d3d3; border-radius: 10px;">
+        </canvas>
+        <br><br>
+
+        <a id="download">
+            <button class="btn btabutton" onClick="download()">Download</button>
+        </a>
+        <br><br>
+
+    </div>
+</div>
+
+<script>
+    var idKui = document.getElementById("idKui").innerHTML
+    var tglKui = document.getElementById("tglKui").innerHTML
+    var pembuatKui = document.getElementById("pembuatKui").innerHTML
+    var idSis = document.getElementById("idSis").innerHTML
+    var namaSis = document.getElementById("namaSis").innerHTML
+    var cabang = document.getElementById("cabang").innerHTML
+    var program = document.getElementById("program").innerHTML
+    var bank = document.getElementById("bank").innerHTML
+    var nominal = document.getElementById("nominal").innerHTML
+    var tglByr = document.getElementById("tglByr").innerHTML
+
+    var canvas = document.getElementById("kuitansi");
+    var ctx = canvas.getContext("2d");
+
+    ctx.font = "bold 28px Roboto";
+    ctx.fillText("KUITANSI #" + idKui, 300, 60);
+
+    ctx.font = "18px Arial";
+    ctx.fillText("No. Siswa              : " + idSis, 50, 125);
+    ctx.fillText("Nama Siswa          : " + namaSis, 50, 150);
+    ctx.fillText("Cabang                  : " + cabang, 50, 200);
+    ctx.fillText("Program                 : " + program, 50, 225);
+    ctx.fillText("Bank Tujuan             : " + bank, 50, 275);
+    ctx.fillText("Tanggal Pembayaran      : " + tglByr, 50, 300);
+
+    ctx.fillStyle = "#FFE8E8";
+    ctx.fillRect(50, 355, 700, 45);
+    ctx.strokeStyle = "#FF4C4C";
+    ctx.strokeRect(50, 355, 700, 45);
+
+    ctx.fillStyle = "black";
+    ctx.fillText("Jumlah yang dibayarkan", 80, 385)
+    ctx.font = "bold 20px Arial";
+    ctx.fillText("Rp." + nominal, 600, 385)
+
+    // ctx.font = "16px Arial";
+    // ctx.fillText("*Pembayaran ke rekening:", 50, 400)
+    // ctx.fillText("  a.n " + "nama cabang", 50, 425)
+    // ctx.fillText("  Bank " + "nama bank " + "no rek", 50, 450)
+    // ctx.fillText("**Tolong masukkan nomor invoice pada bukti pembayaran", 50, 500)
+
+    ctx.font = "20px Arial";
+    ctx.fillText("Issuer     : " + pembuatKui, 	550, 475)
+    ctx.fillText("Tanggal  : " + tglKui, 	550, 500)
+
+
+    function download() {
+        var download = document.getElementById("download");
+        var image = document.getElementById("kuitansi").toDataURL("image/png").replace("image/png", "image/octet-stream");
+        var savename = "KUITANSI_" + document.getElementById("idKui").innerHTML + ".png"
+        download.setAttribute("href", image);
+        download.setAttribute("download", savename);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Cabang</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Tambah Cabang')"></div>
+<div th:replace="fragments/fragment :: navbar('Tambah Cabang')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div>
+            <h4 style="font-family: Roboto;color: black;font-style: normal;font-size: 36px; font-weight: 900;line-height: 42px"> Cabang Baru </h4>
+        </div>
+        <br>
+        <br>
+        <div class="btacard">
+            <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex; align-items: center"  > Formulir Cabang Baru</h2>
+            <br>
+            <br>
+            <form th:action="@{/cabang/add}" th:object = "${cabang}" method = "POST" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id_cabang}"/>
+                <div class="row">
+                    <div class="col">
+                        <p> Nama <Ca></Ca>bang </p>
+                        <input required type="text" class="form-control"  name="nama_cabang" placeholder="Nama Cabang" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Kode Cabang </p>
+                        <input required type="text" class="form-control"  name="kode_cabang" placeholder="kode_cabang"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Email </p>
+                        <input required type="text" class="form-control"  name="email" placeholder="email"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Nomor Telepon</p>
+                        <input required type="text" class="form-control"  name="nomor_telepon" placeholder="nomor_telepon"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Nomor Rekening Cabang</p>
+                        <input required type="text" class="form-control"  name="nomor_rekening" placeholder="nomor rekening"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p> Bank Cabang</p>
+                        <input required type="text" class="form-control"  name="bank_cabang" placeholder="Bank Cabang"/>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Alamat</p>
+                        <textarea required type="text" class="form-control" name="alamat"
+                                  rows="3" placeholder="Alamat Cabang" minlength="20"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Logo(max 10mb):</p>
+                        <input type="file" id="attachment" name="attachment" accept="image/*">
+                    </div>
+                </div>
+                <div align="center">
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                    <a href="/cabang" class="btn btn-sm btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+        <br>
+
+    </div>
+</div>
+</body>
+</html>

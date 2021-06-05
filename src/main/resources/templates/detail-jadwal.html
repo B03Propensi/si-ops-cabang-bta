@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Jadwal</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Detail Jadwal')"></div>
+<div th:replace="fragments/fragment :: navbar('Detail Jadwal')"></div>
+<div class="main">
+    <div class="container">
+        <div class="detailcard">
+            <h2 style="font-weight: bold;" th:text="${kelas.namaKelas}"></h2>
+            <div style="text-align: right;">
+                <a type="button" class="btn btn-primary" th:href="@{/jadwal/ubah/} + ${kelas.idKelas}">
+                    <span>Ubah</span>
+                </a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapusJadwalModal" style="margin-left: 20px;">
+                    <span>Hapus</span>
+                </button>
+            </div>
+            <table class="table" style="width: 60%;">
+                <tbody>
+                    <tr>
+                        <th scope="row">Nama Kelas</th>
+                        <td th:text="${kelas.namaKelas}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Bidang</th>
+                        <td th:text="${kelas.bidang}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cabang</th>
+                        <td th:text="${kelas.cabang.nama_cabang}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Hari</th>
+                        <td th:text="${kelas.hari}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Waktu Mulai</th>
+                        <td th:text="${kelas.waktuMulai}" ></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Waktu Selesai</th>
+                        <td th:text="${kelas.waktuSelesai}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal fade" id="hapusJadwalModal" tabindex="-1" role="dialog" aria-labelledby="hapusJadwalModalLabel" aria-hidden="true">-->
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h2 style="font-weight: bold; text-align: center;" th:text="'Apakah Anda yakin ingin menghapus jadwal ' + ${kelas.namaKelas} + '?'"></h2>
+                            <p style="text-align: center">Kelas Biologi 1 tidak akan terhapus dari database (hanya tidak terjadwal). Untuk menghapus kelas silakan menuju halaman “<a th:href="@{/kelas/}">Registrasi Kelas</a>.”</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/jadwal/hapus/} + ${kelas.idKelas}" class="btn btn-outline-secondary">
+                                <span>Hapus</span>
+                            </a>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">
+                                <span>Batal</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

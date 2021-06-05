@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Jadwal</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Tambah Jadwal')"></div>
+<div th:replace="fragments/fragment :: navbar('Tambah Jadwal')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div class="btacard">
+            <form th:action="@{/jadwal/tambah/}" th:object="${jadwalBaru}" method="POST">
+                <h6>Nama Kelas<span style="color: #ff0000">*</span></h6>
+                <select name="idKelas" class="form-control" aria-label="Default select example" required>
+                    <option value="" disabled selected>Pilih Kelas...</option>
+                    <option th:each="kelas : ${listKelas}" th:value="${kelas.idKelas}" th:text="${kelas.namaKelas}"></option>
+                </select>
+                <div th:if="${#lists.isEmpty(listKelas)}">
+                    <p>Belum ada kelas yang terdaftar. Silakan registrasi kelas pada halaman <a th:href="@{/kelas/tambah/}">Registrasi Kelas</a>.</p>
+                </div>
+                <input type="hidden" th:field="*{namaKelas}">
+                <input type="hidden" th:field="*{bidang}">
+                <h6 style="margin-top: 10px;">Hari<span style="color: #ff0000">*</span></h6>
+                <select name="hari" class="form-control" aria-label="Default select example" required>
+                    <option value="" disabled selected>Pilih Hari...</option>
+                    <option value="Senin">Senin</option>
+                    <option value="Selasa">Selasa</option>
+                    <option value="Rabu">Rabu</option>
+                    <option value="Kamis">Kamis</option>
+                    <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
+                </select>
+                <h6 style="margin-top: 10px;">Waktu Mulai<span style="color: #ff0000">*</span></h6>
+                <input type="time" name="waktuMulai" th:text="${#dates.format(standardDate, 'HH:mm')}" th:value="*{#dates.format(waktuMulai, 'HH:mm')}" class="form-control"
+                       min="08:00" max="18:00" required>
+                <h6 style="margin-top: 10px;">Waktu Selesai<span style="color: #ff0000">*</span></h6>
+                <input type="time" name="waktuSelesai" th:text="${#dates.format(standardDate, 'HH:mm')}" th:value="*{#dates.format(waktuMulai, 'HH:mm')}" class="form-control"
+                       min="08:00" max="18:00" required>
+                <p style="color: #ff0000">*Required</p>
+                <div th:if="${#lists.isEmpty(listKelas)}" style="text-align: right;  margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary" disabled>Simpan</button>
+                    <a th:href="@{/jadwal/}" type="button" class="btn btn-outline-danger">Batal</a>
+                </div>
+                <div th:unless="${#lists.isEmpty(listKelas)}" style="text-align: right;  margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a th:href="@{/jadwal/}" type="button" class="btn btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

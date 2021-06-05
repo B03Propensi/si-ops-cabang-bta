@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengajuan Cuti</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
+<div th:replace="fragments/fragment :: navbar('Cuti')"></div>
+<div class="main">
+    <div class="container">
+        <h1>Detail Pengajuan Cuti</h1><br>
+        <div class="btacard" style="width: 60%">
+            <h1 th:text="'Pengajuan Cuti #' + ${cuti.idCuti}"></h1><br>
+            <div class="detail-cuti">
+                <div th:if="${isAbleToUpdateCuti}" class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Nama Pegawai</p></div>
+                    <div class="col"><p th:text="${cuti.pengaju.namaUser}"></p></div>
+                </div>
+                <div th:if="${isAbleToUpdateCuti}" class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Role</p></div>
+                    <div class="col"><p th:text="${cuti.pengaju.role.namaRole}"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Diajukan</p></div>
+                    <div class="col"><p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Tanggal Cuti</p></div>
+                    <div class="col"><p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')} + ' - ' +
+                                                 ${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Alasan</p></div>
+                    <div class="col"><p th:text="${cuti.alasan}"></p></div>
+                </div>
+                <div th:if="${cuti.lampiran} != null" class="row">
+                    <div class="col-4" style="margin-left: 0px"><p>Lampiran</p></div>
+                    <div class="col">
+                        <a><img th:src="*{'data:image/*;base64,'+ image}" style="width: 50%" data-toggle="modal" data-target="#modal"/></a>
+                    </div>
+                </div>
+                <br>
+                <div th:if="${isPegawai} OR ${cuti.status} != 0">
+                    <div class="row">
+                        <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan</p></div>
+                        <div class="col">
+                            <p th:if="${cuti.status} == 0" class="menunggu">Menunggu Persetujuan</p>
+                            <p th:if="${cuti.status} == 1" class="disetujui">Disetujui</p>
+                            <p th:if="${cuti.status} == 2" class="ditolak">Ditolak</p>
+                        </div>
+                    </div>
+                    <div th:if="${cuti.feedback} != null AND ${cuti.feedback} != ''" class="row">
+                        <div class="col-4" style="margin-left: 0px"><p>Feedback</p></div>
+                        <div class="col">
+                            <p th:text="${cuti.feedback}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${isAbleToUpdateCuti} AND ${cuti.status} == 0">
+                    <form id="updateForm" th:action="@{/cuti/update}" th:object="${cuti}" method="POST">
+                        <input type="hidden" th:field="*{idCuti}"/>
+                        <input type="hidden" th:field="*{tanggal_diajukan}"/>
+                        <input type="hidden" th:field="*{tanggal_mulai}"/>
+                        <input type="hidden" th:field="*{tanggal_selesai}"/>
+                        <input type="hidden" th:field="*{alasan}"/>
+                        <input type="hidden" th:field="*{lampiran}"/>
+                        <input type="hidden" th:field="*{pengaju.idUser}"/>
+
+                        <div class="row" style="margin-bottom: 15px">
+                            <div class="col-4" style="margin-left: 0px"><p>Status Persetujuan <span style="color: red">*</span></p></div>
+                            <div class="col-3" style="padding-left: 0">
+                                <select required id="status" class="form-control" name="status">
+                                    <option value="" disabled selected hidden>Pilih status</option>
+                                    <option value="1">Disetujui</option>
+                                    <option value="2">Ditolak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" style="margin-left: 0px"><p>Feedback <span id="star" style="color: red">*</span></p></div>
+                            <div class="col">
+                                <textarea id="feedback" type="text" class="form-control" name="feedback"
+                                          rows="3" placeholder="Feedback..." maxlength="255"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <div align="right">
+                <button th:if="${isAbleToUpdateCuti} AND ${cuti.status} == 0"
+                        type="submit" form="updateForm" class="btn btn-sm btn-primary">Simpan</button>
+                <a href="/cuti" class="btn btn-sm btn-outline-danger">Kembali</a>
+            </div>
+        </div>
+
+        <!--Modal-->
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body mb-0 p-0">
+                        <img th:src="*{'data:image/*;base64,'+ image}" style="width: 100%"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal-->
+
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $('#star').hide()
+        $('#status').change(function() {
+            if (this.value == "2") {
+                $('#feedback').prop("required", true)
+                $('#star').show()
+            } else {
+                $('#feedback').prop("required", false)
+                $('#star').hide()
+            }
+        })
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengajuan Cuti</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Cuti')"></div>
+<div th:replace="fragments/fragment :: navbar('Cuti')"></div>
+<div class="main">
+    <div class="container">
+        <h1>Daftar Pengajuan Cuti</h1><br>
+        <div class="cuti-alert">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Pengajuan cuti berhasil dibuat!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Pengajuan cuti berhasil dibatalkan!
+            </div>
+            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+                Status pengajuan cuti berhasil diubah!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi kesalahan saat membuat pengajuan!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi kesalahan saat membatalkan pengajuan!
+            </div>
+            <div th:if="${alert} == 'delNotAllowed'" class="alert alert-danger" role="alert">
+                Pengajuan cuti tidak dapat dibatalkan!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Pengajuan cuti tidak ditemukan!
+            </div>
+        </div>
+
+
+        <div>
+            <a th:if="${isAbleToAddDeleteCuti}" href="/cuti/add" class="btn btn-sm btabutton" style="margin-bottom: 5px">
+                <span><strong>+</strong></span> Buat Pengajuan Cuti
+            </a>
+
+            <div th:if="${listCuti.size()} == 0" align="center">
+                <p class="empty-cuti">Belum ada pengajuan cuti</p>
+            </div>
+
+            <table th:unless="${listCuti.size()} == 0" class="btatable">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th th:if="${isAbleToUpdateCuti}">Nama Pegawai</th>
+                    <th>Tanggal Diajukan</th>
+                    <th>Tanggal Cuti</th>
+                    <th>Status Persetujuan</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cuti, iterStat : ${listCuti}">
+                    <td>
+                        <p th:text="${iterStat.count}"></p>
+                    </td>
+                    <td th:if="${isAbleToUpdateCuti}">
+                        <p th:text="${cuti.pengaju.namaUser}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_diajukan, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(cuti.tanggal_mulai, 'd MMMM yyyy')} + ' - ' +
+                                    ${#dates.format(cuti.tanggal_selesai, 'd MMMM yyyy')}"></p>
+                    </td>
+                    <td>
+                        <p th:if="${cuti.status} == 0" class="badge-menunggu">Menunggu Persetujuan</p>
+                        <p th:if="${cuti.status} == 1" class="badge-disetujui">Disetujui</p>
+                        <p th:if="${cuti.status} == 2" class="badge-ditolak">Ditolak</p>
+                    </td>
+                    <td>
+                        <a th:href = "@{/cuti/view/} + ${cuti.idCuti}" class="btn btn-sm btn-primary">Lihat</a>
+                        <a th:if="${isAbleToAddDeleteCuti} AND ${cuti.status} == 0"
+                           th:href = "@{/cuti/delete/} + ${cuti.idCuti}" class="btn btn-sm btn-danger">Batalkan</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

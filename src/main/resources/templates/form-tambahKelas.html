@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Kelas</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Tambah Kelas')"></div>
+<div th:replace="fragments/fragment :: navbar('Tambah Kelas')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div class="btacard">
+            <form th:action="@{/kelas/tambah/}" th:object="${kelasBaru}" method="POST">
+                <h6>Nama Kelas<span style="color: #ff0000">*</span></h6>
+                <input name="namaKelas" type="text" class="form-control" placeholder="contoh: Biologi 1" required>
+                <h6 style="margin-top: 10px;">Bidang<span style="color: #ff0000">*</span></h6>
+                <select name="bidang" class="form-control" aria-label="Default select example" required>
+                    <option value="" disabled selected>Pilih Bidang...</option>
+                    <option value="Biologi">Biologi</option>
+                    <option value="Fisika">Fisika</option>
+                    <option value="Kimia">Kimia</option>
+                    <option value="Ekonomi">Ekonomi</option>
+                    <option value="Geografi">Geografi</option>
+                    <option value="Sosiologi">Sosiologi</option>
+                    <option value="Sejarah">Sejarah</option>
+                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                    <option value="Bahasa Inggris">Bahasa Inggris</option>
+                    <option value="Matematika">Matematika</option>
+                </select>
+                <h6 style="margin-top: 10px;">Cabang<span style="color: #ff0000">*</span></h6>
+                <select name="cabang" class="form-control" aria-label="Default select example" required>
+                    <option value="" disabled selected>Pilih Cabang...</option>
+                    <option th:each="cabang : ${listCabang}" th:value="${cabang.id_cabang}" th:text="${cabang.nama_cabang}"></option>
+                </select>
+                <h6 style="margin-top: 10px;">Pengajar</h6>
+                <select name="pengajar" class="form-control" aria-label="Default select example">
+                    <option value="" disabled selected>Pilih Pengajar...</option>
+                    <option th:each="pengajar : ${listPengajar}" th:value="${pengajar.idUser}" th:text="${pengajar.namaUser}"></option>
+                </select>
+                <p style="color: #ff0000">*Required</p>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a th:href="@{/kelas/}" type="button" class="btn btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

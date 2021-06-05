@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengajuan Cuti</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('404')"></div>
+<div th:replace="fragments/fragment :: navbar('404')"></div>
+<div class="main">
+    <div class="container">
+        <div align="center">
+            <div class="empty-cuti">
+                <h1 style="color: #FF4C4C; font-weight: bold">404</h1>
+                <h2>Mohon maaf, <br> Halaman tidak tersedia.</h2>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

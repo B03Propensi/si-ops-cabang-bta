@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+<div th:replace="fragments/fragment :: navbar('Beranda')"></div>
+<div class="main">
+    <div class="container">
+        <!--Isi di sini-->
+        <div>
+            <h4 style="font-family: Roboto;color: black;font-style: normal;font-size: 36px; font-weight: 900;line-height: 42px"> Presensi </h4>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <div class="presensi-alert">
+            <div th:if="${alert} == 'addSuccess'" class="alert alert-success" role="alert">
+                Presensi baru berhasil dibuat
+            </div>
+            <div th:if="${alert} == 'updateSuccess'" class="alert alert-success" role="alert">
+                Presensi berhasil diubah!
+            </div>
+            <div th:if="${alert} == 'delSuccess'" class="alert alert-success" role="alert">
+                Presensi berhasil dihapus!
+            </div>
+            <div th:if="${alert} == 'addFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat membuat Presensi!
+            </div>
+            <div th:if="${alert} == 'delFail'" class="alert alert-danger" role="alert">
+                Terjadi error saat menghapus Presensi!
+            </div>
+            <div th:if="${alert} == 'notFound'" class="alert alert-danger" role="alert">
+                Presensi tidak ditemukan!
+            </div>
+        </div>
+        <div th:if="${isAbleToAddPresensi}"  class="row justify-content-between">
+            <a th:href = "@{/presensi/add}" class = "btn btn-outline-danger " > Lakukan Presensi</a>
+        </div>
+        <div th:if="${isKoordinator}"  class="row justify-content-between">
+            <a th:href = "@{/statistik-presensi}" class = "btn btn-outline-danger " > Lihat Presensi Pengajar</a>
+        </div>
+        <br>
+        <br>
+        <div class="row justify-content-between" th:if="${!isDirop}">
+            <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex;"> Rekapitulasi Presensi</h2>
+        </div>
+        <br>
+        <table class="btatable" th:if="${!isDirop}">
+            <thead>
+            <tr>
+                <th>Nomor</th>
+                <th>Hari,Tanggal</th>
+                <th>Waktu Kehadiran</th>
+                <th th:if="${isPengajar}">Kelas</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="presensi, iterStat : ${listPresensi}">
+                <td>
+                    <p th:text="${iterStat.count}"></p>
+                </td>
+                <td>
+                    <p th:text="${presensi.tanggal}"></p>
+                </td>
+                <td>
+                    <p th:text="${presensi.waktu}"></p>
+                </td>
+                <td th:if="${isPengajar}">
+                    <p th:text="${presensi.kelas}"></p>
+                </td>
+                <td>
+                    <p th:if="${presensi.status} == 0" class="badge-terlambat">Terlambat</p>
+                    <p th:if="${presensi.status} == 1" class="badge-hadir">Hadir Tepat Waktu</p>
+                </td>
+
+                <td class="btn-toolbar" style="justify-content: center">
+                    <a th:href = "@{/presensi/view/} + ${presensi.idPresensi}" >Detail</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

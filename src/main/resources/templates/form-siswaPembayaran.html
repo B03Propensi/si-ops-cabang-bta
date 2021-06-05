@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ubah Status Pembayaran</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Siswa')"></div>
+<div th:replace="fragments/fragment :: navbar('Siswa')"></div>
+<div class="main">
+    <div class="container">
+        <h1>Ubah Status Pembayaran</h1><br>
+        <div class="btacard" style="width: 50%">
+            <h1 align="center">Form Kuitansi</h1><br>
+            <form th:action="@{'/siswa/' + ${idSiswa} + '/pembayaran'}" th:object = "${kuitansi}" method = "POST">
+                <div class="row">
+                    <div class="col">
+                        <p>Bank Tujuan: <span style="color: #ff0000">*</span></p>
+                        <input required type="text" class="form-control" name="bankTujuan">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Nominal: <span style="color: red">*</span></p>
+                        <input required type="text" class="form-control" name="nominalKuitansi">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <p>Tanggal Pembayaran: <span style="color: red">*</span></p>
+                        <input required type="date" class="form-control" name="tanggalPembayaran">
+                    </div>
+                </div>
+                <br>
+                <div align="center">
+                    <button type="submit" class="btn btn-sm btn-primary">Kirim</button>
+                    <a href="/siswa" class="btn btn-sm btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

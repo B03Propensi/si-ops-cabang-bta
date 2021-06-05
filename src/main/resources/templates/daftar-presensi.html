@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+	<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+        var d = new Date();
+        var n = d.getFullYear();
+        var chartData = [[${chart}]];
+        console.log(chartData);
+		FusionCharts.ready(function(){
+			var chartObj = new FusionCharts({
+    type: 'pie3d',
+    renderAt: 'chart-container',
+    width: '450',
+    height: '300',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Total Kehadiran Pegawai",
+            "subCaption": "Tahun " + n,
+            "showPercentInTooltip": "0",
+            "decimals": "1",
+            "useDataPlotColorForLabels": "1",
+            //Theme
+            "theme": "fusion"
+        },
+        "data": chartData
+    }
+}
+);
+			chartObj.render();
+		});
+	</script>
+</head>
+<body>
+    <div th:replace="fragments/fragment :: sidenav('Beranda')"></div>
+
+    <div class="main">
+        <div class="container">
+            <h1>Daftar Presensi Pegawai Cabang</h1><br>
+
+            <form th:action ="@{/statistik-presensi/cabang}" class="form-group-inline" method="GET">
+                <div class ="row justify-content-center">
+                    <div class="col-5">
+                        <label><b>Pilih Cabang :</b></label>
+                        <select class="form-control" name="idCabang">
+                            <option value="" selected>Pilih Cabang</option>
+                                <option th:each="cabang : ${listCabang}"
+                                    th:value="${cabang.id_cabang}"
+                                    th:selected="${cabangModel.id_cabang == cabang.id_cabang}"
+                                    th:text="${cabang.id_cabang}"> </option>
+                        </select>
+                    </div>
+                </div>
+                <button class = "btn btn-primary" type = "submit" value="Submit">Submit</a>
+            </form>
+
+            <div align="center">
+                <div style="width: 95%">
+                    <table class="btatable">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Pegawai</th>
+                            <th>Jabatan</th>
+                            <th>Status</th>
+                            <th>Akumulasi Keterlambatan</th>
+                            <th>Akumulasi Cuti</th>
+                            <th>Akumulasi Ketidakhadiran</th>
+                            <th>Akumulasi Presensi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pegawai, iterStat : ${list}">
+                            <td>
+                                <p th:text="${iterStat.count}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[0]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[1]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[2]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[4]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[5]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[6]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[3]}"></p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <br>
+            <div id="chart-container"></div>
+        </div>
+    </div>
+</body>

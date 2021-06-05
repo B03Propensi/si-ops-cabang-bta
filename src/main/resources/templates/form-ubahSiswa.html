@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ubah Informasi Siswa</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Ubah Informasi Siswa')"></div>
+<div th:replace="fragments/fragment :: navbar('Ubah Informasi Siswa')"></div>
+<div class="main">
+    <div class="container mb-5">
+        <!--Isi di sini-->
+        <h3>Ubah Informasi Siswa</h3>
+        <div class="btacard">
+            <form th:action="@{/siswa/edit/} + ${siswa.idSiswa}" th:object="${siswa}" method="POST">
+                <div class="mb-5">
+                    <h6>Nama Lengkap<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{namaSiswa}" name="namaSiswa" type="text" class="form-control" required>
+                    <h6 style="margin-top: 10px;">Asal Sekolah<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{asalSekolah}" name="asalSekolah" type="text" class="form-control" required>
+                    <h6 style="margin-top: 10px;">Program<span style="color: #ff0000">*</span></h6>
+                    <select name="program" class="form-control" aria-label="Default select example" required>
+                        <option th:each="program : ${listProgram}" th:selected="(${program.idProgram} == *{program.idProgram})" th:value="${program.idProgram}" th:text="${program.namaProgram}"></option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <h6>Tanggal Lahir<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{#dates.format(tanggalLahir, 'yyyy-MM-dd')}" name="tanggalLahir" th:text="${#dates.format(standardDate, 'yyyy-MM-dd')}" type="date" class="form-control" required>
+                    <h6 style="margin-top: 10px;">No. Handphone<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{hpSiswa}" name="hpSiswa" type="tel" class="form-control" required>
+                    <h6 style="margin-top: 10px;">Email<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{emailSiswa}" name="emailSiswa" type="email" class="form-control" required>
+                    <h6 style="margin-top: 10px;">Alamat<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{alamatSiswa}" name="alamatSiswa" class="form-control" required>
+                </div>
+                <div class="mb-4">
+                    <h6>Nama Orang Tua<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{namaOrtu}" name="namaOrtu" type="text" class="form-control" required>
+                    <h6 style="margin-top: 10px;">No. Handphone Orang Tua<span style="color: #ff0000">*</span></h6>
+                    <input th:value="*{hpOrtu}" name="hpOrtu" type="tel" class="form-control" required>
+                </div>
+                <p style="color: #ff0000">*Required</p>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a th:href="@{/siswa/} + ${siswa.idSiswa}" type="button" class="btn btn-outline-danger">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
