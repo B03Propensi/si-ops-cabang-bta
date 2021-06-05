@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -177,6 +178,26 @@ public class SiswaController {
             redirectAttrs.addFlashAttribute("alert", "delFail");
             return "redirect:/siswa";
         }
+    }
+
+    @GetMapping("/siswa/statistik")
+    public String statistikSiswa(Model model) {
+        List<HashMap> chart = new ArrayList();
+        int totalLunas = siswaService.getAllSiswaByPembayaran(1).size();
+        int totalBelumLunas = siswaService.getAllSiswaByPembayaran(0).size();
+
+        HashMap<String, String> objLunas = new HashMap<String, String>();
+        objLunas.put("label", "lunas");
+        objLunas.put("value", Integer.toString(totalLunas));
+        chart.add(objLunas);
+
+        HashMap<String, String> objBelumLunas = new HashMap<String, String>();
+        objBelumLunas.put("label", "belum lunas");
+        objBelumLunas.put("value", Integer.toString(totalBelumLunas));
+        chart.add(objBelumLunas);
+
+        model.addAttribute("chart", chart);
+        return "siswa-statistik";
     }
 
     @GetMapping("/program")

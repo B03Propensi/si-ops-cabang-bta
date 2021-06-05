@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistik Siswa</title>
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<div th:replace="fragments/fragment :: sidenav('Siswa')"></div>
+<div th:replace="fragments/fragment :: navbar('Siswa')"></div>
+<div class="main">
+    <div class="container">
+        <div align="center">
+            <div id="chart-container">FusionCharts XT will load here!</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    var chartData = [[${chart}]];
+    console.log(chartData);
+
+    const chartConfig = {
+        type: 'column2d',
+        renderAt: 'chart-container',
+        width: '75%',
+        height: '400',
+        dataFormat: 'json',
+        dataSource: {
+            // Chart Configuration
+            "chart": {
+                "caption": "Total Status Pembayaran Siswa",
+                "subCaption": "",
+                "xAxisName": "Status Pembayaran",
+                "yAxisName": "Jumlah Siswa",
+                "numberSuffix": "",
+                "theme": "fusion",
+            },
+            // Chart Data
+            "data": chartData
+        }
+    };
+
+    FusionCharts.ready(function(){
+        var fusioncharts = new FusionCharts(chartConfig);
+        fusioncharts.render();
+    });
+
+</script>
+</body>
+</html>
