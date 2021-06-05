@@ -20,13 +20,14 @@
             <h2 class="col-6" style="font-family: Roboto;color: black;font-style: normal;font-weight: bold; display: flex; align-items: center"  > Formulir Presensi Baru</h2>
             <br>
             <br>
-            <form th:action="@{/presensi/add}" th:object = "${presensi}" method = "POST">
+            <form th:action="@{/presensi/update(${presensi.idPresensi})}" th:object = "${presensi}" method = "POST">
+                <input type="hidden" th:field="*{idPresensi}"/>
                 <div class="row">
                     <div class="col-4">
                         <p>Tanggal Absensi :</p>
                     </div>
                     <div class="col">
-                        <p th:text="${tanggal}"></p>
+                        <p th:text="${presensi.tanggal}"></p>
                     </div>
                 </div>
                 <br>
@@ -35,7 +36,7 @@
                         <p>Waktu Kehadiran :</p>
                     </div>
                     <div class="col">
-                        <p><span th:text="${waktu}"></span></p>
+                        <p><span th:text="${presensi.waktu}"></span></p>
                     </div>
                 </div>
                 <br>
@@ -45,8 +46,8 @@
                     </div>
                     <div class="col">
                         <p>
-                            <span th:if="${status} == 0" th:value="0" style="color: red" name="status" >Terlambat</span>
-                            <span th:if="${status} == 1" th:value="1" style="color: green" name="status">Hadir tepat waktu</span>
+                            <span th:if="${presensi.status} == 0" th:value="0" style="color: red" name="status" >Terlambat</span>
+                            <span th:if="${presensi.status} == 1" th:value="1" style="color: green" name="status">Hadir tepat waktu</span>
                         </p>
                     </div>
                 </div>
@@ -54,7 +55,7 @@
                 <div class="row">
                     <div class="col">
                         <p> Cabang </p>
-                        <select name="lokasi" class="form-control" aria-label="Default select example" style="width: 50%">
+                        <select th:field="*{lokasi}" name="lokasi" class="form-control" aria-label="Default select example" style="width: 50%">
                             <option value="" disabled selected>Pilih Cabang...</option>
                             <option th:each="i : ${listCabang}" th:value="${i.id_cabang}" th:text="${i.nama_cabang}"></option>
                         </select>
@@ -64,14 +65,14 @@
                 <div class="row" th:if="${isPengajar}">
                     <div class="col">
                         <p> Kelas </p>
-                        <select name="kelas" class="form-control" aria-label="Default select example" style="width: 50%">
+                        <select th:field="*{kelas}" name="kelas" class="form-control" aria-label="Default select example" style="width: 50%">
                             <option value="" disabled selected>Pilih Kelas...</option>
                             <option th:each="i : ${listKelas}" th:value="${i.idKelas}" th:text="${i.namaKelas}"></option>
                         </select>
                     </div>
                 </div>
                 <br>
-                <div class="row" th:if="${status} == 0">
+                <div class="row" th:if="${presensi.status} == 0">
                     <div class="col">
                         <p>Alasan: <span style="color: red">*</span></p>
                         <textarea required type="text" class="form-control" name="alasan"

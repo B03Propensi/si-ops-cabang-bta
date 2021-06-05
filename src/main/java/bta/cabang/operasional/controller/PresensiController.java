@@ -15,12 +15,7 @@ import org.hibernate.type.LocalDateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -89,6 +84,7 @@ public class PresensiController {
         String dayOfTheWeek = dateFormat.format(d);
         String tanggal = dateFormat.format(timestamp);
         String waktu = dateFormat2.format(timestamp);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         System.out.println(dayOfTheWeek);
         System.out.println("COBAIN TIMESTAMP : " + tanggal);
@@ -126,6 +122,7 @@ public class PresensiController {
     public String addPresensiForm(Model model) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMMM yyyy", new java.util.Locale("id"));
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm",Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         timestamp = new Timestamp(System.currentTimeMillis());
         String tanggal = dateFormat.format(timestamp);
@@ -157,31 +154,32 @@ public class PresensiController {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMMM yyyy", new java.util.Locale("id"));
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm",Locale.getDefault());
+            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
             dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
             timestamp = new Timestamp(System.currentTimeMillis());
 
-                presensiModel.setDate(timestamp);
-                presensiModel.setUser(authService.getCurrentLoggedInUserByUsername());
-                presensiModel.setJabatan(currentUser.getRole().getNamaRole());
-                presensiModel.setTanggal(dateFormat.format(timestamp));
-                presensiModel.setWaktu(dateFormat2.format(timestamp));
+            presensiModel.setDate(timestamp);
+            presensiModel.setUser(authService.getCurrentLoggedInUserByUsername());
+            presensiModel.setJabatan(currentUser.getRole().getNamaRole());
+            presensiModel.setTanggal(dateFormat.format(timestamp));
+            presensiModel.setWaktu(dateFormat2.format(timestamp));
 
 
 
-                if (timestamp.getHours() > 8) {
-                    presensiModel.setStatus(0);
-                    System.out.println("Telattttt");
-                } else if (timestamp.getHours() == 8 && timestamp.getMinutes() > 0) {
-                    presensiModel.setStatus(0);
-                    System.out.println("Telattttt");
-                } else {
-                    presensiModel.setStatus(1);
-                    System.out.println("hadiir");
-                }
+            if (timestamp.getHours() > 8) {
+                presensiModel.setStatus(0);
+                System.out.println("Telattttt");
+            } else if (timestamp.getHours() == 8 && timestamp.getMinutes() > 0) {
+                presensiModel.setStatus(0);
+                System.out.println("Telattttt");
+            } else {
+                presensiModel.setStatus(1);
+                System.out.println("hadiir");
+            }
 
-                presensiService.addPresensi(presensiModel);
-                redirectAttrs.addFlashAttribute("alert", "addSuccess");
-                return "redirect:/presensi";
+            presensiService.addPresensi(presensiModel);
+            redirectAttrs.addFlashAttribute("alert", "addSuccess");
+            return "redirect:/presensi";
 
 
 
@@ -211,10 +209,31 @@ public class PresensiController {
         }
     }
 
+    @GetMapping("/presensi/update/{id_presensi}")
+    private String updatePresensiForm(@PathVariable Integer id_presensi, Model model){
+
+        PresensiModel presensiModel = presensiService.getPresensibyId(id_presensi);
+        model.addAttribute("presensi", presensiModel );
+        return "update-presensi-form";
+    }
+
+    @PostMapping("/presensi/update")
+    private String updateCabangSubmit(@RequestParam Integer id_presensi, @ModelAttribute PresensiModel presensiModel, Model model, RedirectAttributes redirectAttrs){
+        try{
+            presensiService.updatePresensi(id_presensi,presensiModel);
+            redirectAttrs.addFlashAttribute("alert", "updateSuccess");
+            return "redirect:/presensi";
+        }catch (Exception e){
+            redirectAttrs.addFlashAttribute("alert", "updateFail");
+            return "redirect:/presensi";
+        }
+    }
+
+
+
     @GetMapping(value = "/statistik-presensi")
     public String viewAllPresensi(Model model){
         UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
-        List<CabangModel> listCabang = cabangService.getCabangList();
         if(currentUser.getRole().getNamaRole().equals("Direktur Operasional")) {
             List<UserModel> listPegawaibaru = userService.findObjekPresensi(1);
             List<UserModel> listPegawai = new ArrayList<UserModel>();
@@ -240,7 +259,7 @@ public class PresensiController {
                         list[i][0] = pegawai.getNamaUser();
                         list[i][1] = pegawai.getRole().getNamaRole();
                         list[i][2] = "Bekerja";
-                        
+
                         int terlambat = 0;
                         int absen = 0;
                         int hadir = 0;
@@ -272,7 +291,7 @@ public class PresensiController {
                         if(!holidays.isEmpty()) {
                             hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
                         }
-                        
+
                         absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
 
                         list[i][3] = String.valueOf(hariPresensi);
@@ -288,7 +307,7 @@ public class PresensiController {
                         totalTerlambat += terlambat;
                     }
                 }
-            } 
+            }
 
             HashMap<String, String> objekCuti = new HashMap<String, String>();
             objekCuti.put("label", "cuti");
@@ -307,13 +326,13 @@ public class PresensiController {
             objekPenuh.put("value", Integer.toString(totalPenuh));
             chart.add(objekPenuh);
 
+            System.out.println(chart + "----------------------------");
             model.addAttribute("chart", chart);
             model.addAttribute("list", list);
-            model.addAttribute("listCabang", listCabang);
             return "daftar-presensi";
         } else if(currentUser.getRole().getNamaRole().equals("Koordinator Bidang Studi")) {
             List<UserModel> listPegawaibaru = userService.findObjekPresensi(2);
-            
+
             List<UserModel> listPegawai = new ArrayList<UserModel>();
             for(UserModel pegawai:listPegawaibaru) {
                 if(pegawai.getListPresensi() != null) {
@@ -336,7 +355,7 @@ public class PresensiController {
                         list[i][0] = pegawai.getNamaUser();
                         list[i][1] = pegawai.getRole().getNamaRole();
                         list[i][2] = "Bekerja";
-                        
+
                         int terlambat = 0;
                         int absen = 0;
                         int hadir = 0;
@@ -381,119 +400,8 @@ public class PresensiController {
                         totalTerlambat += terlambat;
                     }
                 }
-            } 
-
-            HashMap<String, String> objekCuti = new HashMap<String, String>();
-            objekCuti.put("label", "cuti");
-            objekCuti.put("value", Integer.toString(totalCuti));
-            chart.add(objekCuti);
-            HashMap<String, String> objekTerlambat = new HashMap<String, String>();
-            objekTerlambat.put("label", "terlambat");
-            objekTerlambat.put("value", Integer.toString(totalTerlambat));
-            chart.add(objekTerlambat);
-            HashMap<String, String> objekAbsen = new HashMap<String, String>();
-            objekAbsen.put("label", "absen");
-            objekAbsen.put("value", Integer.toString(totalAbsen));
-            chart.add(objekAbsen);
-            HashMap<String, String> objekPenuh = new HashMap<String, String>();
-            objekPenuh.put("label", "penuh");
-            objekPenuh.put("value", Integer.toString(totalPenuh));
-            chart.add(objekPenuh);
-
-            model.addAttribute("chart", chart);
-            model.addAttribute("list", list);
-            model.addAttribute("listCabang", listCabang);
-            return "daftar-presensi-pengajar";
-        } else {
-            return "error/403";
-        }
-    }
-
-    @RequestMapping(value = "/statistik-presensi/cabang")
-    public String viewAllPresensiByCabang(
-        @RequestParam(value = "idCabang", required = true) Long idCabang,
-        Model model
-        ){
-        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
-        CabangModel cabang = cabangService.getCabangbyId(idCabang);
-        List<CabangModel> listCabang = cabangService.getCabangList();
-        if(currentUser.getRole().getNamaRole().equals("Direktur Operasional")) {
-            List<UserModel> listPegawaibaru = userService.findObjekPresensi(1);
-            List<UserModel> listPegawai = new ArrayList<UserModel>();
-            for(UserModel pegawai:listPegawaibaru) {
-                if(pegawai.getListPresensi() != null) {
-                    if(!pegawai.getListPresensi().isEmpty()) {
-                        listPegawai.add(pegawai);
-                    }
-                }
             }
 
-            List<HashMap<String, String>> chart = new ArrayList<HashMap<String, String>>();
-            int totalCuti = 0;
-            int totalPenuh = 0;
-            int totalTerlambat = 0;
-            int totalAbsen = 0;
-
-            String[][] list = new String[listPegawai.size()][8];
-            int i = 0;
-            for(UserModel pegawai : listPegawai) {
-                if((!(pegawai.getListPresensi()==null))) {
-                    if(!pegawai.getListPresensi().isEmpty()) {
-                        if(pegawai.getListPresensi().get(0).getLokasi().equals(cabang)) {
-                            list[i][0] = pegawai.getNamaUser();
-                            list[i][1] = pegawai.getRole().getNamaRole();
-                            list[i][2] = "Bekerja";
-                            
-                            int terlambat = 0;
-                            int absen = 0;
-                            int hadir = 0;
-                            for(PresensiModel presensi : pegawai.getListPresensi()) {
-                                if(presensi.getStatus().equals(0)) {
-                                    terlambat++;
-                                } else if(presensi.getStatus().equals(1)) {
-                                    hadir++;
-                                }
-                            }
-
-                            PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
-                            PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
-                            LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
-                            LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
-
-                            List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
-                            List<LocalDate> holidays = new ArrayList<LocalDate>();
-                            for(CutiModel objekCuti : listCuti) {
-                                if(objekCuti.getStatus() !=0) {
-                                    LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
-                                    LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
-                                    holidays.addAll(getDatesBetween(start, end));
-                                }
-                            }
-                            long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
-                            List<LocalDate> emptyList = null;
-                            long hariCuti = 0L;
-                            if(!holidays.isEmpty()) {
-                                hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
-                            }
-                            
-                            absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
-
-                            list[i][3] = String.valueOf(hariPresensi);
-                            list[i][4] = Integer.toString(terlambat);
-                            list[i][5] = String.valueOf(hariCuti);
-                            list[i][6] = Integer.toString(absen);
-                            list[i][7] = Integer.toString(hadir);
-                            i++;
-
-                            totalCuti += hariCuti;
-                            totalAbsen += absen;
-                            totalPenuh += hadir;
-                            totalTerlambat += terlambat;
-                        }
-                    }
-                }
-            } 
-
             HashMap<String, String> objekCuti = new HashMap<String, String>();
             objekCuti.put("label", "cuti");
             objekCuti.put("value", Integer.toString(totalCuti));
@@ -511,102 +419,9 @@ public class PresensiController {
             objekPenuh.put("value", Integer.toString(totalPenuh));
             chart.add(objekPenuh);
 
+            System.out.println(chart + "----------------------------");
             model.addAttribute("chart", chart);
             model.addAttribute("list", list);
-            model.addAttribute("listCabang", listCabang);
-            return "daftar-presensi";
-        } else if(currentUser.getRole().getNamaRole().equals("Koordinator Bidang Studi")) {
-            List<UserModel> listPegawaibaru = userService.findObjekPresensi(2);
-            
-            List<UserModel> listPegawai = new ArrayList<UserModel>();
-            for(UserModel pegawai:listPegawaibaru) {
-                if(pegawai.getListPresensi() != null) {
-                    if(!pegawai.getListPresensi().isEmpty()) {
-                        listPegawai.add(pegawai);
-                    }
-                }
-            }
-            String[][] list = new String[listPegawai.size()][8];
-            int i = 0;
-
-            List<HashMap<String, String>> chart = new ArrayList<HashMap<String, String>>();
-            int totalCuti = 0;
-            int totalPenuh = 0;
-            int totalTerlambat = 0;
-            int totalAbsen = 0;
-            for(UserModel pegawai : listPegawai) {
-                if(!(pegawai.getListPresensi() == null)) {
-                    if(!pegawai.getListPresensi().isEmpty()) {
-                        list[i][0] = pegawai.getNamaUser();
-                        list[i][1] = pegawai.getRole().getNamaRole();
-                        list[i][2] = "Bekerja";
-                        
-                        int terlambat = 0;
-                        int absen = 0;
-                        int hadir = 0;
-                        for(PresensiModel presensi : pegawai.getListPresensi()) {
-                            if(presensi.getStatus().equals(0)) {
-                                terlambat++;
-                            } else if(presensi.getStatus().equals(1)) {
-                                hadir++;
-                            }
-                        }
-
-                        PresensiModel awalPresensi = pegawai.getListPresensi().get(0);
-                        PresensiModel latestPresensi = pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1);
-                        LocalDate newDate = awalPresensi.getDate().toLocalDateTime().toLocalDate();
-                        LocalDate lateDate = latestPresensi.getDate().toLocalDateTime().toLocalDate();
-
-                        List<CutiModel> listCuti = cutiService.getAllCutiByUser(pegawai.getIdUser());
-                        List<LocalDate> holidays = new ArrayList<LocalDate>();
-                        for(CutiModel objekCuti : listCuti) {
-                            if(objekCuti.getStatus() !=0) {
-                                LocalDate start = new java.sql.Date(objekCuti.getTanggal_mulai().getTime()).toLocalDate();
-                                LocalDate end = new java.sql.Date(objekCuti.getTanggal_selesai().getTime()).toLocalDate();
-                                holidays.addAll(getDatesBetween(start, end));
-                            }
-                        }
-                        long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
-                        List<LocalDate> emptyList = null;
-                        long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
-
-                        absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
-
-                        list[i][3] = String.valueOf(hariPresensi);
-                        list[i][4] = Integer.toString(terlambat);
-                        list[i][5] = String.valueOf(hariCuti);
-                        list[i][6] = Integer.toString(absen);
-                        list[i][7] = Integer.toString(hadir);
-                        i++;
-
-                        totalCuti += hariCuti;
-                        totalAbsen += absen;
-                        totalPenuh += hadir;
-                        totalTerlambat += terlambat;
-                    }
-                }
-            } 
-
-            HashMap<String, String> objekCuti = new HashMap<String, String>();
-            objekCuti.put("label", "cuti");
-            objekCuti.put("value", Integer.toString(totalCuti));
-            chart.add(objekCuti);
-            HashMap<String, String> objekTerlambat = new HashMap<String, String>();
-            objekTerlambat.put("label", "terlambat");
-            objekTerlambat.put("value", Integer.toString(totalTerlambat));
-            chart.add(objekTerlambat);
-            HashMap<String, String> objekAbsen = new HashMap<String, String>();
-            objekAbsen.put("label", "absen");
-            objekAbsen.put("value", Integer.toString(totalAbsen));
-            chart.add(objekAbsen);
-            HashMap<String, String> objekPenuh = new HashMap<String, String>();
-            objekPenuh.put("label", "penuh");
-            objekPenuh.put("value", Integer.toString(totalPenuh));
-            chart.add(objekPenuh);
-
-            model.addAttribute("chart", chart);
-            model.addAttribute("list", list);
-            model.addAttribute("listCabang", listCabang);
             return "daftar-presensi-pengajar";
         } else {
             return "error/403";
@@ -615,25 +430,25 @@ public class PresensiController {
 
     private static long countBusinessDaysBetween(LocalDate startDate, LocalDate endDate, List<LocalDate> holidays) {
         Predicate<LocalDate> isHoliday = date -> !holidays.isEmpty() ? holidays.contains(date) : false;
- 
+
         Predicate<LocalDate> isWeekend = date -> date.getDayOfWeek() == DayOfWeek.SATURDAY
                 || date.getDayOfWeek() == DayOfWeek.SUNDAY;
- 
+
         endDate = endDate.plusDays(1);
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
- 
+
         long businessDays = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysBetween)
                 .filter(isHoliday.or(isWeekend).negate()).count();
         return businessDays;
     }
 
     public static List<LocalDate> getDatesBetween(
-  LocalDate startDate, LocalDate endDate) { 
+            LocalDate startDate, LocalDate endDate) {
         endDate = endDate.plusDays(1);
-        long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate); 
+        long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
         return IntStream.iterate(0, i -> i + 1)
-        .limit(numOfDaysBetween)
-        .mapToObj(i -> startDate.plusDays(i))
-        .collect(Collectors.toList()); 
+                .limit(numOfDaysBetween)
+                .mapToObj(i -> startDate.plusDays(i))
+                .collect(Collectors.toList());
     }
 }
