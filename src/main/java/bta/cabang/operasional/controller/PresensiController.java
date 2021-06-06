@@ -52,7 +52,7 @@ public class PresensiController {
 
     @GetMapping("/presensi")
     public String viewAllpresensi(Model model) {
-        UftelatserModel currentUser = authService.getCurrentLoggedInUserByUsername();
+        UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
         Long role = currentUser.getRole().getIdRole();
         Long id_user = currentUser.getIdUser();
 
