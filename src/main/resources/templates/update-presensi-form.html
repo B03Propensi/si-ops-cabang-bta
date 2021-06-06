@@ -75,7 +75,7 @@
                 <div class="row" th:if="${presensi.status} == 0">
                     <div class="col">
                         <p>Alasan: <span style="color: red">*</span></p>
-                        <textarea required type="text" class="form-control" name="alasan"
+                        <textarea required type="text" th:field="*{alasan}" class="form-control" name="alasan"
                                   rows="3" placeholder="Alasan terlambat" maxlength="255" style="width: 70%"></textarea>
                     </div>
                 </div>
