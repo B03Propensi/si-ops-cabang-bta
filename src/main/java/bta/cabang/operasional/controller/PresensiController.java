@@ -156,7 +156,7 @@ public class PresensiController {
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm",Locale.getDefault());
             dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
             dateFormat2.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-            timestamp = new Timestamp(System.currentTimeMillis());
+                  timestamp = new Timestamp(System.currentTimeMillis());
 
             presensiModel.setDate(timestamp);
             presensiModel.setUser(authService.getCurrentLoggedInUserByUsername());
@@ -218,9 +218,9 @@ public class PresensiController {
     }
 
     @PostMapping("/presensi/update")
-    private String updateCabangSubmit(@RequestParam Integer id_presensi, @ModelAttribute PresensiModel presensiModel, Model model, RedirectAttributes redirectAttrs){
+    private String updateCabangSubmit(@RequestParam Integer idPresensi, @ModelAttribute PresensiModel presensiModel, Model model, RedirectAttributes redirectAttrs){
         try{
-            presensiService.updatePresensi(id_presensi,presensiModel);
+            presensiService.updatePresensi(idPresensi,presensiModel);
             redirectAttrs.addFlashAttribute("alert", "updateSuccess");
             return "redirect:/presensi";
         }catch (Exception e){

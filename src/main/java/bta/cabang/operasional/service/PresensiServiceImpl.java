@@ -29,15 +29,10 @@ public class PresensiServiceImpl implements PresensiService {
     }
 
     @Override
-    public PresensiModel updatePresensi(Integer id_presensi, PresensiModel presensiModel) {
-        PresensiModel targetpresensi = this.getPresensibyId(id_presensi);
+    public PresensiModel updatePresensi(Integer idPresensi, PresensiModel presensiModel) {
+        PresensiModel targetpresensi = presensiDb.findById(idPresensi).get();
         try {
-            targetpresensi.setDate(presensiModel.getDate());
-            targetpresensi.setStatus(presensiModel.getStatus());
-            targetpresensi.setJabatan(presensiModel.getJabatan());
             targetpresensi.setAlasan(presensiModel.getAlasan());
-            targetpresensi.setLokasi(presensiModel.getLokasi());
-            targetpresensi.setUser(presensiModel.getUser());
             presensiDb.save(targetpresensi);
             return targetpresensi;
         }
