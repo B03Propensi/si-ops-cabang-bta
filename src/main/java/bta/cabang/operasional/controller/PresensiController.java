@@ -390,7 +390,7 @@ public class PresensiController {
                     if(!pegawai.getListPresensi().isEmpty()) {
                         list[i][0] = pegawai.getNamaUser();
                         list[i][1] = pegawai.getRole().getNamaRole();
-                        list[i][2] = "Bekerja";
+                        list[i][2] = String.valueOf(pegawai.getKelasPengajar().size());
 
                         int terlambat = 0;
                         int absen = 0;
