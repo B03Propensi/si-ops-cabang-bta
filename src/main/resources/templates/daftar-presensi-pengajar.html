@@ -58,6 +58,7 @@
                                                 th:selected="${cabangModel.id_cabang == cabang.id_cabang}"
                                                 th:text="${cabang.nama_cabang}"> </option>
                                     </select>
+                                    <br>
                                     <button class = "btn btn-outline-danger " type = "submit" value="Submit">Submit</button>
                                 </div>
                             </div>
@@ -65,8 +66,9 @@
                     </div>
                 </form>
             </div>
+            <br>
 
-            <div align="center">
+            <div align="center" th:if="${list.length != 0}">
                 <div style="width: 95%">
                     <table class="btatable">
                         <thead>
@@ -110,6 +112,13 @@
             </div>
             
             <br>
+            <div class="container" th:if="${list.length == 0}">
+                <div align="center">
+                    <div class="empty-cuti">
+                        <h2>Mohon maaf, <br> Belum ada pegawai yang terdaftar aktif.</h2>
+                    </div>
+                </div>
+            </div>
             <div id="chart-container"></div>
         </div>
     </div>

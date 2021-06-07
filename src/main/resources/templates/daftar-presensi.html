@@ -44,26 +44,30 @@
         <div class="container">
             <h1>Daftar Presensi Pegawai Cabang</h1><br>
 
-            <!--
-            <div>
-            <form th:action ="@{/statistik-presensi/cabang}" class="form-group-inline" method="GET">
-                <div class ="row justify-content-center">
-                    <div class="col-5">
-                        <label><b>Pilih Cabang :</b></label>
-                        <select class="form-control" name="idCabang">
-                            <option value="" selected>Pilih Cabang</option>
-                                <option th:each="cabang : ${listCabang}"
-                                    th:value="${cabang.id_cabang}"
-                                    th:selected="${cabangModel.id_cabang == cabang.id_cabang}"
-                                    th:text="${cabang.id_cabang}"> </option>
-                        </select>
+            <div class = container>
+                <form th:action ="@{/statistik-presensi}" class="form-group-inline" method="GET">
+                    <div class ="row">
+                        <div class="col-5">
+                            <div class = "row">
+                                <div class = "col-5">
+                                    <label><b>Pilih Cabang :</b></label>
+                                    <select class="form-control" name="id_cabang">
+                                        <option value="" selected>Pilih Cabang</option>
+                                            <option th:each="cabang : ${listCabang}"
+                                                th:value="${cabang.id_cabang}"
+                                                th:selected="${cabangModel.id_cabang == cabang.id_cabang}"
+                                                th:text="${cabang.nama_cabang}"> </option>
+                                    </select>
+                                    <br>
+                                    <button class = "btn btn-outline-danger " type = "submit" value="Submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <button class = "btn btn-primary" type = "submit" value="Submit">Submit</a>
-            </form>
+                </form>
             </div>
-        -->
-            <div align="center">
+
+            <div align="center" th:if="${list.length != 0}">
                 <div style="width: 95%">
                     <table class="btatable">
                         <thead>
@@ -110,6 +114,13 @@
                 </div>
             </div>
             
+            <div class="container" th:if="${list.length == 0}">
+                <div align="center">
+                    <div class="empty-cuti">
+                        <h2>Mohon maaf, <br> Belum ada pegawai yang terdaftar aktif.</h2>
+                    </div>
+                </div>
+            </div>
             <br>
             <div id="chart-container"></div>
         </div>
