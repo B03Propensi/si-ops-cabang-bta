@@ -42,6 +42,7 @@
         <div th:if="${isAbleToAddPresensi} AND ${DifferentDate}"  class="row justify-content-between">
             <a th:href = "@{/presensi/add}" class = "btn btn-outline-danger " > Lakukan Presensi</a>
         </div>
+        <br>
         <div th:if="${isKoordinator}"  class="row justify-content-between">
             <a th:href = "@{/statistik-presensi}" class = "btn btn-outline-danger " > Lihat Presensi Pengajar</a>
         </div>

@@ -45,20 +45,24 @@
             <h1>Daftar Presensi Pengajar</h1><br>
 
             <div class = container>
-                <form th:action ="@{/statistik-presensi/cabang}" class="form-group-inline" method="GET">
-                    <div class ="row justify-content-center">
+                <form th:action ="@{/statistik-presensi}" class="form-group-inline" method="GET">
+                    <div class ="row">
                         <div class="col-5">
-                            <label><b>Pilih Cabang :</b></label>
-                            <select class="form-control" name="idCabang">
-                                <option value="" selected>Pilih Cabang</option>
-                                    <option th:each="cabang : ${listCabang}"
-                                        th:value="${cabang.id_cabang}"
-                                        th:selected="${cabangModel.id_cabang == cabang.id_cabang}"
-                                        th:text="${cabang.id_cabang}"> </option>
-                            </select>
+                            <div class = "row">
+                                <div class = "col-5">
+                                    <label><b>Pilih Cabang :</b></label>
+                                    <select class="form-control" name="id_cabang">
+                                        <option value="" selected>Pilih Cabang</option>
+                                            <option th:each="cabang : ${listCabang}"
+                                                th:value="${cabang.id_cabang}"
+                                                th:selected="${cabangModel.id_cabang == cabang.id_cabang}"
+                                                th:text="${cabang.nama_cabang}"> </option>
+                                    </select>
+                                    <button class = "btn btn-outline-danger " type = "submit" value="Submit">Submit</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button class = "btn btn-primary" type = "submit" value="Submit">Submit</a>
                 </form>
             </div>
 
@@ -69,6 +73,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama Pengajar</th>
+                            <th>Jumlah Kelas Diajar</th>
                             <th>Akumulasi Keterlambatan</th>
                             <th>Akumulasi Cuti</th>
                             <th>Akumulasi Ketidakhadiran</th>
@@ -84,7 +89,10 @@
                                 <p th:text="${pegawai[0]}"></p>
                             </td>
                             <td>
-                                <p th:text="${pegawai[1]}"></p>
+                                <p th:text="${pegawai[2]}"></p>
+                            </td>
+                            <td>
+                                <p th:text="${pegawai[4]}"></p>
                             </td>
                             <td>
                                 <p th:text="${pegawai[5]}"></p>

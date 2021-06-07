@@ -231,16 +231,33 @@ public class PresensiController {
 
 
 
-    @GetMapping(value = "/statistik-presensi")
-    public String viewAllPresensi(Model model){
+    @RequestMapping(value="/statistik-presensi")
+    public String viewAllPresensi(
+        @RequestParam(value = "id_cabang", required=false) Long id_cabang,
+        Model model
+        ){
+        CabangModel cabangModel = new CabangModel();
+        if(id_cabang != null) {
+            cabangModel = cabangService.getCabangbyId(id_cabang);
+        }
         UserModel currentUser = authService.getCurrentLoggedInUserByUsername();
         if(currentUser.getRole().getNamaRole().equals("Direktur Operasional")) {
             List<UserModel> listPegawaibaru = userService.findObjekPresensi(1);
             List<UserModel> listPegawai = new ArrayList<UserModel>();
-            for(UserModel pegawai:listPegawaibaru) {
-                if(pegawai.getListPresensi() != null) {
-                    if(!pegawai.getListPresensi().isEmpty()) {
-                        listPegawai.add(pegawai);
+            if(cabangModel.getNama_cabang() != null) {
+                for(UserModel pegawai:listPegawaibaru) {
+                    if(pegawai.getListPresensi() != null) {
+                        if(!pegawai.getListPresensi().isEmpty() && pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1).getLokasi().equals(cabangModel)) {
+                            listPegawai.add(pegawai);
+                        }
+                    }
+                }
+            } else {
+                for(UserModel pegawai:listPegawaibaru) {
+                        if(pegawai.getListPresensi() != null) {
+                            if(!pegawai.getListPresensi().isEmpty()) {
+                            listPegawai.add(pegawai);
+                        }
                     }
                 }
             }
@@ -286,10 +303,10 @@ public class PresensiController {
                             }
                         }
                         long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
-                        List<LocalDate> emptyList = null;
+                        List<LocalDate> emptyList = new ArrayList<>();
                         long hariCuti = 0L;
                         if(!holidays.isEmpty()) {
-                            hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
+                            hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()-1 ), emptyList);
                         }
 
                         absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
@@ -326,18 +343,30 @@ public class PresensiController {
             objekPenuh.put("value", Integer.toString(totalPenuh));
             chart.add(objekPenuh);
 
-            System.out.println(chart + "----------------------------");
             model.addAttribute("chart", chart);
             model.addAttribute("list", list);
+            model.addAttribute("listCabang", cabangService.getCabangList());
+            model.addAttribute("cabangModel", cabangModel);
             return "daftar-presensi";
         } else if(currentUser.getRole().getNamaRole().equals("Koordinator Bidang Studi")) {
             List<UserModel> listPegawaibaru = userService.findObjekPresensi(2);
 
             List<UserModel> listPegawai = new ArrayList<UserModel>();
-            for(UserModel pegawai:listPegawaibaru) {
-                if(pegawai.getListPresensi() != null) {
-                    if(!pegawai.getListPresensi().isEmpty()) {
-                        listPegawai.add(pegawai);
+            if(cabangModel.getNama_cabang() != null) {
+                System.out.println("happen" +"----------------------------" + cabangModel.getNama_cabang());
+                for(UserModel pegawai:listPegawaibaru) {
+                    if(pegawai.getListPresensi() != null) {
+                        if(!pegawai.getListPresensi().isEmpty() && pegawai.getListPresensi().get(pegawai.getListPresensi().size()-1).getLokasi().equals(cabangModel)) {
+                            listPegawai.add(pegawai);
+                        }
+                    }
+                }
+            } else {
+                for(UserModel pegawai:listPegawaibaru) {
+                    if(pegawai.getListPresensi() != null) {
+                        if(!pegawai.getListPresensi().isEmpty()) {
+                            listPegawai.add(pegawai);
+                        }
                     }
                 }
             }
@@ -354,7 +383,7 @@ public class PresensiController {
                     if(!pegawai.getListPresensi().isEmpty()) {
                         list[i][0] = pegawai.getNamaUser();
                         list[i][1] = pegawai.getRole().getNamaRole();
-                        list[i][2] = "Bekerja";
+                        list[i][2] = String.valueOf(pegawai.getKelasPengajar().size());
 
                         int terlambat = 0;
                         int absen = 0;
@@ -382,10 +411,13 @@ public class PresensiController {
                             }
                         }
                         long hariPresensi = countBusinessDaysBetween(newDate, lateDate, holidays);
-                        List<LocalDate> emptyList = null;
-                        long hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()), emptyList);
+                        List<LocalDate> emptyList = new ArrayList<>();
+                        Long hariCuti = 0L;
+                        if(!holidays.isEmpty()) {
+                            hariCuti = countBusinessDaysBetween(holidays.get(0), holidays.get(holidays.size()-1), emptyList);
+                        }
 
-                        absen = pegawai.getListPresensi().size() - ((int) hariPresensi) - ((int) hariCuti);
+                        absen = pegawai.getListPresensi().size() - ((int) hariPresensi) -  hariCuti.intValue();
 
                         list[i][3] = String.valueOf(hariPresensi);
                         list[i][4] = Integer.toString(terlambat);
@@ -419,9 +451,10 @@ public class PresensiController {
             objekPenuh.put("value", Integer.toString(totalPenuh));
             chart.add(objekPenuh);
 
-            System.out.println(chart + "----------------------------");
             model.addAttribute("chart", chart);
             model.addAttribute("list", list);
+            model.addAttribute("listCabang", cabangService.getCabangList());
+            model.addAttribute("cabangModel", cabangModel);
             return "daftar-presensi-pengajar";
         } else {
             return "error/403";
